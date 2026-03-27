@@ -1,0 +1,4 @@
+﻿idx,scale/mm,translate_x/mm,translate_y/mm,translate_z/mm,rotate/deg
+1,100,100,0,10,0
+2,110,200,10,10,10
+3,120,300,0,10,20
