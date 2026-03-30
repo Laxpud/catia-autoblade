@@ -71,10 +71,11 @@ def create_airfoil(part: Part, points: list):
 
             spline_ref = part.create_reference_from_object(spline)
             line_ref = part.create_reference_from_object(line)
-            assemble = hybrid_shape_factory.add_new_assemble(gs_airfoil, [spline_ref, line_ref])
-            print(f"[INFO] Spline and line assembled successfully.")
+            join_feature = hybrid_shape_factory.add_new_join(spline_ref, line_ref)
+            gs_airfoil.append_hybrid_shape(join_feature)
+            print(f"[INFO] Spline and line joined successfully.")
             te_coord = (first_point, last_point)
-            return gs_airfoil, assemble, True, (le_coord, te_coord)
+            return gs_airfoil, join_feature, True, (le_coord, te_coord)
         else:
             te_coord = (first_point,)
             return gs_airfoil, spline, False, (le_coord, te_coord)
@@ -272,6 +273,29 @@ def create_blade_surface(part: Part, section_splines: list, le_spline, te_spline
         blade_surface.add_guide(le_ref)
         blade_surface.add_guide(te_ref)
         gs_blade_surface.append_hybrid_shape(blade_surface)
+
+        blade_surface_ref = part.create_reference_from_object(blade_surface)
+
+        root_section_ref = section_refs[0]
+        root_fill = hsf.add_new_fill()
+        root_fill.add_bound(root_section_ref)
+        gs_blade_surface.append_hybrid_shape(root_fill)
+
+        tip_section_ref = section_refs[-1]
+        tip_fill = hsf.add_new_fill()
+        tip_fill.add_bound(tip_section_ref)
+        gs_blade_surface.append_hybrid_shape(tip_fill)
+
+        blade_surface_ref = part.create_reference_from_object(blade_surface)
+        root_fill_ref = part.create_reference_from_object(root_fill)
+        tip_fill_ref = part.create_reference_from_object(tip_fill)
+
+        join_surface = hsf.add_new_join(blade_surface_ref, root_fill_ref)
+        join_surface.add_element(tip_fill_ref)
+        join_surface.set_deviation(0.01)  # 合并距离
+        join_surface.set_connex(True)  # 检查连通性，避免缝合非连续曲面
+        join_surface.set_manifold(True)  # 检查流形，避免生成错误几何体
+        gs_blade_surface.append_hybrid_shape(join_surface)
 
         print("[INFO] Blade surface created successfully.")
         return gs_blade_surface
