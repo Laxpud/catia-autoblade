@@ -5,6 +5,8 @@ import math
 from pycatia import catia
 from pycatia.mec_mod_interfaces.part_document import PartDocument
 from pycatia.mec_mod_interfaces.part import Part
+from pycatia.part_interfaces.close_surface import CloseSurface
+
 
 def create_part():
     try:
@@ -62,10 +64,18 @@ def create_airfoil(part: Part, points: list):
         le_coord = (0.0, 0.25, 0.0)
 
         if first_point != last_point:
-            line = hybrid_shape_factory.add_new_line_coord(
-                first_point[0], first_point[1], first_point[2],
+            is_sharp = False
+            start_point = hybrid_shape_factory.add_new_point_coord(
+                first_point[0], first_point[1], first_point[2]
+            )
+            end_point = hybrid_shape_factory.add_new_point_coord(
                 last_point[0], last_point[1], last_point[2]
             )
+            gs_airfoil.append_hybrid_shape(start_point)
+            gs_airfoil.append_hybrid_shape(end_point)
+            start_point_ref = part.create_reference_from_object(start_point)
+            end_point_ref = part.create_reference_from_object(end_point)
+            line = hybrid_shape_factory.add_new_line_pt_pt(start_point_ref, end_point_ref)
             gs_airfoil.append_hybrid_shape(line)
             print(f"[INFO] Line created to connect first and last points of airfoil cloud.")
 
@@ -75,10 +85,11 @@ def create_airfoil(part: Part, points: list):
             gs_airfoil.append_hybrid_shape(join_feature)
             print(f"[INFO] Spline and line joined successfully.")
             te_coord = (first_point, last_point)
-            return gs_airfoil, join_feature, True, (le_coord, te_coord)
+            return gs_airfoil, join_feature, is_sharp, (le_coord, te_coord)
         else:
+            is_sharp = True
             te_coord = (first_point,)
-            return gs_airfoil, spline, False, (le_coord, te_coord)
+            return gs_airfoil, spline, is_sharp, (le_coord, te_coord)
     except Exception as e:
         raise Exception(f"[ERROR] Error creating airfoil cloud: {e}") from e
 
@@ -142,7 +153,7 @@ def transform_airfoil_section(part: Part, airfoil_ref, x_axis_ref, origin_ref, s
     except Exception as e:
         raise Exception(f"[ERROR] Error transforming section {section['idx']}: {e}") from e
 
-def create_section_le_te_points(part: Part, gs_blade, le_te_coords, section, le_points, te_points):
+def create_section_le_te_points(part: Part, gs_blade, le_te_coords, section, le_points, te_upper_points, te_lower_points):
     try:
         hsf = part.hybrid_shape_factory
         le_coord = le_te_coords[0]
@@ -166,7 +177,7 @@ def create_section_le_te_points(part: Part, gs_blade, le_te_coords, section, le_
             )
             te_upper_final = hsf.add_new_point_coord(te_u_x, te_u_y, te_u_z)
             gs_blade.append_hybrid_shape(te_upper_final)
-            te_points.append(te_upper_final)
+            te_upper_points.append(te_upper_final)
 
             te_l_x, te_l_y, te_l_z = transform_point(
                 te_lower_coord[0], te_lower_coord[1], te_lower_coord[2],
@@ -175,7 +186,7 @@ def create_section_le_te_points(part: Part, gs_blade, le_te_coords, section, le_
             )
             te_lower_final = hsf.add_new_point_coord(te_l_x, te_l_y, te_l_z)
             gs_blade.append_hybrid_shape(te_lower_final)
-            te_points.append(te_lower_final)
+            te_lower_points.append(te_lower_final)
         else:
             te_single_coord = te_coord[0]
             te_x, te_y, te_z = transform_point(
@@ -185,11 +196,12 @@ def create_section_le_te_points(part: Part, gs_blade, le_te_coords, section, le_
             )
             te_final = hsf.add_new_point_coord(te_x, te_y, te_z)
             gs_blade.append_hybrid_shape(te_final)
-            te_points.append(te_final)
+            te_upper_points.append(te_final)
+            te_lower_points.append(te_final)
     except Exception as e:
         raise Exception(f"[ERROR] Error creating LE/TE points for section {section['idx']}: {e}") from e
 
-def create_blade_geometry(part: Part, airfoil, le_te_coords):
+def create_blade_geometry(part: Part, airfoil, le_te_coords, is_sharp):
     try:
         hybrid_bodies = part.hybrid_bodies
         gs_blade = hybrid_bodies.add()
@@ -208,7 +220,8 @@ def create_blade_geometry(part: Part, airfoil, le_te_coords):
         x_axis_ref = part.create_reference_from_object(x_axis)
 
         le_points = []
-        te_points = []
+        te_upper_points = []
+        te_lower_points = []
         section_splines = []
 
         for section in section_params:
@@ -220,11 +233,11 @@ def create_blade_geometry(part: Part, airfoil, le_te_coords):
             section_splines.append(translated)
 
             create_section_le_te_points(
-                part, gs_blade, le_te_coords, section, le_points, te_points
+                part, gs_blade, le_te_coords, section, le_points, te_upper_points, te_lower_points
             )
 
             print(f"[INFO] Section {section['idx']}: rotate={section['rotation']}deg, "
-                  f"scale={section['scale']}, offset=({section['translate_x']}, "
+                  f"scale={section['scale']}, translate=({section['translate_x']}, "
                   f"{section['translate_y']}, {section['translate_z']})")
 
         le_spline = hsf.add_new_spline()
@@ -233,19 +246,28 @@ def create_blade_geometry(part: Part, airfoil, le_te_coords):
             le_spline.add_point(ref)
         gs_blade.append_hybrid_shape(le_spline)
 
-        te_spline = hsf.add_new_spline()
-        for pt in te_points:
+        te_upper_spline = hsf.add_new_spline()
+        for pt in te_upper_points:
             ref = part.create_reference_from_object(pt)
-            te_spline.add_point(ref)
-        gs_blade.append_hybrid_shape(te_spline)
+            te_upper_spline.add_point(ref)
+        gs_blade.append_hybrid_shape(te_upper_spline)
+
+        if is_sharp:
+            te_lower_spline = te_upper_spline
+        else:
+            te_lower_spline = hsf.add_new_spline()
+            for pt in te_lower_points:
+                ref = part.create_reference_from_object(pt)
+                te_lower_spline.add_point(ref)
+            gs_blade.append_hybrid_shape(te_lower_spline)
 
         print("[INFO] Blade geometry created successfully.")
-        return gs_blade, section_splines, le_spline, te_spline, le_points
+        return gs_blade, section_splines, le_spline, te_upper_spline, te_lower_spline, le_points
 
     except Exception as e:
         raise Exception(f"[ERROR] Error creating blade geometry: {e}") from e
 
-def create_blade_surface(part: Part, section_splines: list, le_spline, te_spline, le_points):
+def create_blade_surface(part: Part, section_splines: list, le_spline, te_upper_spline, te_lower_spline, le_points, is_sharp):
     try:
         hybrid_bodies = part.hybrid_bodies
         gs_blade_surface = hybrid_bodies.add()
@@ -264,51 +286,91 @@ def create_blade_surface(part: Part, section_splines: list, le_spline, te_spline
             le_point_refs.append(le_pt_ref)
 
         le_ref = part.create_reference_from_object(le_spline)
-        te_ref = part.create_reference_from_object(te_spline)
+        te_upper_ref = part.create_reference_from_object(te_upper_spline)
 
         blade_surface = hsf.add_new_loft()
         for i, ref in enumerate(section_refs):
             le_pt_ref = le_point_refs[i]
             blade_surface.add_section_to_loft(ref, 1, le_pt_ref)
         blade_surface.add_guide(le_ref)
-        blade_surface.add_guide(te_ref)
+        blade_surface.add_guide(te_upper_ref)
+        if not is_sharp:
+            te_lower_ref = part.create_reference_from_object(te_lower_spline)
+            blade_surface.add_guide(te_lower_ref)
         gs_blade_surface.append_hybrid_shape(blade_surface)
 
-        blade_surface_ref = part.create_reference_from_object(blade_surface)
+        # 填充桨根和桨尖平面
+        # blade_surface_ref = part.create_reference_from_object(blade_surface)
 
-        root_section_ref = section_refs[0]
-        root_fill = hsf.add_new_fill()
-        root_fill.add_bound(root_section_ref)
-        gs_blade_surface.append_hybrid_shape(root_fill)
+        # root_section_ref = section_refs[0]
+        # root_fill = hsf.add_new_fill()
+        # root_fill.add_bound(root_section_ref)
+        # gs_blade_surface.append_hybrid_shape(root_fill)
 
-        tip_section_ref = section_refs[-1]
-        tip_fill = hsf.add_new_fill()
-        tip_fill.add_bound(tip_section_ref)
-        gs_blade_surface.append_hybrid_shape(tip_fill)
+        # tip_section_ref = section_refs[-1]
+        # tip_fill = hsf.add_new_fill()
+        # tip_fill.add_bound(tip_section_ref)
+        # gs_blade_surface.append_hybrid_shape(tip_fill)
 
-        blade_surface_ref = part.create_reference_from_object(blade_surface)
-        root_fill_ref = part.create_reference_from_object(root_fill)
-        tip_fill_ref = part.create_reference_from_object(tip_fill)
+        # 接合
+        # blade_surface_ref = part.create_reference_from_object(blade_surface)
+        # root_fill_ref = part.create_reference_from_object(root_fill)
+        # tip_fill_ref = part.create_reference_from_object(tip_fill)
 
-        join_surface = hsf.add_new_join(blade_surface_ref, root_fill_ref)
-        join_surface.add_element(tip_fill_ref)
-        join_surface.set_deviation(0.01)  # 合并距离
-        join_surface.set_connex(True)  # 检查连通性，避免缝合非连续曲面
-        join_surface.set_manifold(True)  # 检查流形，避免生成错误几何体
-        gs_blade_surface.append_hybrid_shape(join_surface)
+        # join_surface = hsf.add_new_join(blade_surface_ref, root_fill_ref)
+        # join_surface.add_element(tip_fill_ref)
+        # join_surface.set_deviation(0.01)  # 合并距离
+        # join_surface.set_connex(True)  # 检查连通性，避免缝合非连续曲面
+        # join_surface.set_manifold(True)  # 检查流形，避免生成错误几何体
+        # gs_blade_surface.append_hybrid_shape(join_surface)
 
         print("[INFO] Blade surface created successfully.")
-        return gs_blade_surface
+        # return gs_blade_surface, join_surface
+        return gs_blade_surface, blade_surface
 
     except Exception as e:
         raise Exception(f"[ERROR] Error creating blade surface: {e}") from e
 
+def create_blade_solid(part: Part, surface):
+    try:
+        shape_factory = part.shape_factory
+        bodies = part.bodies
+        new_body = bodies.add()
+        new_body.name = "blade_solid"
+        part.in_work_object = new_body
+
+        surface_ref = part.create_reference_from_object(surface)
+
+        blade_solid: CloseSurface = shape_factory.add_new_close_surface(surface_ref)
+
+        part.update()
+        print("[INFO] Blade solid created successfully.")
+        return blade_solid
+
+    except Exception as e:
+        raise Exception(f"[ERROR] Error creating blade solid: {e}") from e
 
 def save_part(part_document: PartDocument):
     try:
+        # # ===================== 1. 隐藏所有几何集（HybridBodies） =====================
+        # for i in range(1, part.hybrid_bodies.count + 1):
+        #     geo_set: HybridBody = part.hybrid_bodies.item(i)
+        #     geo_set.Visible = False
+
+        # # ===================== 2. 隐藏所有几何体（Bodies，包括PartBody） =====================
+        # for i in range(1, part.bodies.count + 1):
+        #     body: Body = part.bodies.item(i)
+        #     body.Visible = False
+
+        # blade_solid.Visible = True
+
         save_path = os.path.join(os.path.dirname(__file__), "blade_part.CATPart")
         part_document.save_as(save_path, overwrite=True)
         print(f"[INFO] Part saved successfully to: {save_path}")
+
+        # stp_path = os.path.join(os.path.dirname(__file__), "blade_part.stp")
+        # part_document.save_as(stp_path, overwrite=True)
+        # print(f"[INFO] Part saved as STP successfully to: {stp_path}")
     except Exception as e:
         raise Exception(f"[ERROR] Error saving part: {e}") from e
 
@@ -321,9 +383,27 @@ if __name__ == "__main__":
 
     gs_airfoil, airfoil, is_sharp, le_te_coords = create_airfoil(part, points)
 
-    gs_blade, section_splines, le_spline, te_spline, le_points = create_blade_geometry(part, airfoil, le_te_coords)
+    gs_blade_geometry, section_splines, le_spline, te_upper_spline, te_lower_spline, le_points = create_blade_geometry(part, airfoil, le_te_coords, is_sharp)
 
-    gs_blade_surface = create_blade_surface(part, section_splines, le_spline, te_spline, le_points)
+    gs_blade_surface, blade_surface = create_blade_surface(part, section_splines, le_spline, te_upper_spline, te_lower_spline, le_points, is_sharp)
+
+    # gs_airfoil.Visible = False
+    # print(gs_airfoil.name)
+    # print(type(gs_airfoil))
+    # caa.active_window.active_viewer.refresh()
+
+    # acdoc = caa.active_document
+    # selection = acdoc.selection
+    # selection.clear()
+    # selection.add(gs_airfoil)
+    # success = selection.vis_properties.set_
+    # selection.clear()
+    # if success:
+    #     print("[INFO] Airfoil hidden successfully.")
+    # else:
+    #     print("[ERROR] Failed to hide airfoil.")
+
+    blade_solid = create_blade_solid(part, blade_surface)
 
     try:
         part.update()

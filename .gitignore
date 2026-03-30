@@ -35,6 +35,7 @@ env/
 *.CATScript
 *.CATPart.1
 *.CATProduct.1
+*.stp
 
 # IDE
 .idea/
