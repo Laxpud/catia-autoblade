@@ -1,5 +1,5 @@
 [project]
-name = "Catia_AutoBlade"
+name = "catia-autoblade"
 dynamic = ["version"]
 description = "CATIA automation tool for creating blades"
 readme = "README.md"
