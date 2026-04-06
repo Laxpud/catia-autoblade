@@ -3,7 +3,7 @@ name = "catia-autoblade"
 dynamic = ["version"]
 description = "CATIA automation tool for creating blades"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 license = { file = "LICENSE" }
 authors = [
     { name = "Laxpud", email = "mi.shore@foxmail.com"}
@@ -12,25 +12,27 @@ keywords = ["catia", "automation", "blade", "cad"]
 
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: OS Independent",
 ]
 
 dependencies = [
     "pywin32>=302",
+    "inquirer>=3.0.0",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]
 
 [project.scripts]
-catblade = "catia_autoblade.create_blade:main"
-catblade-batch = "catia_autoblade.batch_create_blade:main"
+autoblade-single = "catia_autoblade.create_blade:main"
+autoblade-batch = "catia_autoblade.batch_create_blade:main"
+autoblade = "catia_autoblade.cli:main"
 
 [project.urls]
-Repository = "https://github.com/YangFan/Catia_AutoBlade"
+Repository = "https://github.com/Laxpud/catia-autoblade"
 
 [build-system]
 requires = ["hatchling"]
@@ -38,9 +40,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 path = "src/catia_autoblade/__init__.py"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src"]
 
 [[tool.uv.index]]
 name = "tsinghua"

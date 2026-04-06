@@ -440,5 +440,8 @@ def create_single_blade(airfoil_filename, section_params_filename, output_dir="o
 
     return output_name, output_dir
 
-if __name__ == "__main__":
+def main():
     create_single_blade("sc1095.csv", "section_params-1.csv")
+
+if __name__ == "__main__":
+    main()
