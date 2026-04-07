@@ -1,0 +1,11 @@
+version = "1.0.0"
+
+[paths]
+input_dir = "input"
+output_dir = "output"
+airfoil_dir = "input\\airfoils"
+section_params_dir = "input\\section_params"
+
+[defaults]
+author = ""
+output_name_template = "{airfoil}_blade-{idx}"

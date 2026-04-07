@@ -20,16 +20,19 @@ classifiers = [
 
 dependencies = [
     "pywin32>=302",
-    "inquirer>=3.0.0",
+    "typer>=0.15",
+    "questionary>=2.0",
+    "pydantic>=2.0",
+    "tomlkit>=0.13",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]
 
 [project.scripts]
-autoblade-single = "catia_autoblade.create_blade:main"
-autoblade-batch = "catia_autoblade.batch_create_blade:main"
-autoblade = "catia_autoblade.cli:main"
+autoblade = "catia_autoblade.cli:app"
+autoblade-create = "catia_autoblade.commands.create:run_create_command"
+autoblade-batch = "catia_autoblade.commands.batch:run_batch_command"
 
 [project.urls]
 Repository = "https://github.com/Laxpud/catia-autoblade"
