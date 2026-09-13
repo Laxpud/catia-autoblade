@@ -1,6 +1,8 @@
 # 生成原生可重算的 FreeCAD 模型
 
-Status: accepted
+Status: superseded by [ADR-0005](0005-prioritize-geometric-accuracy.md)（2026-09-08）
+
+以下保留原决定及其历史约束。
 
 FreeCAD 的 FCStd 必须由标准 App、Part、PartDesign 和 Sketcher 对象组成：截面使用原生 Sketch，最终叶片使用链接这些截面的原生实体 Loft。禁止把一次性计算结果包装成静态 Shape，也禁止依赖 FCStd 不会内嵌实现代码的自定义 FeaturePython；这样生成文件在标准 FreeCAD 中保存重开后仍可无修改 `recompute()`。
 

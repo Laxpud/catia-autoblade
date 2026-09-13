@@ -53,7 +53,7 @@ flowchart LR
     subgraph Child[Isolated FreeCADCmd process]
         Flatpak --> Runner[Versioned runner]
         Request[Closed SI-unit JSON request] --> Runner
-        Runner --> NativeModel[Native Sketch / Loft model]
+        Runner --> NativeModel[Accuracy-validated geometry engine]
         NativeModel --> FreeCADArtifacts[FCStd + STEP]
         Runner --> Result[Structured JSON result]
     end
@@ -146,53 +146,28 @@ Ctrl-C 终止当前 AutoBlade 所属进程、清理暂存并停止整个调用�
 未来 NativeLauncher 只能接受经类型、存在性和可执行性校验的 executable path，
 不能退化为自由 shell command。
 
-## FreeCAD 原生模型
+## FreeCAD 几何构造与模型交付
 
-目标 FCStd 使用以下稳定语义树：
+**路线重新评估中。** 用户于 2026-09-08 明确要求精度优先，
+[ADR-0005](adr/0005-prioritize-geometric-accuracy.md) 替代原生 Loft 限定。
+已验证的旧原型与偏差见[诊断记录](validation/freecad-deviation-analysis-2026-09-08.md)。
 
-```text
-Blade                      (App::Part)
-├── Sections               (Group, hidden by default)
-│   ├── Section_001        (Sketcher::SketchObject)
-│   └── Section_NNN
-├── ReferenceGeometry      (Group, hidden by default)
-│   ├── LeadingEdgeReference
-│   └── TrailingEdgeReference
-└── Result                 (Group)
-    └── BladeSolid         (Part::Loft, Solid = true)
-```
+Host 仍只传入已闭合 SI 单位任务；CAD 子进程负责几何构造和边界单位转换。
+候选包括原生受约束曲面、截面/导引曲线网络和自定义算法。截面与前后缘可以
+成为真实驱动约束，不再预先限定为 `ReferenceOnly`。正式接口、对象树和算法
+依赖在阶段 2 对比后确定，不把探索性曲面快照写成已经完成的产品能力。
 
-`Blade` 保存 backend、FreeCAD 版本、Runner 协议版本、单位、来源 basename 和输入
-摘要等属性，不保存依赖原工作区的绝对路径。成功打开文件时只显示
-`BladeSolid`；用户可以展开和显示截面及参考几何。
+不要求不同翼型点数相同；保持 TE→LE→TE 输入语义、变换顺序与尖/钝拓扑。
+任何重新参数化、近似或采样均必须显式记录参数及对原始输入的几何误差。
+不得为绕过失败静默删点、移动点或钝化尾缘。
 
-每个截面遵循下列构造契约：
+FCStd 交付可以采用原生依赖、带明确安装依赖的重建对象，或几何快照加可重建
+输入/算法参数。只有实际保存重开、重建及精度验证通过后才选择交付方式；
+静态结果不能宣称拥有 Sketch→结果的参数化依赖。输入摘要、算法版本、单位
+与依赖必须可追溯，重建不依赖用户原工作区的绝对路径。
 
-1. 使用核心已经验证的 TE→LE→TE 顺序和旋转→缩放→平移结果；
-2. 在规范前缘处分为 upper/lower 两条原生 B-spline，并在数值公差内插值全部
-   输入点；
-3. 不要求不同翼型拥有相同点数，不默认删点、移动点或重采样；
-4. 尖尾缘的两条曲线共享精确 TE 顶点，不增加零长度闭合边；
-5. 钝尾缘用上下 TE 端点之间的原生直线形成闭合 wire；
-6. 可以确定性规范曲线方向、边顺序、seam 和 LE/TE 拓扑，但不能以此改变几何；
-7. 同一叶片所有翼型必须保持相同 sharp/blunt 拓扑，混合拓扑继续在启动 CAD 前
-   拒绝。
-
-FreeCAD 原生 `Part::Loft` 通过 `Sections` 链接参与文档重算，但没有 CATIA 式任意
-guide rail 属性，见
-[FreeCAD 1.1.3 Part Loft 源码](https://github.com/FreeCAD/FreeCAD/blob/1.1.3/src/Mod/Part/App/PartFeatures.cpp)。
-因此前后缘 Guide 是根据初始模型生成、标记为 `ReferenceOnly` 的冻结检查快照，
-不驱动 `BladeSolid`，也不承诺在用户编辑后同步。
-
-禁止使用静态 `Part::Feature.Shape` 伪装参数依赖，禁止使用需要外部 Python 实现
-才能恢复的自定义 FeaturePython。FCStd 只依赖标准 FreeCAD App、Part、PartDesign
-和 Sketcher 模块；[FreeCAD scripted objects 文档](https://github.com/FreeCAD/FreeCAD-documentation/blob/main/wiki/Scripted_objects.md)
-说明脚本对象的 Python 实现不会嵌入文件。
-
-AutoBlade 保证生成模型保存、关闭、重新打开后可无修改 `Document.recompute()`，
-且最终仍是有效单实体。模型保留原生依赖，用户可以编辑上游 Sketch，但编辑后的
-闭合性、拓扑和最终几何有效性由用户负责；`0.3.0` 不承诺任意编辑成功，也不把
-CSV、弦长或扭转变成 FreeCAD 参数化属性。
+精度优先不等于放弃生命周期、依赖许可、headless、有效单实体或 STEP 验证。
+具体工程公差尚未批准，须区分求解容差、测量误差、输入保持误差和跨后端差异。
 
 ## 制品与 STEP 契约
 
@@ -206,7 +181,7 @@ CSV、弦长或扭转变成 FreeCAD 参数化属性。
 目录，不自动增加 backend 后缀。
 
 FreeCAD 在同一暂存目录生成 FCStd 和 STEP，依次验证文件存在、非空、FCStd 可
-重开并无修改重算、STEP 可重开且包含一个有效实体后，才发布到最终位置。文件系统
+重开并按声明方式重建、STEP 可重开且包含一个有效实体后，才发布到最终位置。文件系统
 不能把两个文件通过一次 rename 同时提交，因此 Adapter 必须以回滚保护发布步骤；
 任何部分发布都不能返回成功。
 
@@ -242,19 +217,19 @@ FCStd，不导出 STEP；旧 `--keep-failed-part` 暂作为弃用 alias。成功
 
 下列内容必须由原型和真实证据确定，不能在实现前编造：
 
-- `Part::Loft` 对 300/253/249 点多翼型、260 点钝尾缘和 1000 点密集轮廓的实际
-  稳定性与性能；
+- 受约束曲面、Gordon 或自定义算法对 300/253/249 点多翼型、260 点钝尾缘和
+  1000 点密集轮廓的精度、稳定性、重建依赖与性能；
 - AP242DIS writer 的最终 precision 数值；
 - 体积、截面、表面、质心和包围盒的默认公差与有理由的案例覆盖；
 - 第一批公开 CATIA STEP 基线及其许可、环境和摘要。
 
-如果原生 Sketch→Loft→Solid、尖/钝尾缘、保存重开重算或黄金几何公差任一关键
-条件失败，正式集成停止并返回设计决策；不能静默改用静态 Shape、FeaturePython、
-自动钝化、删点或重采样。
+如果几何精度、尖/钝拓扑、保存重开/声明的重建方式或黄金对照任一关键条件失败，
+正式集成停止并返回设计决策。替代路线按 ADR-0005 显式评估，不允许静默改变输入。
 
 ## 决策记录
 
 - [ADR-0001：采用 AutoBlade 多后端产品身份](adr/0001-adopt-autoblade-multi-backend-identity.md)
 - [ADR-0002：隔离 CAD 后端与 FreeCAD 进程](adr/0002-isolate-cad-backends-and-freecad-processes.md)
-- [ADR-0003：生成原生可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)
+- [ADR-0003（已替代）：生成原生可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)
+- [ADR-0005：以几何精度决定建模路线](adr/0005-prioritize-geometric-accuracy.md)
 - [ADR-0004：使用经治理的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)

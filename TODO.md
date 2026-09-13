@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-07）
+## 当前状态（2026-09-09）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -30,7 +30,7 @@
 ## Primary milestone：AutoBlade 0.3.0 多后端内部 preview
 
 Outcome：把产品规范身份迁移为 AutoBlade，保持 Windows/CATIA 既有行为，并在
-Linux/Flatpak FreeCAD 1.1.3 上通过同一任务体系生成可重算 FCStd 和 AP242DIS
+Linux/Flatpak FreeCAD 1.1.3 上通过同一任务体系生成可追溯、可重建的 FCStd 和 AP242DIS
 STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `0.3.0` 制品集交付。
 
 权威设计与执行入口：
@@ -40,14 +40,21 @@ STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `
 - [实施计划](docs/plans/autoblade-0.3.0.md)
 - [架构决策](docs/adr/)
 
-Current focus：进入 [`0.3.0` 实施计划](docs/plans/autoblade-0.3.0.md)阶段 2
-“FreeCAD 几何可行性闸门”，先用仓库公开输入验证最小 headless Runner 和原生
-模型机制。阶段 1 双平台 gate 已通过；阶段 2 尚未实施。
+Current focus：阶段 2“FreeCAD 几何精度与路线闸门”。用户已授权以几何精度优先，
+允许其他建模方案；[ADR-0005](docs/adr/0005-prioritize-geometric-accuracy.md) 替代
+必须使用原生 Loft 的限制。Gordon 已生成有效闭合实体，固定叶根后缘偏差从 0.571 mm 降至 0.000336 mm，
+但切换区固定采样又找到约 0.382 mm 的三维曲面差异。边界截面保持不超过约
+0.0014 mm，同弧长对应只增加较小偏差，结果支持把剩余问题定位到截面间曲面
+选择，见[切换区诊断](docs/validation/gordon-transition-analysis-2026-09-09.md)。
+下一步定义可审查的展向插值/连续性规则并比较候选，再确定算法、重建交付方式
+与分层误差预算。用户尚无工程公差，不能把求解器容差当作验收批准。阶段 2
+尚未 GO，不进入阶段 3。
 
 Dependencies：
 
 - 阶段 2 可以先用仓库公开输入验证 FreeCAD 机制；进入完整 backend 集成前，用户
-  或指定工程责任人必须提供至少一套许可清晰的 CATIA STEP 基线。
+  或指定工程责任人必须批准至少一套许可清晰的 CATIA STEP 基线。现已有按用户
+  授权生成的候选对照，生成证据不代替黄金基线批准。
 - `0.3.0` 发布前必须补齐单尖、单钝、不同点数多尖、多钝和明显变换的公开黄金
   矩阵，并批准实测 STEP precision 与几何公差。
 - GitHub 仓库改名、PyPI 名称注册、checkout 移动、CATIA 基线批准和 Git commit
@@ -61,8 +68,9 @@ Exit criteria：
   会话所有权和零新增 CNEXT 回归全部通过。
 - [ ] Linux/Flatpak FreeCAD 1.1.3 支持 `create`、`batch`、`sweep`、dry-run、doctor、
   manifest v3、失败快照和每任务隔离，成功产出完整 `.FCStd + .stp` 制品集。
-- [ ] FreeCAD 使用标准原生 Sketch→Loft/Solid 依赖，覆盖不同点数与尖/钝尾缘，
-  FCStd 保存重开后可无修改 recompute，失败时不静默重采样、钝化或降级静态 Shape。
+- [ ] FreeCAD 建模路线通过截面、导引与曲面精度验证，覆盖不同点数与尖/钝尾缘；
+  FCStd/STEP 为有效闭合实体，保存重开与声明的重建方式可复现，任何拟合误差、
+  外部依赖及静态快照属性均显式记录，不静默改变输入或拓扑。
 - [ ] 公开 CATIA 黄金矩阵、许可、摘要、工程公差、几何比较和 Linux required CI
   均可从干净 checkout 复现，1000 点样例具有性能记录。
 - [ ] Windows 与 Linux 的常规检查、干净 wheel 安装 smoke、真实 CATIA、真实

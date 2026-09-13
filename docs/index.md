@@ -23,15 +23,16 @@
 
 以下文档描述尚未完成的 `v0.3.0` 目标，不代表当前版本已经支持 FreeCAD 或新的包名：
 
-- [AutoBlade `v0.3.0` 目标架构](architecture-target.md)：多后端边界、FreeCAD 进程协议、原生可重算模型、产物事务和验证门禁。
+- [AutoBlade `v0.3.0` 目标架构](architecture-target.md)：多后端边界、FreeCAD 进程协议、精度优先的可追溯重建模型、产物事务和验证门禁。
 - [AutoBlade `v0.3.0` 实施计划](plans/autoblade-0.3.0.md)：按依赖顺序拆分的阶段、退出条件、证据和回滚边界。
 
 ## 架构决策
 
 - [ADR-0001：采用 AutoBlade 多后端身份](adr/0001-adopt-autoblade-multi-backend-identity.md)。
 - [ADR-0002：隔离 CAD 后端与 FreeCAD 进程](adr/0002-isolate-cad-backends-and-freecad-processes.md)。
-- [ADR-0003：构建原生、可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)。
+- [ADR-0003（已替代）：构建原生、可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)。
 - [ADR-0004：使用受控的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)。
+- [ADR-0005：以几何精度决定 FreeCAD 建模路线](adr/0005-prioritize-geometric-accuracy.md)。
 
 ## 内容归属
 

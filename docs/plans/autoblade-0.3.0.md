@@ -18,7 +18,7 @@ Windows/CATIA 继续工作且仍为默认 backend，Linux/Flatpak FreeCAD 1.1.3 
 
 - distribution、Python namespace、用户配置目录和发布制品迁移；
 - 内部 CAD backend seam 与 backend-aware Planner/Job/Executor；
-- Flatpak FreeCADCmd Runner、进程监督、原生可重算模型和双制品事务；
+- Flatpak FreeCADCmd Runner、进程监督、可追溯重建模型和双制品事务；
 - 配置 schema v4、sweep manifest v3、CLI、doctor、dry-run 和失败快照；
 - 可公开 CATIA 黄金基线、Linux CI、双后端发布验证和当前文档切换。
 
@@ -104,30 +104,67 @@ Exit gate：Windows 现有无真实 CATIA 检查和安装 smoke 通过；Linux �
 Rollback：在尚未执行外部仓库改名或分发新 wheel 前恢复旧 distribution/package
 路径和构建清单；用户配置迁移只在显式 apply 后发生，并保留原文件备份。
 
-## 阶段 2：FreeCAD 几何可行性闸门
+## 阶段 2：FreeCAD 几何精度与路线闸门
 
-Outcome：用最小、可丢弃的 headless Runner 证明目标原生模型在 FreeCAD 1.1.3
-可行，再决定是否允许正式集成继续。
+Outcome：用最小、可丢弃的 headless Runner 比较精度优先的建模方案，在 FreeCAD
+1.1.3 上确定满足几何要求且可复现的交付方式，再决定是否允许正式集成继续。
+
+2026-09-08 范围调整：用户允许其他路线，ADR-0005 替代原生 Loft 的先验限定。
+调整的是实现限制，精度、单实体、追溯与重建验收仍未通过，不借变更标记完成。
 
 - [ ] 通过固定 Runner 和版本化 JSON，把一个已闭合 SI 单位任务传入 Flatpak
   `FreeCADCmd`；不重新解析 CSV，不依赖 `if __name__ == "__main__"`。
 - [ ] 以原生 Sketch 表达 upper/lower 插值 B-spline，在尖尾缘共享顶点，在钝尾缘
-  增加显式直线闭合边；不删点、不移动点、不重采样。
-- [ ] 使用 `Part::Loft(Solid=True)` 生成 `BladeSolid`，创建冻结的
-  `ReferenceOnly` 前后缘参考，并只显示最终实体。
-- [ ] 保存 FCStd，关闭重开后执行无修改 `Document.recompute()`，验证仍为有效单
-  solid；导出单位 mm 的 AP242DIS STEP 并验证文件 schema。
+  增加显式直线闭合边；原始点保持权威，重新参数化或近似必须记录误差。
+- [ ] 对比受约束曲面/Gordon/自定义算法，显式测量截面和导引保持、曲面连续性
+  与跨后端偏差；验证有效闭合 `BladeSolid` 并确定依赖/重建交付方式。
+- [ ] 保存 FCStd，关闭重开并按声明的方式重建，验证仍为有效单 solid；记录任何
+  外部依赖/快照语义，导出单位 mm 的 AP242DIS STEP 并验证文件 schema。
 - [ ] 覆盖单尖、单钝、300/253/249 点多翼型和明显变换；用 1000 点翼型记录耗时
   与峰值内存，不设置尚无证据的性能 SLA。
 - [ ] 至少取得一套获许可 CATIA STEP，输出几何差异报告和待批准的 precision/
   tolerance 建议。
 
-Exit gate：所有原生依赖、尖/钝拓扑、不同点数、保存重开重算和至少一个 CATIA
-对照均通过；不存在静态 Shape、FeaturePython 或用户偏好污染。形成明确 GO 记录
-后才能进入阶段 3。
+验证进展（2026-09-07）：五个公开输入/派生案例通过本机原型的闭合 Sketch、
+原生 Loft 单实体、保存重开强制重算、AP242 schema/mm 单位和 STEP 重开检查；
+包含 89 截面不同点数、1000 点和明显变换，耗时/峰值内存已记录。详细证据与
+本机复现边界见[阶段 2 实测记录](../validation/freecad-prototype-2026-09-07.md)。
+多翼型 STEP 往返体积相对差约 0.0124467%，尚未定位；没有获许可 CATIA
+对照、precision/公差批准或 GUI 可见性验收，因此 checklist 保持未完成，
+未形成 GO。下一步先补差异定位与基线，不提前进入阶段 3。
+
+后续进展（2026-09-08）：用户授权后已在 win11 交互 Session 1 从非 editable
+wheel 生成 89 截面 CATPart/AP242 STEP，特征树、零新增 CNEXT、双平台完整
+检查和 Windows 临时副本清理通过。候选输入/产物摘要和保存会话诊断见
+[CATIA 候选对照记录](../validation/catia-baseline-2026-09-07.md)。双向曲面
+采样最大差约 0.512 mm；截面提取完整性和默认体积积分仍需完善。
+现已取得候选对照，但未批准黄金基线或工程公差，阶段 2 仍未 GO。
+
+偏差诊断（2026-09-08）：逐面投影和独立后缘参数取点确认真实偏差，叶根
+实测至少 0.571 mm；前后缘驱动约束及展向插值不同是主要方向，详见
+[偏差诊断](../validation/freecad-deviation-analysis-2026-09-08.md)。改变 MaxDegree
+的显式重建实验未得到有效修复，不用于 gate；不得以加密采样或放宽公差替代修复。
+
+新路线验证（2026-09-08）：固定 CurvesWB 版本的 Gordon 原型生成有效闭合
+单实体、可重开静态 FCStd 和 AP242 STEP。固定叶根 X=83 mm 偏差从 0.571 mm
+降到 0.000336 mm，但反向曲面采样仍约 0.330 mm。截面/导引误差、性能、
+静态交付限制及下一步见[Gordon 实测](../validation/gordon-prototype-2026-09-08.md)。
+尚未完成干净输入重建、完整矩阵或公差批准，保持未 GO。
+
+切换区诊断（2026-09-09）：两个翼型切换区共 39 个固定站位均取得完整闭合
+截面；输入截面保持最大约 0.0014 mm，但收敛后的固定截面差异分别达到约
+0.2023 mm 和 0.3857 mm，后一极值点到完整三维曲面仍约 0.3818 mm。同弧长
+对应只增加较小偏差，支持把主要问题定位为截面间曲面选择而非输入保持或单纯
+参数错位。方法、限制及下一步见[切换区固定采样诊断](../validation/gordon-transition-analysis-2026-09-09.md)。
+下一步定义显式展向插值与连续性规则并比较候选；未选定算法或批准 CATIA 真值，
+保持未 GO。
+
+Exit gate：截面/导引保持、曲面精度、尖/钝拓扑、不同点数、保存重开与声明的
+重建方式及至少一个 CATIA 对照均通过；算法、依赖、近似参数和测量误差可复查，
+无用户偏好污染，基线和公差获批准。形成明确 GO 后才能进入阶段 3。
 
 No-go：任一关键契约失败时停止，不先完成 CLI/config 基础设施；保留事实报告并
-重新讨论 ADR-0003。禁止自动钝化、重采样或改成静态模型来制造通过状态。
+按 ADR-0005 重新评估路线。禁止静默改变输入或把未声明依赖/静态结果冒充可重建模型。
 
 ## 阶段 3：完整 backend 集成
 
@@ -217,7 +254,7 @@ patch。已分发版本失败时停止分发、恢复上一批准 wheel，并按
 | --- | --- | --- |
 | 纯 Python | Windows 与 Linux | import 边界、输入契约、backend 选择、Planner、manifest、配置迁移和错误映射 |
 | Fake CAD | 默认 pytest | COM/进程调用顺序、timeout、中断、失败继续、暂存/回滚和制品校验 |
-| FreeCAD 原型 | Linux + Flatpak 1.1.3 | 原生依赖、尖/钝、不同点数、保存重开重算、AP242DIS 和性能证据 |
+| FreeCAD 原型 | Linux + Flatpak 1.1.3 | 精度、尖/钝、不同点数、保存重开/声明的重建、AP242DIS 和性能证据 |
 | FreeCAD 黄金回归 | Linux + Flatpak 1.1.3 | 全案例工程公差、可重复性和无 owned-process 残留 |
 | CATIA 回归 | Windows + CATIA P3 V5-6R2020 | 既有 CATPart/STEP 行为、黄金基线来源和无新增 CNEXT |
 | 安装与发布 | 两个平台的干净环境 | wheel/sdist 身份、入口、依赖 marker、资源、文档、摘要和发布 manifest |
