@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-09）
+## 当前状态（2026-09-15）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -26,6 +26,9 @@
   均已通过，阶段 1 已完成；FreeCAD 仍不是当前版本能力。
 - 本机已只读验证 Flatpak `org.freecad.FreeCAD` 的 headless 版本入口返回 FreeCAD
   1.1.3；这不替代几何原型、黄金回归或发布证据。
+- 用户已人工对比当前 Gordon FreeCAD 模型与 CATIA 候选模型，确认两者视觉上
+  几乎完全重合，并批准当前已观测差异用于预期科学计算用途；批准边界见
+  [人工验收记录](docs/validation/gordon-transition-analysis-2026-09-09.md#2026-09-15-人工验收)。
 
 ## Primary milestone：AutoBlade 0.3.0 多后端内部 preview
 
@@ -46,9 +49,12 @@ Current focus：阶段 2“FreeCAD 几何精度与路线闸门”。用户已授
 但切换区固定采样又找到约 0.382 mm 的三维曲面差异。边界截面保持不超过约
 0.0014 mm，同弧长对应只增加较小偏差，结果支持把剩余问题定位到截面间曲面
 选择，见[切换区诊断](docs/validation/gordon-transition-analysis-2026-09-09.md)。
-下一步定义可审查的展向插值/连续性规则并比较候选，再确定算法、重建交付方式
-与分层误差预算。用户尚无工程公差，不能把求解器容差当作验收批准。阶段 2
-尚未 GO，不进入阶段 3。
+2026-09-15 的人工对比确认两模型视觉上几乎完全重合，且当前差异不会对预期
+科学计算造成明显问题，因此不再把该代表案例约 0.382 mm 的跨后端差异作为继续
+拟合 CATIA 黑盒行为的阻塞项。下一步以当前 Gordon 路线补齐可审查的展向插值/
+连续性契约、干净输入重建、依赖/许可证、交付方式和剩余拓扑矩阵。此次批准不
+等于通用制造公差、STEP writer precision 或 CATIA 黄金基线批准；阶段 2 尚未
+GO，不进入阶段 3。
 
 Dependencies：
 
@@ -56,7 +62,8 @@ Dependencies：
   或指定工程责任人必须批准至少一套许可清晰的 CATIA STEP 基线。现已有按用户
   授权生成的候选对照，生成证据不代替黄金基线批准。
 - `0.3.0` 发布前必须补齐单尖、单钝、不同点数多尖、多钝和明显变换的公开黄金
-  矩阵，并批准实测 STEP precision 与几何公差。
+  矩阵。当前代表案例的几何适用性已获批准；仍需把 STEP precision 和各案例
+  自动回归阈值写成受版本控制、可复现的数值契约。
 - GitHub 仓库改名、PyPI 名称注册、checkout 移动、CATIA 基线批准和 Git commit
   均需要独立授权，不是本 milestone 的隐含操作权限。
 
