@@ -25,6 +25,7 @@
 
 - [AutoBlade `v0.3.0` 目标架构](architecture-target.md)：多后端边界、FreeCAD 进程协议、精度优先的可追溯重建模型、产物事务和验证门禁。
 - [AutoBlade `v0.3.0` 实施计划](plans/autoblade-0.3.0.md)：按依赖顺序拆分的阶段、退出条件、证据和回滚边界。
+- [FreeCAD STEP precision 与 CATIA v2 对照提案](validation/freecad-precision-proposal-2026-09-16.md)：阶段 2 的 writer 实测、几何差异报告、候选回归阈值和待批准边界。
 
 ## 架构决策
 
@@ -33,6 +34,7 @@
 - [ADR-0003（已替代）：构建原生、可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)。
 - [ADR-0004：使用受控的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)。
 - [ADR-0005：以几何精度决定 FreeCAD 建模路线](adr/0005-prioritize-geometric-accuracy.md)。
+- [ADR-0006：随 wheel 提供固定 CurvesWB 最小源码闭包](adr/0006-bundle-pinned-curveswb-source-closure.md)。
 
 ## 内容归属
 

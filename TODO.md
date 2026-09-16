@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-15）
+## 当前状态（2026-09-16）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -43,29 +43,25 @@ STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `
 - [实施计划](docs/plans/autoblade-0.3.0.md)
 - [架构决策](docs/adr/)
 
-Current focus：阶段 2“FreeCAD 几何精度与路线闸门”。用户已授权以几何精度优先，
-允许其他建模方案；[ADR-0005](docs/adr/0005-prioritize-geometric-accuracy.md) 替代
-必须使用原生 Loft 的限制。Gordon 已生成有效闭合实体，固定叶根后缘偏差从 0.571 mm 降至 0.000336 mm，
-但切换区固定采样又找到约 0.382 mm 的三维曲面差异。边界截面保持不超过约
-0.0014 mm，同弧长对应只增加较小偏差，结果支持把剩余问题定位到截面间曲面
-选择，见[切换区诊断](docs/validation/gordon-transition-analysis-2026-09-09.md)。
-2026-09-15 的人工对比确认两模型视觉上几乎完全重合，且当前差异不会对预期
-科学计算造成明显问题，因此不再把该代表案例约 0.382 mm 的跨后端差异作为继续
-拟合 CATIA 黑盒行为的阻塞项。下一步以当前 Gordon 路线补齐可审查的展向插值/
-连续性契约、干净输入重建、依赖/许可证、交付方式和剩余拓扑矩阵。此次批准不
-等于通用制造公差、STEP writer precision 或 CATIA 黄金基线批准；阶段 2 尚未
-GO，不进入阶段 3。
+Current focus：**阶段 3 按用户指示暂停。** 暂停期间没有活动实施任务，不自动
+推进其他 milestone 或 backlog；恢复后从“内部类型化 backend factory、
+backend-specific artifact plan 和结构化错误”开始，不公开动态插件发现 API。
+阶段 2 已于 2026-09-16 GO：用户批准 request v2 Gordon 路线、首个可公开分发的
+CATIA 黄金 STEP `d9ef236c…824db9`、显式 STEP writer mode 2 / `1e-7 mm` 和四层
+软件回归阈值。全局有限曲面最大 `0.357179 mm`、完整固定截面最大
+`0.385172 mm`；数值是内部 preview 回归门禁，不是制造公差。证据见
+[干净重建与拓扑矩阵](docs/validation/gordon-clean-rebuild-2026-09-15.md)和
+[precision 与 v2 CATIA 对照契约](docs/validation/freecad-precision-proposal-2026-09-16.md)。
 
 Dependencies：
 
-- 阶段 2 可以先用仓库公开输入验证 FreeCAD 机制；进入完整 backend 集成前，用户
-  或指定工程责任人必须批准至少一套许可清晰的 CATIA STEP 基线。现已有按用户
-  授权生成的候选对照，生成证据不代替黄金基线批准。
+- 首个 CATIA STEP 黄金基线及公开再分发已于 2026-09-16 获用户批准；公开夹具
+  入库前仍须清理路径元数据、验证几何未变并记录新摘要。
 - `0.3.0` 发布前必须补齐单尖、单钝、不同点数多尖、多钝和明显变换的公开黄金
   矩阵。当前代表案例的几何适用性已获批准；仍需把 STEP precision 和各案例
   自动回归阈值写成受版本控制、可复现的数值契约。
-- GitHub 仓库改名、PyPI 名称注册、checkout 移动、CATIA 基线批准和 Git commit
-  均需要独立授权，不是本 milestone 的隐含操作权限。
+- GitHub 仓库改名、PyPI 名称注册、checkout 移动、后续 CATIA 基线批准和 Git
+  commit 均需要独立授权，不是本 milestone 的隐含操作权限。
 
 Exit criteria：
 

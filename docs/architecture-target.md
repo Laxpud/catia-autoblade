@@ -148,23 +148,39 @@ Ctrl-C 终止当前 AutoBlade 所属进程、清理暂存并停止整个调用�
 
 ## FreeCAD 几何构造与模型交付
 
-**路线重新评估中。** 用户于 2026-09-08 明确要求精度优先，
-[ADR-0005](adr/0005-prioritize-geometric-accuracy.md) 替代原生 Loft 限定。
-已验证的旧原型与偏差见[诊断记录](validation/freecad-deviation-analysis-2026-09-08.md)。
+**阶段 2 已选 Gordon 路线并于 2026-09-16 GO。** 用户于 2026-09-08 明确要求
+精度优先，[ADR-0005](adr/0005-prioritize-geometric-accuracy.md) 替代原生 Loft
+限定；2026-09-15 又批准当前代表案例的已观测差异用于预期科学计算。固定 Runner
+现已从闭合 JSON 干净重建同一案例，并仅从 FCStd 嵌入请求得到逐值一致测量，证据
+见[干净重建验证](validation/gordon-clean-rebuild-2026-09-15.md)。黄金基线、STEP
+设置、分层回归阈值和 v2 适用性也已获批准；这允许正式集成继续，不代表 FreeCAD
+已经是当前产品能力。
 
 Host 仍只传入已闭合 SI 单位任务；CAD 子进程负责几何构造和边界单位转换。
-候选包括原生受约束曲面、截面/导引曲线网络和自定义算法。截面与前后缘可以
-成为真实驱动约束，不再预先限定为 `ReferenceOnly`。正式接口、对象树和算法
-依赖在阶段 2 对比后确定，不把探索性曲面快照写成已经完成的产品能力。
+当前候选保持 TE→LE→TE 点序：尖尾缘拆为 upper/lower B-spline，钝尾缘使用一张
+TE-upper→LE→TE-lower full-wrap 曲面并增加显式 ruled closure。profile 按分区累计
+弧长参数化；LE 与两条 TE guide 共享按相邻站位三边平均距离得到的 span 参数。
+固定 Runner 直接调用 CurvesWB Gordon builder，绕开其会改变曲线几何的自动求交、
+排序和近似重参数化。每张曲面内部 knot 连续性至少为 C2；曲面接缝、根尖封盖和
+钝后缘 closure 只要求 C0 与最终 watertight single solid。阶段 2 Runner 还强制
+截面/导引有限采样保持不超过 `network bbox diagonal × 1e-5`；该数值是算法完整性
+gate，不是制造公差或连续 Hausdorff 上界。
 
 不要求不同翼型点数相同；保持 TE→LE→TE 输入语义、变换顺序与尖/钝拓扑。
 任何重新参数化、近似或采样均必须显式记录参数及对原始输入的几何误差。
 不得为绕过失败静默删点、移动点或钝化尾缘。
 
-FCStd 交付可以采用原生依赖、带明确安装依赖的重建对象，或几何快照加可重建
-输入/算法参数。只有实际保存重开、重建及精度验证通过后才选择交付方式；
-静态结果不能宣称拥有 Sketch→结果的参数化依赖。输入摘要、算法版本、单位
-与依赖必须可追溯，重建不依赖用户原工作区的绝对路径。
+目标 FCStd 采用静态 Shape 加可重建输入/算法参数：`BladeSolid` 是快照，
+`InputCurveNetwork` 保存曲线网络快照，`Traceability` 内嵌 canonical 闭合请求、
+摘要、算法/依赖版本、单位、连续性和重建声明。它不宣称拥有 Sketch→结果的原生
+参数化依赖；受支持重建是用随版本固定的 Runner 和算法源码重新执行嵌入请求，
+且不依赖用户工作区绝对路径。CurvesWB 最小源码闭包同时含 Apache-2.0 和
+LGPL-2.1-or-later 文件；当前原型只引用本机固定 checkout，尚不是可分发实现。
+源码、许可证文本和归属说明的目标交付已由
+[ADR-0006](adr/0006-bundle-pinned-curveswb-source-closure.md) 固定：wheel/sdist
+随附未修改的七文件最小源码闭包、双许可证和来源/摘要 manifest，默认认证模式
+验证固定字节；显式 developer override 允许替换源码但标记为非认证结果。阶段 3
+实现前不把该目标写成当前 wheel 能力。
 
 精度优先不等于放弃生命周期、依赖许可、headless、有效单实体或 STEP 验证。
 2026-09-15 用户已批准当前 89 截面三翼型 Gordon/CATIA 代表案例的已观测差异
@@ -190,7 +206,10 @@ FreeCAD 在同一暂存目录生成 FCStd 和 STEP，依次验证文件存在、
 
 FreeCAD STEP 固定为 AP242DIS 几何、单位 mm，并在独立进程内显式设置 schema、
 单位、精度和曲面写出参数；不读取或持久修改用户 GUI 偏好，也不宣称完整 AP242
-产品数据交换。具体 precision 数值由几何原型测量后提出，并经工程责任人批准。
+产品数据交换。阶段 2 已依据 FreeCAD 1.1.3 / OCCT 7.8.1 实测并批准
+`write.precision.mode=2`、`write.precision.val=1e-7 mm` 和
+`write.surfacecurve.mode=1`；完整依据和已批准的分层回归阈值见
+[precision 与 CATIA v2 对照提案](validation/freecad-precision-proposal-2026-09-16.md)。
 FreeCAD headless 与 OCCT STEP writer 的能力依据见
 [Headless FreeCAD](https://github.com/FreeCAD/FreeCAD-documentation/blob/main/wiki/Headless_FreeCAD.md)
 和 [OCCT STEP guide](https://github.com/Open-Cascade-SAS/OCCT/blob/master/dox/user_guides/step/step.md)。
@@ -216,15 +235,17 @@ FCStd，不导出 STEP；旧 `--keep-failed-part` 暂作为弃用 alias。成功
 [`0.3.0` 实施计划](plans/autoblade-0.3.0.md)维护，决策理由见
 [ADR-0004](adr/0004-use-curated-cross-backend-golden-baselines.md)。
 
-## 可行性闸门与未定数值
+## 已通过的可行性闸门与后续矩阵
 
-下列内容必须由原型和真实证据确定，不能在实现前编造：
+阶段 2 已用原型、真实证据和用户批准确定以下边界，不能因实现需要自行放宽：
 
 - 受约束曲面、Gordon 或自定义算法对 300/253/249 点多翼型、260 点钝尾缘和
   1000 点密集轮廓的精度、稳定性、重建依赖与性能；
-- AP242DIS writer 的最终 precision 数值；
-- 体积、截面、表面、质心和包围盒的默认公差与有理由的案例覆盖；
-- 第一批公开 CATIA STEP 基线及其许可、环境和摘要。
+- AP242DIS writer 固定显式 `1e-7 mm`；
+- 体积、截面、表面、质心和包围盒的代表案例默认值已经批准，仍须由阶段 4 完整
+  黄金矩阵验证默认值与逐案例覆盖；
+- 首个公开 CATIA STEP `d9ef236c…824db9` 的黄金身份与再分发已于 2026-09-16
+  获批；入库前仍须清理路径元数据、验证几何未变并记录最终摘要，完整矩阵未齐备。
 
 如果几何精度、尖/钝拓扑、保存重开/声明的重建方式或黄金对照任一关键条件失败，
 正式集成停止并返回设计决策。替代路线按 ADR-0005 显式评估，不允许静默改变输入。
