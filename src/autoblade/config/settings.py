@@ -1,9 +1,12 @@
 from pathlib import Path
+from typing import Literal
+
+from ..core.backend import BackendName
 
 from pydantic import BaseModel, ConfigDict, Field
 
 
-CURRENT_CONFIG_SCHEMA_VERSION = "3.0.0"
+CURRENT_CONFIG_SCHEMA_VERSION = "4.0.0"
 
 
 class StrictConfigModel(BaseModel):
@@ -25,8 +28,17 @@ class PathsConfig(StrictConfigModel):
 class DefaultsConfig(StrictConfigModel):
     """不由 CLI 显式指定时采用的运行默认值。"""
 
+    backend: BackendName = BackendName.CATIA
     author: str = ""
     output_name_template: str = "{blade}"
+
+
+class FreeCADConfig(StrictConfigModel):
+    """认证入口固定为 Flatpak；超时单位为秒，不接受自由 shell 命令。"""
+
+    launcher: Literal["flatpak"] = "flatpak"
+    app_id: str = Field(default="org.freecad.FreeCAD", pattern=r"^[A-Za-z][A-Za-z0-9_.-]+$")
+    timeout_seconds: float = Field(default=900, gt=0, allow_inf_nan=False)
 
 
 class AppConfig(StrictConfigModel):
@@ -34,4 +46,5 @@ class AppConfig(StrictConfigModel):
 
     paths: PathsConfig = Field(default_factory=PathsConfig)
     defaults: DefaultsConfig = Field(default_factory=DefaultsConfig)
+    freecad: FreeCADConfig = Field(default_factory=FreeCADConfig)
     version: str = CURRENT_CONFIG_SCHEMA_VERSION

@@ -64,7 +64,7 @@ def test_doctor_checks_configured_directories_without_starting_catia(
     (input_dir / "sections").mkdir()
     config_file = tmp_path / "config.toml"
     config_file.write_text(
-        """version = "3.0.0"
+        """version = "4.0.0"
 [paths]
 input_dir = "input"
 output_dir = "output"

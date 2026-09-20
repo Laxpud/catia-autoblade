@@ -92,7 +92,7 @@ if [[ ! -f "$canonical_config" || -f "$legacy_config_dir/config.toml" ]]; then
     echo "Legacy user configuration location migration did not complete." >&2
     exit 1
 fi
-legacy_backups=("$legacy_config_dir"/config.toml.v3.0.0.bak*)
+legacy_backups=("$legacy_config_dir"/config.toml.v4.0.0.bak*)
 if [[ ${#legacy_backups[@]} -ne 1 || ! -f "${legacy_backups[0]}" ]]; then
     echo "Legacy user configuration backup was not created exactly once." >&2
     exit 1

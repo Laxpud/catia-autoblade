@@ -65,6 +65,7 @@ exclude = [
     "**/__pycache__",
     "**/*.CATPart",
     "**/*.CATProduct",
+    "**/*.FCStd*",
     "**/*.log",
     "**/*.stp",
 ]
@@ -109,3 +110,12 @@ include = [
 name = "tsinghua"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
+
+[tool.ruff]
+extend-exclude = ["src/autoblade/_vendor"]
+
+# FreeCAD 使用独立 Python，Child 共用模块不能被 Host 3.14 formatter 改为新语法。
+[tool.ruff.per-file-target-version]
+"src/autoblade/adapters/cad/freecad/runner.py" = "py310"
+"src/autoblade/adapters/cad/freecad/protocol.py" = "py310"
+"src/autoblade/adapters/cad/freecad/probe.py" = "py310"

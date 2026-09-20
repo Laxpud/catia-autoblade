@@ -8,6 +8,8 @@ CONFIG_KEYS = (
     "output_dir",
     "airfoil_dir",
     "blade_sections_dir",
+    "backend",
+    "timeout_seconds",
     "author",
     "output_name_template",
 )
@@ -32,6 +34,10 @@ def run_config_command(
         typer.echo(f"  output_dir: {config.paths.output_dir}")
         typer.echo(f"  airfoil_dir: {config.paths.airfoil_dir}")
         typer.echo(f"  blade_sections_dir: {config.paths.blade_sections_dir}")
+        typer.echo(f"  backend: {config.defaults.backend.value}")
+        typer.echo(f"  timeout_seconds: {config.freecad.timeout_seconds:g}")
+        typer.echo(f"  freecad.launcher: {config.freecad.launcher}")
+        typer.echo(f"  freecad.app_id: {config.freecad.app_id}")
         typer.echo(f"  author: {config.defaults.author}")
         typer.echo(
             "  output_name_template: "
@@ -79,7 +85,8 @@ def run_config_command(
             )
 
         config = manager.load()
-        owner = config.paths if hasattr(config.paths, key) else config.defaults
+        owner = (config.freecad if key == "timeout_seconds" else
+                 config.paths if hasattr(config.paths, key) else config.defaults)
         setattr(owner, key, value)
         manager.save(config)
         typer.echo(f"[INFO] {key} set to {value!r}")

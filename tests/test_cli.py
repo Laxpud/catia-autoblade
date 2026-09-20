@@ -208,7 +208,7 @@ output_name_template = "{blade}"
     assert "Preview only" in preview.stdout
     assert applied.exit_code == 0, applied.output
     assert "Backup created" in applied.stdout
-    assert 'version = "3.0.0"' in config_file.read_text(encoding="utf-8")
+    assert 'version = "4.0.0"' in config_file.read_text(encoding="utf-8")
     assert (tmp_path / "config.toml.v1.0.0.bak").is_file()
 
 
@@ -285,7 +285,7 @@ def test_global_explicit_config_is_forwarded_to_commands(
     monkeypatch,
 ) -> None:
     config_file = tmp_path / "custom.toml"
-    config_file.write_text('version = "3.0.0"', encoding="utf-8")
+    config_file.write_text('version = "4.0.0"', encoding="utf-8")
     calls = []
 
     def fake_run(config_show, *, config_manager):
@@ -352,7 +352,7 @@ def test_init_subcommand_requires_explicit_target_and_forwards_options(
 def test_doctor_subcommand_uses_discovered_config(monkeypatch) -> None:
     calls = []
 
-    def fake_run(*, config_manager):
+    def fake_run(*, config_manager, backend, all_backends):
         calls.append(config_manager)
 
     monkeypatch.setattr(doctor_commands, "run_doctor_command", fake_run)

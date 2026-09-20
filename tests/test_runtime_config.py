@@ -40,7 +40,7 @@ def _write_config(
     config_dir.mkdir(parents=True)
     config_file = config_dir / "config.toml"
     config_file.write_text(
-        f"""version = "3.0.0"
+        f"""version = "4.0.0"
 
 [paths]
 input_dir = "data"

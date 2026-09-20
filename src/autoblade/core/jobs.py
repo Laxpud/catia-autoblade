@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from pathlib import Path
+import math
 from typing import Literal
 
 from .input_plan import BladeInputPlan, BladeMode
+from .backend import Artifact, BackendName, plan_artifacts
 
 
 BuildStatus = Literal["success", "failed"]
@@ -25,14 +27,28 @@ class BladeBuildJob:
     output_name: str
     input_plan: BladeInputPlan
     keep_failed_part: bool = False
+    backend: BackendName = BackendName.CATIA
+    timeout_seconds: float = 900
+    freecad_app_id: str = "org.freecad.FreeCAD"
+    dependency_override: Path | None = None
+    verbose: bool = False
+
+    def __post_init__(self) -> None:
+        """拒绝未知后端和无限等待；直接 Python 调用与 CLI 具有相同边界。"""
+        object.__setattr__(self, "backend", BackendName(self.backend))
+        if (isinstance(self.timeout_seconds, bool) or not math.isfinite(self.timeout_seconds)
+                or self.timeout_seconds <= 0):
+            raise ValueError("timeout_seconds must be a finite positive number.")
+
+    @property
+    def artifacts(self) -> tuple[Artifact, Artifact]:
+        """返回 backend-specific 逻辑制品集，规划和执行共享同一来源。"""
+        return plan_artifacts(self.backend, self.output_dir, self.output_name)
 
     @property
     def output_paths(self) -> tuple[Path, Path]:
         """返回任务会覆盖或创建的原生模型与 STEP 路径。"""
-        return (
-            self.output_dir / f"{self.output_name}.CATPart",
-            self.output_dir / f"{self.output_name}.stp",
-        )
+        return tuple(artifact.path for artifact in self.artifacts)
 
 
 @dataclass(frozen=True, slots=True)
@@ -42,6 +58,7 @@ class BuildResult:
     job: BladeBuildJob
     status: BuildStatus
     error: str | None = None
+    error_code: str | None = None
 
     def as_dict(self) -> dict[str, str | None]:
         """提供旧批处理调用方使用的字典视图。"""

@@ -19,3 +19,20 @@ def forbid_real_catia_dispatch(monkeypatch: pytest.MonkeyPatch) -> None:
     # 同时封锁新旧入口，防止未来代码回退到 Dispatch 后测试静默启动 CATIA。
     monkeypatch.setattr(win32com.client, "Dispatch", blocked_dispatch)
     monkeypatch.setattr(win32com.client, "DispatchEx", blocked_dispatch)
+
+
+@pytest.fixture(autouse=True)
+def forbid_real_freecad_process(monkeypatch: pytest.MonkeyPatch) -> None:
+    """与 COM 防护同级：默认 pytest 不能绕过 fake process 启动真实 Flatpak CAD。"""
+    import subprocess
+    from pathlib import Path
+
+    original = subprocess.Popen
+
+    def guarded(command, *args, **kwargs):
+        if isinstance(command, (list, tuple)) and command:
+            if Path(str(command[0])).name in {"flatpak", "FreeCADCmd", "freecadcmd"}:
+                raise AssertionError("Automated tests must not launch real FreeCAD.")
+        return original(command, *args, **kwargs)
+
+    monkeypatch.setattr(subprocess, "Popen", guarded)

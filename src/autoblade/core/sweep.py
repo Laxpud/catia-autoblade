@@ -1,3 +1,4 @@
+from typing import Unpack
 import json
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -6,6 +7,7 @@ from pathlib import Path
 from .input_plan import inspect_section_mode
 from .input_validation import InputValidationError
 from .jobs import BladeBuildJob
+from .backend import BackendOptions
 from .planner import (
     _resolve_section_file,
     _validate_output_conflicts,
@@ -13,7 +15,7 @@ from .planner import (
 )
 
 
-SWEEP_MANIFEST_SCHEMA_VERSION = 2
+SWEEP_MANIFEST_SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True, slots=True)
@@ -23,6 +25,11 @@ class SweepPlan:
     airfoil_filenames: tuple[str, ...]
     blade_sections_filenames: tuple[str, ...]
     jobs: tuple[BladeBuildJob, ...]
+
+    def __post_init__(self) -> None:
+        """清单只有一个 backend；空计划和混合后端均无法表达合法扫描。"""
+        if not self.jobs or len({job.backend for job in self.jobs}) != 1:
+            raise ValueError("Sweep requires non-empty jobs with one CAD backend.")
 
     def as_dict(self) -> dict[str, object]:
         """返回只含 JSON 基础类型的版本化任务清单。"""
@@ -36,13 +43,14 @@ class SweepPlan:
                     "blade_sections": job.blade_sections_filename,
                     "output_dir": str(job.output_dir),
                     "output_name": job.output_name,
-                    "output_files": [str(path) for path in job.output_paths],
+                    "artifacts": [artifact.as_dict() for artifact in job.artifacts],
                 }
             )
 
         return {
             "schema_version": SWEEP_MANIFEST_SCHEMA_VERSION,
             "planner": "sweep",
+            "backend": self.jobs[0].backend.value,
             "combination": "cartesian",
             "selection": {
                 "airfoils": list(self.airfoil_filenames),
@@ -78,12 +86,14 @@ class SweepPlanner:
         blade_sections_dir: str | Path,
         output_name_template: str,
         author: str,
+        **backend_options: Unpack[BackendOptions],
     ) -> None:
         self.output_base_dir = Path(output_base_dir).resolve()
         self.airfoil_dir = Path(airfoil_dir).resolve()
         self.blade_sections_dir = Path(blade_sections_dir).resolve()
         self.output_name_template = output_name_template
         self.author = author
+        self.backend_options = backend_options
 
     def plan(
         self,
@@ -123,6 +133,7 @@ class SweepPlanner:
                 blade_sections_dir=self.blade_sections_dir,
                 output_name_template=self.output_name_template,
                 author=self.author,
+                **self.backend_options,
             )
             for airfoil_filename in airfoils
             for section_filename in sections

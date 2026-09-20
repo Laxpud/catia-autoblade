@@ -1,3 +1,4 @@
+from typing import Unpack
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -5,6 +6,7 @@ from ..utils.output_naming import build_output_name
 from .input_plan import build_blade_input_plan, inspect_section_mode
 from .input_validation import InputValidationError
 from .jobs import BladeBuildJob
+from .backend import BackendName, BackendOptions
 
 
 def plan_create_job(
@@ -17,6 +19,11 @@ def plan_create_job(
     output_name_template: str,
     author: str,
     keep_failed_part: bool = False,
+    backend: BackendName = BackendName.CATIA,
+    timeout_seconds: float = 900,
+    freecad_app_id: str = "org.freecad.FreeCAD",
+    dependency_override: Path | None = None,
+    verbose: bool = False,
 ) -> BladeBuildJob:
     """把一个明确模型定义规划为可直接执行的闭合任务。"""
     airfoil_path = Path(airfoil_dir).resolve()
@@ -50,6 +57,11 @@ def plan_create_job(
         output_name=output_name,
         input_plan=input_plan,
         keep_failed_part=keep_failed_part,
+        backend=BackendName(backend),
+        timeout_seconds=timeout_seconds,
+        freecad_app_id=freecad_app_id,
+        dependency_override=dependency_override,
+        verbose=verbose,
     )
 
 
@@ -62,6 +74,7 @@ def plan_batch_jobs(
     blade_sections_dir: str | Path,
     output_name_template: str,
     author: str,
+    **backend_options: Unpack[BackendOptions],
 ) -> list[BladeBuildJob]:
     """为多个模型定义生成稳定排序的任务，不执行隐式笛卡尔积。
 
@@ -103,6 +116,7 @@ def plan_batch_jobs(
                 blade_sections_dir=section_dir_path,
                 output_name_template=output_name_template,
                 author=author,
+                **backend_options,
             )
         )
 

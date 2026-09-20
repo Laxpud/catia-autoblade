@@ -99,7 +99,7 @@ def test_sweep_manifest_is_stable_json_with_complete_ordered_job_list(
 
     assert serialized == plan.to_json()
     assert manifest == plan.as_dict()
-    assert manifest["schema_version"] == 2
+    assert manifest["schema_version"] == 3
     assert manifest["combination"] == "cartesian"
     assert manifest["selection"] == {
         "airfoils": ["foil-a.csv", "foil-b.csv"],
@@ -111,7 +111,7 @@ def test_sweep_manifest_is_stable_json_with_complete_ordered_job_list(
         "sweep-0003",
         "sweep-0004",
     ]
-    assert all(len(job["output_files"]) == 2 for job in manifest["jobs"])
+    assert all(len(job["artifacts"]) == 2 for job in manifest["jobs"])
 
 
 def test_sweep_rejects_self_contained_section_definition(tmp_path: Path) -> None:
@@ -144,7 +144,7 @@ def test_sweep_dry_run_shows_manifest_and_conflicts_without_executor(
     workspace.mkdir()
     config_file = workspace / "config.toml"
     config_file.write_text(
-        """version = "3.0.0"
+        """version = "4.0.0"
 
 [paths]
 input_dir = "."
@@ -182,7 +182,7 @@ output_name_template = "{blade}"
     assert "Combination: cartesian (2 x 2 = 4)" in output
     assert "Existing output conflicts: 1" in output
     assert '"job_id": "sweep-0004"' in output
-    assert "Dry run complete; CATIA was not started." in output
+    assert "Dry run complete; CAD was not started." in output
 
 
 def test_non_interactive_sweep_requires_both_explicit_dimensions(
@@ -192,7 +192,7 @@ def test_non_interactive_sweep_requires_both_explicit_dimensions(
     workspace.mkdir()
     config_file = workspace / "config.toml"
     config_file.write_text(
-        """version = "3.0.0"
+        """version = "4.0.0"
 
 [paths]
 input_dir = "."
@@ -222,7 +222,7 @@ def test_sweep_execution_delegates_complete_plan_to_shared_executor(
     workspace.mkdir()
     config_file = workspace / "config.toml"
     config_file.write_text(
-        """version = "3.0.0"
+        """version = "4.0.0"
 
 [paths]
 input_dir = "."

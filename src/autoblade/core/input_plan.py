@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,6 +26,8 @@ class AirfoilInput:
     path: Path
     points: tuple[AirfoilPoint, ...]
     is_sharp: bool
+    # 原始 CSV 字节摘要随解析结果闭合；空值只兼容旧 CATIA 手工构造的计划。
+    source_sha256: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -36,6 +39,7 @@ class BladeInputPlan:
     sections: tuple[SectionParameters, ...]
     airfoils: tuple[AirfoilInput, ...]
     is_sharp: bool
+    blade_sections_sha256: str = ""
 
 
 def inspect_section_mode(blade_sections_path: str | Path) -> BladeMode:
@@ -68,7 +72,9 @@ def build_blade_input_plan(
 ) -> BladeInputPlan:
     """解析截面和唯一翼型，并保证所有错误都发生在 COM 初始化前。"""
     section_path = Path(blade_sections_path)
+    section_digest = _source_sha256(section_path)
     table = read_section_parameter_table(section_path)
+    _require_unchanged_source(section_path, section_digest)
     mode: BladeMode = "multi" if table.has_airfoil_column else "single"
 
     if mode == "multi" and fallback_airfoil_filename is not None:
@@ -110,13 +116,16 @@ def build_blade_input_plan(
             source_path=section_path,
             source_line=source_line,
         )
+        digest = _source_sha256(airfoil_path)
         points = tuple(airfoil_reader(airfoil_path))
+        _require_unchanged_source(airfoil_path, digest)
         airfoils.append(
             AirfoilInput(
                 filename=airfoil_filename,
                 path=airfoil_path,
                 points=points,
                 is_sharp=points[0] == points[-1],
+                source_sha256=digest,
             )
         )
 
@@ -145,7 +154,22 @@ def build_blade_input_plan(
         sections=tuple(sections),
         airfoils=tuple(airfoils),
         is_sharp=expected_is_sharp,
+        blade_sections_sha256=section_digest,
     )
+
+
+def _source_sha256(path: Path) -> str:
+    """规划时固定 CSV 来源摘要，执行和追溯不再依赖可变工作区文件。"""
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError as error:
+        raise InputValidationError(path, f"cannot snapshot input source: {error}") from error
+
+
+def _require_unchanged_source(path: Path, expected: str) -> None:
+    """普通并发编辑若跨越解析窗口则拒绝计划，避免点数据与来源摘要不一致。"""
+    if _source_sha256(path) != expected:
+        raise InputValidationError(path, "input changed while it was being parsed; retry planning")
 
 
 def resolve_airfoil_reference(

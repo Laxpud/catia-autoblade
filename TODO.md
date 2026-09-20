@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-16）
+## 当前状态（2026-09-20）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -23,9 +23,9 @@
   提升为当前承诺。
 - 目标架构、ADR 和实施计划已经建立；阶段 1 的 distribution、Python namespace、
   配置目录和 Linux 无 CAD 路径已实现，Linux 与 Windows 完整检查及安装 gate
-  均已通过，阶段 1 已完成；FreeCAD 仍不是当前版本能力。
-- 本机已只读验证 Flatpak `org.freecad.FreeCAD` 的 headless 版本入口返回 FreeCAD
-  1.1.3；这不替代几何原型、黄金回归或发布证据。
+  均已通过，阶段 1 已完成。
+- 阶段 3 已完成开发集成与 FreeCAD 真实 smoke；当前发布版本仍为 `0.2.0`，
+  `0.3.0` preview 的完整黄金矩阵、CI、真实 CATIA 发布回归和正式发布尚未完成。
 - 用户已人工对比当前 Gordon FreeCAD 模型与 CATIA 候选模型，确认两者视觉上
   几乎完全重合，并批准当前已观测差异用于预期科学计算用途；批准边界见
   [人工验收记录](docs/validation/gordon-transition-analysis-2026-09-09.md#2026-09-15-人工验收)。
@@ -43,9 +43,12 @@ STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `
 - [实施计划](docs/plans/autoblade-0.3.0.md)
 - [架构决策](docs/adr/)
 
-Current focus：**阶段 3 按用户指示暂停。** 暂停期间没有活动实施任务，不自动
-推进其他 milestone 或 backlog；恢复后从“内部类型化 backend factory、
-backend-specific artifact plan 和结构化错误”开始，不公开动态插件发现 API。
+Current focus：**阶段 4：公开黄金夹具与回归数值契约。** 阶段 3 已于
+2026-09-20 完成：内部 backend 集成、配置 v4、manifest v3、双平台各 206 项测试
+及完整检查、FreeCAD 安装 wheel 三命令/重建/timeout/Ctrl-C 和 89 截面代表模型
+均通过。下一项从获批 CATIA STEP 的元数据清理、几何未变验证和夹具 manifest
+开始；阶段 4 尚未实施，阶段 5 发布仍待后续门禁。证据见
+[阶段 3 验证记录](docs/validation/backend-integration-2026-09-20.md)。
 阶段 2 已于 2026-09-16 GO：用户批准 request v2 Gordon 路线、首个可公开分发的
 CATIA 黄金 STEP `d9ef236c…824db9`、显式 STEP writer mode 2 / `1e-7 mm` 和四层
 软件回归阈值。全局有限曲面最大 `0.357179 mm`、完整固定截面最大
@@ -65,11 +68,11 @@ Dependencies：
 
 Exit criteria：
 
-- [ ] distribution、Python namespace 和规范品牌均为 AutoBlade/`autoblade`；旧
+- [x] distribution、Python namespace 和规范品牌均为 AutoBlade/`autoblade`；旧
   distribution 不共存，配置 v3→v4 和旧配置目录迁移可预览、备份和回滚。
 - [ ] Windows/CATIA 仍是默认 backend，既有输入、命令、CATPart/STEP、真实 CATIA
   会话所有权和零新增 CNEXT 回归全部通过。
-- [ ] Linux/Flatpak FreeCAD 1.1.3 支持 `create`、`batch`、`sweep`、dry-run、doctor、
+- [x] Linux/Flatpak FreeCAD 1.1.3 支持 `create`、`batch`、`sweep`、dry-run、doctor、
   manifest v3、失败快照和每任务隔离，成功产出完整 `.FCStd + .stp` 制品集。
 - [ ] FreeCAD 建模路线通过截面、导引与曲面精度验证，覆盖不同点数与尖/钝尾缘；
   FCStd/STEP 为有效闭合实体，保存重开与声明的重建方式可复现，任何拟合误差、

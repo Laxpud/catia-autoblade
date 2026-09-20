@@ -12,7 +12,7 @@ from autoblade.config.manager import (
 )
 
 
-CURRENT_CONFIG = """version = "3.0.0"
+CURRENT_CONFIG = """version = "4.0.0"
 
 [paths]
 input_dir = "input"
@@ -96,7 +96,7 @@ def test_config_discovery_priority_is_explicit_workspace_user_defaults(
     )
     assert manager.source.kind == "defaults"
     assert manager.config_file == (working_dir / "config.toml").resolve()
-    assert manager.load().version == "3.0.0"
+    assert manager.load().version == "4.0.0"
 
 
 def test_default_user_config_uses_canonical_autoblade_directory(
@@ -261,13 +261,13 @@ def test_legacy_schema_and_user_location_migrate_in_one_guarded_apply(
     plan = manager.plan_migration()
     assert plan is not None
     assert plan.source_version == "1.0.0"
-    assert plan.target_version == "3.0.0"
+    assert plan.target_version == "4.0.0"
     assert plan.changes[-1].field == "config_file"
 
     backup = manager.apply_migration(plan)
 
     assert backup.read_text(encoding="utf-8") == LEGACY_CONFIG
-    assert 'version = "3.0.0"' in canonical.read_text(encoding="utf-8")
+    assert 'version = "4.0.0"' in canonical.read_text(encoding="utf-8")
     assert manager.load_runtime().paths.input_dir == runtime_before.paths.input_dir
     assert manager.plan_migration() is None
 
@@ -317,13 +317,17 @@ def test_legacy_config_migration_previews_backs_up_and_preserves_values(
         "version",
         "paths.section_params_dir",
         "paths.airfoil_dir",
+        "defaults.backend",
+        "freecad.launcher",
+        "freecad.app_id",
+        "freecad.timeout_seconds",
     ]
 
     backup = manager.apply_migration(plan)
 
     assert backup.read_text(encoding="utf-8") == LEGACY_CONFIG
     migrated_text = config_file.read_text(encoding="utf-8")
-    assert 'version = "3.0.0"' in migrated_text
+    assert 'version = "4.0.0"' in migrated_text
     assert 'airfoil_dir = "airfoils"' in migrated_text
     assert 'blade_sections_dir = "blade_sections"' in migrated_text
     assert "section_params_dir" not in migrated_text
@@ -343,11 +347,15 @@ def test_schema_2_config_migrates_field_and_default_directory(
     assert [change.field for change in plan.changes] == [
         "version",
         "paths.section_params_dir",
+        "defaults.backend",
+        "freecad.launcher",
+        "freecad.app_id",
+        "freecad.timeout_seconds",
     ]
 
     manager.apply_migration(plan)
     migrated_text = config_file.read_text(encoding="utf-8")
-    assert 'version = "3.0.0"' in migrated_text
+    assert 'version = "4.0.0"' in migrated_text
     assert 'blade_sections_dir = "blade_sections"' in migrated_text
     assert "section_params_dir" not in migrated_text
 
@@ -376,7 +384,7 @@ def test_migration_rejects_file_changed_after_preview(tmp_path: Path) -> None:
 def test_future_and_unknown_schema_content_fail_safely(tmp_path: Path) -> None:
     future = _write(
         tmp_path / "future.toml",
-        CURRENT_CONFIG.replace('version = "3.0.0"', 'version = "4.0.0"'),
+        CURRENT_CONFIG.replace('version = "4.0.0"', 'version = "5.0.0"'),
     )
     with pytest.raises(ConfigCompatibilityError, match="newer than supported"):
         ConfigManager(future).load()

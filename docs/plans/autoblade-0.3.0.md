@@ -208,29 +208,43 @@ No-go：任一关键契约失败时停止，不先完成 CLI/config 基础设施
 
 ## 阶段 3：完整 backend 集成
 
-> **状态：暂停（2026-09-16）。** 用户要求阶段 3 先暂停；未开始 backend seam
-> 源码实现。恢复时从第一项继续，不自动跳到后续任务或其他 milestone。
+> **状态：已完成（2026-09-20）。** 用户于 2026-09-19 明确恢复阶段 3；内部
+> backend 集成、双平台完整检查和真实 FreeCAD 退出门禁均已通过。
 
 Outcome：FreeCAD 作为内部正式 backend 接入现有单任务执行链，三个建模命令及其
 规划、错误和制品语义完整可用。
 
-- [ ] 定义内部类型化 backend factory、backend-specific artifact plan 和结构化错误；
+- [x] 定义内部类型化 backend factory、backend-specific artifact plan 和结构化错误；
   不公开动态插件发现 API。
-- [ ] 让 CLI/config 在 Planner 前确定 backend，使输出冲突、预览和 dry-run 使用
+- [x] 让 CLI/config 在 Planner 前确定 backend，使输出冲突、预览和 dry-run 使用
   `.CATPart + .stp` 或 `.FCStd + .stp` 的真实路径。
-- [ ] 实现配置 schema `3.0.0 → 4.0.0` 显式迁移、命令级 `--backend`、900 秒默认
+- [x] 实现配置 schema `3.0.0 → 4.0.0` 显式迁移、命令级 `--backend`、900 秒默认
   timeout 与 CLI 覆盖；默认 backend 继续为 CATIA。
-- [ ] 实现每任务独立 FreeCADCmd 进程、严格 Runner 协议、stdout/stderr 捕获、
+- [x] 实现每任务独立 FreeCADCmd 进程、严格 Runner 协议、stdout/stderr 捕获、
   timeout、Ctrl-C、owned-process 清理和未认证版本警告。
-- [ ] 实现目标文件系统内暂存、FCStd/STEP 验证、逻辑事务发布和部分发布回滚；
+- [x] 实现目标文件系统内暂存、FCStd/STEP 验证、逻辑事务发布和部分发布回滚；
   任一目标存在都走完整冲突流程。
-- [ ] 实现 `--keep-failed-model`，并将 `--keep-failed-part` 保留为弃用 alias；timeout
+- [x] 实现 `--keep-failed-model`，并将 `--keep-failed-part` 保留为弃用 alias；timeout
   只在已有可识别 FCStd 时尽力保留。
-- [ ] 将 sweep manifest 升为 v3，记录 backend 和 typed artifacts，不保留 v2
+- [x] 将 sweep manifest 升为 v3，记录 backend 和 typed artifacts，不保留 v2
   `output_files`；create、batch、sweep 不能在一次调用中混用 backend。
-- [ ] 使 doctor 按选定 backend 检查，FreeCAD 路径执行最小 headless 创建/重开
+- [x] 使 doctor 按选定 backend 检查，FreeCAD 路径执行最小 headless 创建/重开
   探针；`--all` 中任一 backend FAIL 都返回非零。
-- [ ] 保持 batch/sweep 串行且每任务隔离；任务失败后继续，用户中断则停止整个调用。
+- [x] 保持 batch/sweep 串行且每任务隔离；任务失败后继续，用户中断则停止整个调用。
+
+验证状态（2026-09-20，阶段 3 Exit gate 已通过）：
+
+- Linux CPython 3.14.4 与 Windows CPython 3.14.7 各通过 206 项 pytest、Ruff、
+  构建、非 editable wheel 安装 smoke 和分发内容/依赖摘要校验；Windows 本地
+  验证副本已清理，日志与摘要保留。
+- 最终开发 wheel 在 Flatpak FreeCAD 1.1.3 上通过 doctor、尖尾缘 create、钝尾缘
+  batch、尖/钝 sweep、FCStd 嵌入请求重建、timeout 和 Ctrl-C，任务进程与暂存均
+  清理；另完成 89 截面多翼型代表模型，约 391.079 s、峰值 RSS 275,560 KiB。
+- ADR-0006 的七文件未修改闭包、双许可证、来源/摘要 manifest、Host/Child 校验
+  和显式非认证 override 已实现；最终 sdist 重建的 67 个包内文件逐字节一致。
+- 原型两截面“无内部 knot”的连续性误判已修正并有回归；既有 knot 的 C2 门槛
+  和已批准 STEP precision 均未降低。详细摘要、命令、日志和认证边界见
+  [阶段 3 验证记录](../validation/backend-integration-2026-09-20.md)。
 
 Exit gate：三个命令的普通、交互、dry-run、覆盖、失败继续和中断路径都有 mock
 测试；本机 Flatpak 1.1.3 能通过 create/batch/sweep 真实 smoke；任何 return code

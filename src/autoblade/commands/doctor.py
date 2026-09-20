@@ -13,6 +13,7 @@ import typer
 
 from .. import __version__
 from ..config.manager import ConfigManager
+from ..core.backend import BackendName
 
 
 SUPPORTED_PYTHON = (3, 14)
@@ -36,11 +37,21 @@ class DoctorFailure(RuntimeError):
 def run_doctor_command(
     *,
     config_manager: ConfigManager | None = None,
+    backend: BackendName | None = None,
+    all_backends: bool = False,
     collector: Callable[[ConfigManager], list[DoctorCheck]] | None = None,
 ) -> list[DoctorCheck]:
     """输出不连接 CATIA 的诊断摘要，并让明确失败反映到退出码。"""
     manager = config_manager or ConfigManager()
-    checks = (collector or collect_doctor_checks)(manager)
+    if collector is not None:
+        checks = collector(manager)
+    else:
+        selected = backend or manager.load_runtime().defaults.backend
+        checks = []
+        if all_backends or selected == BackendName.CATIA:
+            checks.extend(collect_doctor_checks(manager))
+        if all_backends or selected == BackendName.FREECAD:
+            checks.extend(collect_freecad_checks(manager))
     typer.echo("AutoBlade doctor")
     typer.echo(f"app_version: {__version__}")
     for check in checks:
@@ -211,3 +222,25 @@ def _check_output_writable(path: Path) -> DoctorCheck:
         return DoctorCheck("output_writable", "FAIL", f"{path}: {error}")
     detail = str(path) if path.exists() else f"creatable under {ancestor}"
     return DoctorCheck("output_writable", "PASS", detail)
+
+
+def collect_freecad_checks(manager: ConfigManager) -> list[DoctorCheck]:
+    """所选 FreeCAD 后端运行短探针；失败不能被另一后端的 PASS 抵消。"""
+    from ..adapters.cad.freecad.adapter import probe_backend
+
+    checks = [_check_python()]
+    try:
+        config = manager.load_runtime()
+        checks.extend([
+            DoctorCheck("config", "PASS", manager.source_description),
+            _check_directory("airfoil_dir", config.paths.airfoil_dir),
+            _check_directory("blade_sections_dir", config.paths.blade_sections_dir),
+            _check_output_writable(config.paths.output_dir),
+        ])
+        detail = probe_backend(config.paths.output_dir, app_id=config.freecad.app_id,
+                               timeout=config.freecad.timeout_seconds)
+        status = "PASS" if detail.startswith("FreeCAD 1.1.3;") else "WARN"
+        checks.append(DoctorCheck("freecad", status, detail))
+    except Exception as error:
+        checks.append(DoctorCheck("freecad", "FAIL", str(error)))
+    return checks

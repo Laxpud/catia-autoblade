@@ -75,6 +75,7 @@ class ConfigManager:
             LEGACY_CONFIG_SCHEMA_VERSION,
             PREVIOUS_CONFIG_SCHEMA_VERSION,
             "unversioned",
+            "3.0.0",
         }
     )
     # 只有真实移除字段时才向此表增加条目。迁移器会在通用 unknown-field
@@ -391,7 +392,7 @@ class ConfigManager:
         #    input_dir 为基准拼接。只剥离与 input_dir 完全相同的前缀，绝对路径、
         #    自定义同级路径以及用户的输出命名模板都保持原样。
         paths = migrated.get("paths")
-        if source_version != self.CURRENT_SCHEMA_VERSION and isinstance(
+        if source_version in {"unversioned", "1.0.0", "2.0.0"} and isinstance(
             paths,
             Mapping,
         ):
@@ -433,6 +434,25 @@ class ConfigManager:
                             "Keep the resolved directory stable under input_dir.",
                         )
                     )
+
+        # schema v4 只补充后端默认值，不重复执行 v1/v2 的路径修正规则。
+        # 保留已有用户配置和 TOML 注释；迁移仍受摘要、备份和原子替换保护。
+        if source_version != self.CURRENT_SCHEMA_VERSION:
+            for table_name, values in (
+                ("defaults", {"backend": "catia"}),
+                ("freecad", {"launcher": "flatpak", "app_id": "org.freecad.FreeCAD", "timeout_seconds": 900}),
+            ):
+                if table_name not in migrated:
+                    migrated[table_name] = tomlkit.table()
+                table = migrated[table_name]
+                if isinstance(table, Mapping):
+                    for key, value in values.items():
+                        if key not in table:
+                            table[key] = value
+                            changes.append(ConfigMigrationChange(
+                                f"{table_name}.{key}", "<missing>", str(value),
+                                "Add explicit backend defaults for schema 4.0.0.",
+                            ))
 
         if moves_location:
             self._preserve_location_relative_roots(

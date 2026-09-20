@@ -1,8 +1,12 @@
+from pathlib import Path
+
 from collections.abc import Sequence
 
 import typer
 
 from ..config.manager import ConfigManager
+from ..core.backend import BackendName
+from .backend_options import resolve_backend_options
 from ..core.executor import execute_jobs
 from ..core.input_plan import inspect_section_mode
 from ..core.jobs import BuildResult
@@ -30,11 +34,21 @@ def run_sweep_command(
     interactive: bool,
     *,
     config_manager: ConfigManager | None = None,
+    backend: BackendName | None = None,
+    timeout_seconds: float | None = None,
+    dependency_override: Path | None = None,
+    verbose: bool = False,
+    keep_failed_part: bool = False,
     sweep_processor=None,
 ) -> SweepPlan | list[BuildResult]:
     """规划显式笛卡尔积；dry-run 在共享 Executor 边界前直接返回。"""
     manager = config_manager or ConfigManager()
     config = manager.load_runtime()
+    backend_options = resolve_backend_options(
+        config, backend=backend, timeout_seconds=timeout_seconds,
+        dependency_override=dependency_override, verbose=verbose,
+        keep_failed_part=keep_failed_part,
+    )
     airfoil_files, blade_sections_files = get_available_files(
         airfoil_dir=config.paths.airfoil_dir,
         blade_sections_dir=config.paths.blade_sections_dir,
@@ -103,11 +117,12 @@ def run_sweep_command(
         blade_sections_dir=config.paths.blade_sections_dir,
         output_name_template=config.defaults.output_name_template,
         author=config.defaults.author,
+        **backend_options,
     )
     plan = planner.plan(selected_airfoils, selected_sections)
     show_sweep_preview(plan)
     if dry_run:
-        typer.echo("[INFO] Dry run complete; CATIA was not started.")
+        typer.echo("[INFO] Dry run complete; CAD was not started.")
         return plan
     if interactive:
         confirm_execution()

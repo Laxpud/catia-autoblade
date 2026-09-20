@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "name": "CurvesWB",
+  "repository": "https://github.com/tomate44/CurvesWB",
+  "version": "0.6.81",
+  "commit": "e4972f761d126901d13b3a72be64eb14f7d51c92",
+  "retrieved_at": "2026-09-08",
+  "vendored_at": "2026-09-19",
+  "files": [
+    {
+      "path": "freecad/Curves/BSplineAlgorithms.py",
+      "sha256": "c7571770f9ac7feb53dc3c15070da5971ef5ec96625c3a94b194aadd0f077a3d",
+      "spdx": "Apache-2.0",
+      "copyright": [
+        "2018 German Aerospace Center (DLR)"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/BSplineApproxInterp.py",
+      "sha256": "08658bc981adbfd7f834a190e3830f5eca10e6413875530738cac43658ab6d10",
+      "spdx": "Apache-2.0",
+      "copyright": [
+        "2018 German Aerospace Center (DLR)"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/__init__.py",
+      "sha256": "2e1489b22e21043e706b923c0d41e6a65e4bf8e3963dfa9fbe96b74c9d1f57aa",
+      "spdx": "LGPL-2.1-or-later",
+      "copyright": [
+        "Christophe Grellier (Chris_G); upstream copyright headers preserved"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/curve_network_sorter.py",
+      "sha256": "e447f52fe809e9dccb843927fb2f83aee0c69814d08aaf6e4cb530a35bccdacc",
+      "spdx": "Apache-2.0",
+      "copyright": [
+        "TiGL contributors; upstream copyright headers preserved"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/gordon.py",
+      "sha256": "6b592dbf322ebb7c99f8027be6c79c8e818b5310fe99bd9df93b93541d6b7423",
+      "spdx": "Apache-2.0",
+      "copyright": [
+        "2018 German Aerospace Center (DLR)"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/nurbs_tools.py",
+      "sha256": "e98b66ea4730d006b1cab432789a34456146d0cff1c703aa8390a9e263a1f3ee",
+      "spdx": "LGPL-2.1-or-later",
+      "copyright": [
+        "Christophe Grellier (Chris_G); upstream copyright headers preserved"
+      ],
+      "modified": false
+    },
+    {
+      "path": "freecad/Curves/version.py",
+      "sha256": "dae96e30277186f4b1ca63146043d97bc69d78836cade5e02cbd05e5f81ed890",
+      "spdx": "LGPL-2.1-or-later",
+      "copyright": [
+        "Christophe Grellier (Chris_G); upstream copyright headers preserved"
+      ],
+      "modified": false
+    }
+  ],
+  "licenses": [
+    {
+      "path": "LICENSE-CODE",
+      "spdx": "LGPL-2.1-or-later",
+      "sha256": "814cf1a7e79dc6a3eda3d197fa7ded36c3b733917ed5da1e8cc135eb24f3ac09"
+    },
+    {
+      "path": "LICENSE-TIGL",
+      "spdx": "Apache-2.0",
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1"
+    }
+  ]
+}

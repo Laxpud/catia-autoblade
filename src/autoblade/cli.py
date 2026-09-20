@@ -6,6 +6,8 @@ from typing import Annotated
 
 import typer
 
+from .core.backend import BackendName, BackendError
+
 
 app = typer.Typer(
     help="AutoBlade - Blade creation automation tool",
@@ -52,6 +54,10 @@ def _run_cli(action: Callable[[], object]) -> object | None:
         raise
     except Exception as error:
         typer.echo(f"[ERROR] {error}", err=True)
+        for note in getattr(error, "__notes__", []):
+            typer.echo(f"[INFO] {note}", err=True)
+        if isinstance(error, BackendError) and error.diagnostics and getattr(error, "verbose", False):
+            typer.echo(error.diagnostics, err=True)
         raise typer.Exit(1) from None
 
 
@@ -99,6 +105,12 @@ def main(
 @app.command()
 def create(
     ctx: typer.Context,
+    backend: Annotated[BackendName | None, typer.Option("--backend")] = None,
+    timeout_seconds: Annotated[float | None, typer.Option("--timeout-seconds", min=0.001)] = None,
+    dependency_override: Annotated[Path | None, typer.Option("--freecad-dependency-dir", help="Use custom CurvesWB source; results are not certified.")] = None,
+    verbose: Annotated[bool, typer.Option("--verbose")] = False,
+    keep_failed_model: Annotated[bool, typer.Option("--keep-failed-model")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
     airfoil: Annotated[str | None, typer.Option("--airfoil", "-a")] = None,
     section: Annotated[str | None, typer.Option("--section", "-s")] = None,
     output: Annotated[str | None, typer.Option("--output", "-o")] = None,
@@ -107,7 +119,7 @@ def create(
         bool,
         typer.Option(
             "--keep-failed-part",
-            help="Save a CATPart snapshot when CATIA modeling fails.",
+            help="Deprecated alias for --keep-failed-model.",
         ),
     ] = False,
     command_version: Annotated[
@@ -127,14 +139,19 @@ def create(
         return
     from .commands.create import run_create_command
 
+    if keep_failed_part:
+        typer.echo("[WARN] --keep-failed-part is deprecated; use --keep-failed-model.", err=True)
     _run_cli(
         lambda: run_create_command(
             airfoil,
             section,
             output,
             interactive,
-            keep_failed_part,
+            keep_failed_part or keep_failed_model,
             config_manager=_get_config_manager(ctx),
+            backend=backend, timeout_seconds=timeout_seconds,
+            dependency_override=dependency_override, verbose=verbose,
+            dry_run=dry_run,
         )
     )
 
@@ -142,6 +159,13 @@ def create(
 @app.command()
 def batch(
     ctx: typer.Context,
+    backend: Annotated[BackendName | None, typer.Option("--backend")] = None,
+    timeout_seconds: Annotated[float | None, typer.Option("--timeout-seconds", min=0.001)] = None,
+    dependency_override: Annotated[Path | None, typer.Option("--freecad-dependency-dir", help="Use custom CurvesWB source; results are not certified.")] = None,
+    verbose: Annotated[bool, typer.Option("--verbose")] = False,
+    keep_failed_model: Annotated[bool, typer.Option("--keep-failed-model")] = False,
+    keep_failed_part: Annotated[bool, typer.Option("--keep-failed-part", help="Deprecated alias for --keep-failed-model.")] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
     airfoil: Annotated[str | None, typer.Option("--airfoil", "-a")] = None,
     section: Annotated[str | None, typer.Option("--section", "-s")] = None,
     output: Annotated[str | None, typer.Option("--output", "-o")] = None,
@@ -164,6 +188,8 @@ def batch(
         return
     from .commands.batch import run_batch_command
 
+    if keep_failed_part:
+        typer.echo("[WARN] --keep-failed-part is deprecated; use --keep-failed-model.", err=True)
     _run_cli(
         lambda: run_batch_command(
             airfoil,
@@ -172,6 +198,10 @@ def batch(
             list_files,
             interactive,
             config_manager=_get_config_manager(ctx),
+            backend=backend, timeout_seconds=timeout_seconds,
+            dependency_override=dependency_override, verbose=verbose,
+            keep_failed_part=keep_failed_part or keep_failed_model,
+            dry_run=dry_run,
         )
     )
 
@@ -179,6 +209,12 @@ def batch(
 @app.command()
 def sweep(
     ctx: typer.Context,
+    backend: Annotated[BackendName | None, typer.Option("--backend")] = None,
+    timeout_seconds: Annotated[float | None, typer.Option("--timeout-seconds", min=0.001)] = None,
+    dependency_override: Annotated[Path | None, typer.Option("--freecad-dependency-dir", help="Use custom CurvesWB source; results are not certified.")] = None,
+    verbose: Annotated[bool, typer.Option("--verbose")] = False,
+    keep_failed_model: Annotated[bool, typer.Option("--keep-failed-model")] = False,
+    keep_failed_part: Annotated[bool, typer.Option("--keep-failed-part", help="Deprecated alias for --keep-failed-model.")] = False,
     airfoils: Annotated[
         list[str],
         typer.Option(
@@ -200,7 +236,7 @@ def sweep(
         bool,
         typer.Option(
             "--dry-run",
-            help="Print the complete stable manifest without starting CATIA.",
+            help="Print the complete stable manifest without starting CAD.",
         ),
     ] = False,
     interactive: Annotated[bool, typer.Option("--interactive", "-i")] = False,
@@ -208,6 +244,8 @@ def sweep(
     """Build an explicit Cartesian product of airfoils and section templates."""
     from .commands.sweep import run_sweep_command
 
+    if keep_failed_part:
+        typer.echo("[WARN] --keep-failed-part is deprecated; use --keep-failed-model.", err=True)
     _run_cli(
         lambda: run_sweep_command(
             airfoils,
@@ -216,6 +254,9 @@ def sweep(
             dry_run,
             interactive,
             config_manager=_get_config_manager(ctx),
+            backend=backend, timeout_seconds=timeout_seconds,
+            dependency_override=dependency_override, verbose=verbose,
+            keep_failed_part=keep_failed_part or keep_failed_model,
         )
     )
 
@@ -315,13 +356,17 @@ def initialize_workspace(
 
 
 @app.command()
-def doctor(ctx: typer.Context) -> None:
+def doctor(
+    ctx: typer.Context,
+    backend: Annotated[BackendName | None, typer.Option("--backend")] = None,
+    all_backends: Annotated[bool, typer.Option("--all")] = False,
+) -> None:
     """Diagnose the installation without starting or attaching to CATIA."""
     from .commands.doctor import run_doctor_command
 
     _run_cli(
         lambda: run_doctor_command(
-            config_manager=_get_config_manager(ctx),
+            config_manager=_get_config_manager(ctx), backend=backend, all_backends=all_backends,
         )
     )
 

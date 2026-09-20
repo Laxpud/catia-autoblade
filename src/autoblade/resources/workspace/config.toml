@@ -1,4 +1,4 @@
-version = "3.0.0"
+version = "4.0.0"
 
 [paths]
 input_dir = "input"
@@ -7,5 +7,11 @@ airfoil_dir = "airfoils"
 blade_sections_dir = "blade_sections"
 
 [defaults]
+backend = "catia"
 author = ""
 output_name_template = "{blade}"
+
+[freecad]
+launcher = "flatpak"
+app_id = "org.freecad.FreeCAD"
+timeout_seconds = 900

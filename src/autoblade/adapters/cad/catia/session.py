@@ -3,10 +3,14 @@ from collections.abc import Callable
 from typing import Any
 
 from .errors import CatiaBackendUnavailableError
+from ....core.backend import BackendError, BackendName
 
 
-class CatiaCleanupError(RuntimeError):
+class CatiaCleanupError(BackendError):
     """表示建模成功后，CATIA 或 COM 资源未能完整释放。"""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(BackendName.CATIA, "cleanup", message)
 
 
 class CatiaSession:

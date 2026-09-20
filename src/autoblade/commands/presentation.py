@@ -13,10 +13,12 @@ def show_job_preview(jobs: Iterable[BladeBuildJob]) -> list[BladeBuildJob]:
     for index, job in enumerate(planned, start=1):
         airfoil = job.airfoil_filename or "per-section references"
         typer.echo(
-            f"  {index}. mode={job.mode}, airfoil={airfoil}, "
+            f"  {index}. backend={job.backend.value}, mode={job.mode}, airfoil={airfoil}, "
             f"section={job.blade_sections_filename}"
         )
         typer.echo(f"     output={job.output_dir / job.output_name}")
+        for artifact in job.artifacts:
+            typer.echo(f"     {artifact.kind}={artifact.path}")
         existing = [path for path in job.output_paths if path.exists()]
         if existing:
             names = ", ".join(path.name for path in existing)

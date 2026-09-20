@@ -50,7 +50,7 @@ def test_init_creates_external_workspace_with_optional_examples(
     assert [airfoil.filename for airfoil in input_plan.airfoils] == (
         expected_airfoils
     )
-    assert ConfigManager(target / "config.toml").load().version == "3.0.0"
+    assert ConfigManager(target / "config.toml").load().version == "4.0.0"
 
 
 def test_init_without_examples_only_creates_config_and_directories(
@@ -137,7 +137,7 @@ def test_repeated_init_preserves_existing_managed_and_unrelated_files(
         force=True,
         interactive=False,
     )
-    assert "version = \"3.0.0\"" in config_file.read_text(encoding="utf-8")
+    assert "version = \"4.0.0\"" in config_file.read_text(encoding="utf-8")
     assert (target / "input" / "airfoils" / "manifest.json").is_file()
     assert unrelated.read_text(encoding="utf-8") == "private"
 

@@ -21,6 +21,10 @@ def main() -> int:
     args = parser.parse_args()
 
     import autoblade
+    from autoblade.adapters.cad.freecad.adapter import bundled_dependency
+    from autoblade.adapters.cad.freecad.protocol import validate_curveswb_checkout
+
+    validate_curveswb_checkout(bundled_dependency())
     from autoblade.commands.create import run_create_command
     from autoblade.config.manager import ConfigManager
     from autoblade.utils.file_scanner import get_available_files

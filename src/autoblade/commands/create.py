@@ -1,9 +1,13 @@
+from pathlib import Path
+
 import typer
 
 from ..config.manager import ConfigManager
+from ..core.backend import BackendName
+from .backend_options import resolve_backend_options
 from ..core.executor import execute_job
 from ..core.input_plan import inspect_section_mode
-from ..core.jobs import BuildResult
+from ..core.jobs import BladeBuildJob, BuildResult
 from ..core.planner import plan_create_job
 from ..utils.file_scanner import get_available_files
 from .presentation import show_job_preview
@@ -17,11 +21,21 @@ def run_create_command(
     keep_failed_part: bool = False,
     *,
     config_manager: ConfigManager | None = None,
+    backend: BackendName | None = None,
+    timeout_seconds: float | None = None,
+    dependency_override: Path | None = None,
+    verbose: bool = False,
+    dry_run: bool = False,
     blade_creator=None,
-) -> BuildResult:
+) -> BuildResult | BladeBuildJob:
     """规划并执行一个模型；失败保持为异常交给最外层 CLI 呈现。"""
     manager = config_manager or ConfigManager()
     config = manager.load_runtime()
+    backend_options = resolve_backend_options(
+        config, backend=backend, timeout_seconds=timeout_seconds,
+        dependency_override=dependency_override, verbose=verbose,
+        keep_failed_part=keep_failed_part,
+    )
     airfoil_files, blade_sections_files = get_available_files(
         airfoil_dir=config.paths.airfoil_dir,
         blade_sections_dir=config.paths.blade_sections_dir,
@@ -95,9 +109,12 @@ def run_create_command(
         blade_sections_dir=config.paths.blade_sections_dir,
         output_name_template=config.defaults.output_name_template,
         author=config.defaults.author,
-        keep_failed_part=keep_failed_part,
+        **backend_options,
     )
     show_job_preview([job])
+    if dry_run:
+        typer.echo("[INFO] Dry run complete; CAD was not started.")
+        return job
     if interactive:
         confirm_execution()
 

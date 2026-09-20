@@ -1,4 +1,4 @@
-param(
+﻿param(
     [Parameter(Mandatory = $true)]
     [string]$WheelPath,
     [string]$UvExecutable
@@ -113,7 +113,7 @@ try {
     }
     $legacyBackups = @(
         Get-ChildItem -LiteralPath $legacyConfigDir `
-            -Filter "config.toml.v3.0.0.bak*"
+            -Filter "config.toml.v4.0.0.bak*"
     )
     if ($legacyBackups.Count -ne 1) {
         throw "Expected exactly one legacy user configuration backup."

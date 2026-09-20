@@ -8,6 +8,7 @@ from configparser import ConfigParser
 from email.message import Message
 from email.parser import Parser
 import hashlib
+import json
 import os
 from pathlib import Path
 import re
@@ -32,6 +33,9 @@ EXPECTED_CONSOLE_SCRIPTS = {
 }
 REQUIRED_WHEEL_FILES = {
     "autoblade/_distribution.py",
+    "autoblade/adapters/cad/freecad/runner.py",
+    "autoblade/adapters/cad/freecad/protocol.py",
+    "autoblade/adapters/cad/freecad/probe.py",
     "autoblade/resources/workspace/config.toml",
     "autoblade/resources/airfoil_library/manifest.json",
     "autoblade/resources/airfoil_library/airfoil1_sharp.csv",
@@ -68,6 +72,7 @@ FORBIDDEN_PARTS = {
 FORBIDDEN_SUFFIXES = {
     ".catpart",
     ".catproduct",
+    ".fcstd",
     ".log",
     ".pyc",
     ".stp",
@@ -318,6 +323,7 @@ def _validate_distribution_contents(dist_dir: Path, version: str) -> None:
         ]
         if unexpected:
             raise ValidationError(f"wheel contains unexpected roots: {unexpected}")
+        _validate_vendor_files(archive.read, "autoblade/_vendor/curveswb/")
         _validate_wheel_entry_points(archive, version)
         _validate_no_local_path_leak(
             ((name, archive.read(name)) for name in wheel_names),
@@ -346,10 +352,35 @@ def _validate_distribution_contents(dist_dir: Path, version: str) -> None:
                 if extracted is not None:
                     yield member.name, extracted.read()
 
+        def read_sdist(name):
+            extracted = archive.extractfile(name)
+            if extracted is None:
+                raise ValidationError(f"Missing source file: {name}")
+            return extracted.read()
+
+        _validate_vendor_files(read_sdist, sdist_root + "src/autoblade/_vendor/curveswb/")
         _validate_no_local_path_leak(sdist_contents(), artifact="sdist")
 
     _write_content_manifest(dist_dir, wheel_path.name, wheel_names)
     _write_content_manifest(dist_dir, sdist_path.name, sdist_names)
+
+
+def _validate_vendor_files(read_file, prefix: str) -> None:
+    """从归档实际字节验证未修改依赖、双许可证、来源 manifest 和归属说明。"""
+    from autoblade.adapters.cad.freecad.protocol import VENDOR_MANIFEST_SHA256
+
+    try:
+        data = read_file(prefix + "manifest.json")
+        if hashlib.sha256(data).hexdigest() != VENDOR_MANIFEST_SHA256:
+            raise ValidationError("Bundled dependency manifest fingerprint mismatch")
+        manifest = json.loads(data)
+        if not read_file(prefix + "NOTICE.md"):
+            raise ValidationError("Bundled dependency notice is empty")
+        for item in manifest["files"] + manifest["licenses"]:
+            if hashlib.sha256(read_file(prefix + item["path"])).hexdigest() != item["sha256"]:
+                raise ValidationError(f"Bundled dependency fingerprint mismatch: {item['path']}")
+    except (KeyError, OSError) as error:
+        raise ValidationError(f"Missing bundled dependency source or license: {error}") from error
 
 
 def _validate_wheel_entry_points(archive: ZipFile, version: str) -> None:
