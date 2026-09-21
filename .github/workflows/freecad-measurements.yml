@@ -2,24 +2,9 @@ name: FreeCAD measurements
 
 on:
   workflow_dispatch:
+  # required check 必须对每次变更返回状态，具体测量范围由 job 内部选择。
   push:
-    paths:
-      - 'src/autoblade/**'
-      - 'scripts/golden/**'
-      - 'scripts/*freecad*.sh'
-      - 'tests/fixtures/golden/**'
-      - 'pyproject.toml'
-      - 'uv.lock'
-      - '.github/workflows/freecad-measurements.yml'
   pull_request:
-    paths:
-      - 'src/autoblade/**'
-      - 'scripts/golden/**'
-      - 'scripts/*freecad*.sh'
-      - 'tests/fixtures/golden/**'
-      - 'pyproject.toml'
-      - 'uv.lock'
-      - '.github/workflows/freecad-measurements.yml'
   schedule:
     - cron: '17 2 * * 1'
 
@@ -28,24 +13,33 @@ permissions:
 
 jobs:
   measure:
+    name: FreeCAD measurement integrity
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     # 初期观察环境稳定性；任何状态都不代表人类对几何适用性的批准。
     continue-on-error: true
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Select measurement scope
+        id: scope
+        run: python3 -m scripts.golden.ci_scope
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        if: steps.scope.outputs.measure == 'true'
         with:
           python-version: '3.14'
           enable-cache: true
       - name: Install pinned FreeCAD environment
+        if: steps.scope.outputs.measure == 'true'
         run: bash scripts/setup-freecad-ci.sh
       - name: Collect model measurements and performance
+        if: steps.scope.outputs.measure == 'true'
         env:
           QT_QPA_PLATFORM: offscreen
         run: dbus-run-session -- bash scripts/check-freecad-measurements.sh output/freecad-ci
       - name: Upload measurements for human review
-        if: always()
+        if: always() && steps.scope.outputs.measure == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: freecad-measurements-${{ github.run_id }}-${{ github.run_attempt }}

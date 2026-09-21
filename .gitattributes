@@ -1,3 +1,5 @@
+# CurvesWB 的源码、许可证和 manifest 按原始字节认证；Windows checkout 也必须保持 LF。
+src/autoblade/_vendor/curveswb/** text eol=lf
 src/autoblade/resources/**/*.csv text eol=lf
 src/autoblade/resources/**/*.json text eol=lf
 src/autoblade/resources/**/*.toml text eol=lf
