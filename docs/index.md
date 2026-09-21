@@ -18,6 +18,7 @@
 - [内部 preview 发布与回滚](releasing.md)：标签、候选验证、SHA-256、发布 manifest 和失败处理。
 - [未发布变更](release-notes/unreleased.md)：尚未进入新版本制品集的功能与分发边界变化。
 - [自动化测试](testing.md)：无 CATIA 测试入口、覆盖范围、COM 隔离和真实几何回归边界。
+- [标准几何误差报告](geometry-measurement-reports.md)：自动测量、完整性检查、人工可用性判断及 Linux CAD CI。
 
 ## 已接受的目标设计与活动计划
 
@@ -26,13 +27,16 @@
 - [AutoBlade `v0.3.0` 目标架构](architecture-target.md)：多后端边界、FreeCAD 进程协议、精度优先的可追溯重建模型、产物事务和验证门禁。
 - [AutoBlade `v0.3.0` 实施计划](plans/autoblade-0.3.0.md)：按依赖顺序拆分的阶段、退出条件、证据和回滚边界。
 - [FreeCAD STEP precision 与 CATIA v2 对照提案](validation/freecad-precision-proposal-2026-09-16.md)：阶段 2 的 writer 实测、几何差异报告、候选回归阈值和待批准边界。
+- [首个公开黄金夹具与数值回归](validation/golden-fixture-2026-09-20.md)：阶段 4 首个获批案例的清理摘要、固定测量契约、复现命令与验证边界。
+- [候选矩阵测量与 win11 交付](validation/golden-matrix-2026-09-21.md)：6 组双后端候选、79 站位测量、1000 点性能及供用户判断的模型检查包。
 
 ## 架构决策
 
 - [ADR-0001：采用 AutoBlade 多后端身份](adr/0001-adopt-autoblade-multi-backend-identity.md)。
 - [ADR-0002：隔离 CAD 后端与 FreeCAD 进程](adr/0002-isolate-cad-backends-and-freecad-processes.md)。
 - [ADR-0003（已替代）：构建原生、可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)。
-- [ADR-0004：使用受控的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)。
+- [ADR-0004（已替代）：使用受控的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)。
+- [ADR-0007：自动测量几何误差，模型可用性由人类判断](adr/0007-measure-geometry-and-defer-usability-to-humans.md)。
 - [ADR-0005：以几何精度决定 FreeCAD 建模路线](adr/0005-prioritize-geometric-accuracy.md)。
 - [ADR-0006：随 wheel 提供固定 CurvesWB 最小源码闭包](adr/0006-bundle-pinned-curveswb-source-closure.md)。
 

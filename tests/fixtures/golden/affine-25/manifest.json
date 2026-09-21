@@ -1,0 +1,409 @@
+{
+  "schema": "autoblade.golden/v2",
+  "case_id": "affine-25",
+  "decision_policy": "human_only",
+  "policy_record": "docs/adr/0007-measure-geometry-and-defer-usability-to-humans.md",
+  "authorization": {
+    "date": "2026-09-21",
+    "original_sha256": "2904b30d67be27331ba125dee86f5e4d148144dcf7c568130fd2566d52b30f7c",
+    "record": "docs/validation/golden-matrix-2026-09-21.md#\u516c\u5f00\u6d4b\u8bd5\u57fa\u7ebf\u6388\u6743",
+    "notice": "LICENSE.md",
+    "public_redistribution": true
+  },
+  "human_review": {
+    "date": "2026-09-21",
+    "record": "docs/validation/golden-matrix-2026-09-21.md#\u4eba\u5de5\u68c0\u67e5\u7ed3\u8bba",
+    "scope": "Recorded original artifacts; new outputs require human judgment"
+  },
+  "origin": {
+    "kind": "project_defined_analytic_geometry",
+    "license": "MIT",
+    "generator": "scripts/golden/candidates.py",
+    "profiles": [
+      {
+        "point_count": 121,
+        "amplitude": 0.156,
+        "camber": 0.0,
+        "gap_m": 0.0
+      }
+    ],
+    "transform": {
+      "scale": 2.5,
+      "rotation_x_deg": -41.0,
+      "translation_m": [
+        -0.1,
+        0.2,
+        -0.05
+      ]
+    }
+  },
+  "environment": {
+    "freecad_version": "1.1.3",
+    "occt_version": "7.8.1",
+    "catia": "P3 V5-6R2020 (5.30.0.19235)"
+  },
+  "input": {
+    "sections": "input/blade_sections.csv",
+    "airfoil": "synthetic-1.csv",
+    "section_count": 5,
+    "point_counts": [
+      121
+    ],
+    "trailing_edge": "sharp",
+    "airfoils": [
+      "input/airfoils/synthetic-1.csv"
+    ]
+  },
+  "baseline": {
+    "step": "catia.stp",
+    "data_sha256": "819771ea6c8e677a60d950128de8c2c9d2b4bee08fc100c3ef1cd5eca8296f9f",
+    "sanitization": "HEADER/FILE_NAME path only; DATA bytes unchanged"
+  },
+  "reference_metrics": "reference-metrics.json",
+  "sampling": {
+    "method": "tessellation-vertices-to-trimmed-faces/v1",
+    "deflection_mm": 0.1,
+    "surface_samples": 400,
+    "section_samples": 240,
+    "retry_offsets_mm": [
+      0,
+      0.0001,
+      -0.0001,
+      0.001,
+      -0.001
+    ],
+    "stations": [
+      {
+        "x_mm": -84.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": -68.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": -53.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": -37.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": -21.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": -6.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 9.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 25.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 40.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 56.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 71.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 87.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 103.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 118.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 134.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 150.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 165.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 181.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 196.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 212.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 228.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 243.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 259.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 275.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 290.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 306.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 321.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 337.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 353.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 368.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 384.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 400.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 415.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 431.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 446.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 462.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 478.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 493.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 509.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 525.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 540.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 556.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 571.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 587.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 603.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 618.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 634.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 650.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 665.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 681.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 696.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 712.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 728.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 743.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 759.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 775.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 790.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 806.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 821.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 837.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 853.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 868.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 884.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 900.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 915.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 931.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 946.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 962.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 978.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 993.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1009.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1025.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1040.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1056.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1071.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1087.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1103.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1118.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1134.375,
+        "allow_incomplete": false
+      }
+    ],
+    "station_source": "Predeclared 5% grid in every span interval plus internal input stations; no incomplete-station exceptions"
+  },
+  "step_writer": {
+    "schema": "AP242DIS",
+    "precision_mode": 2,
+    "precision_mm": 1e-07,
+    "surfacecurve_mode": 1,
+    "length_unit": "mm"
+  },
+  "files": {
+    "LICENSE.md": "b66792ee58e8398e6919ac49053293ed4067fd3c94b8142a5bc9f4a87f2cbf67",
+    "catia.stp": "6516cdfabebae1480a13a351305c78406c427bc86563ef1601427b8d0c8a3cff",
+    "input/airfoils/synthetic-1.csv": "ebafa10b4123ee7c78c7730a6f0f7ad408ad9c812d746f5652148e72592a1d38",
+    "input/blade_sections.csv": "33db4147509bfc70079b9426f4cde84f9bb8264d99e18a0ec4e3ae9637b633d1",
+    "reference-metrics.json": "2e5b9c3bd5c22b3a19e9e572edfc0616ab1b03c4994bc552d49b651cbc7abe8a"
+  }
+}

@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-20）
+## 当前状态（2026-09-21）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -43,26 +43,29 @@ STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `
 - [实施计划](docs/plans/autoblade-0.3.0.md)
 - [架构决策](docs/adr/)
 
-Current focus：**阶段 4：公开黄金夹具与回归数值契约。** 阶段 3 已于
-2026-09-20 完成：内部 backend 集成、配置 v4、manifest v3、双平台各 206 项测试
-及完整检查、FreeCAD 安装 wheel 三命令/重建/timeout/Ctrl-C 和 89 截面代表模型
-均通过。下一项从获批 CATIA STEP 的元数据清理、几何未变验证和夹具 manifest
-开始；阶段 4 尚未实施，阶段 5 发布仍待后续门禁。证据见
-[阶段 3 验证记录](docs/validation/backend-integration-2026-09-20.md)。
-阶段 2 已于 2026-09-16 GO：用户批准 request v2 Gordon 路线、首个可公开分发的
-CATIA 黄金 STEP `d9ef236c…824db9`、显式 STEP writer mode 2 / `1e-7 mm` 和四层
-软件回归阈值。全局有限曲面最大 `0.357179 mm`、完整固定截面最大
-`0.385172 mm`；数值是内部 preview 回归门禁，不是制造公差。证据见
-[干净重建与拓扑矩阵](docs/validation/gordon-clean-rebuild-2026-09-15.md)和
-[precision 与 v2 CATIA 对照契约](docs/validation/freecad-precision-proposal-2026-09-16.md)。
+Current focus：**阶段 4：公开黄金矩阵、标准误差报告与 Linux 测量 CI。**
+7 组公开参考已齐备，覆盖单尖、单钝、不同点数多尖、多钝和三组明显变换；另有
+1000 点性能案例。用户已人工接受本次 6 组模型，并另行批准其公开测试基线。
+统一策略为自动测量并生成标准报告，实际可用性由人类判断；既有数值阈值只留作
+历史背景，见 [ADR-0007](docs/adr/0007-measure-geometry-and-defer-usability-to-humans.md)。
+
+双平台各 262 项测试及完整检查通过，独立源码归档已校验全部夹具。7 例完整
+公开矩阵的独立 wheel 测量与 1000 点性能复现已完成，临时环境和 owned 进程
+均已清理。non-blocking Linux workflow 已写入，本次提交已获授权，下一步是获推送授权后
+执行远程 CI 并观察稳定性，阶段 5 未启动。按用户最新要求，检查产物统一保留
+在当前项目的 `output/` 下，后续不再复制到 win11。完整复现模型与报告入口为
+`output/AutoBlade-public-matrix-reproduction-20260921/index.html`，原人工结论在
+`output/AutoBlade-standard-reports-20260921/human-review.json`。
+具体数据与当前证据见[矩阵测量与交付](docs/validation/golden-matrix-2026-09-21.md)，
+完整实施边界见[阶段 4 计划](docs/plans/autoblade-0.3.0.md#阶段-4黄金回归与-linux-ci)。
 
 Dependencies：
 
 - 首个 CATIA STEP 黄金基线及公开再分发已于 2026-09-16 获用户批准；公开夹具
-  入库前仍须清理路径元数据、验证几何未变并记录新摘要。
-- `0.3.0` 发布前必须补齐单尖、单钝、不同点数多尖、多钝和明显变换的公开黄金
-  矩阵。当前代表案例的几何适用性已获批准；仍需把 STEP precision 和各案例
-  自动回归阈值写成受版本控制、可复现的数值契约。
+  已完成路径元数据清理、几何未变验证，新摘要为 `0eb34e4a…42dafe0`。
+- 单尖、单钝、多钝和三组变换的公开基线已于 2026-09-21 获独立授权，完整
+  矩阵已齐备。STEP precision 保持既定设置，测量方法、标准报告和人工结论
+  已版本化；完整 CI 脚本已在本机执行，远程运行及稳定性仍须记录。
 - GitHub 仓库改名、PyPI 名称注册、checkout 移动、后续 CATIA 基线批准和 Git
   commit 均需要独立授权，不是本 milestone 的隐含操作权限。
 
@@ -77,7 +80,7 @@ Exit criteria：
 - [ ] FreeCAD 建模路线通过截面、导引与曲面精度验证，覆盖不同点数与尖/钝尾缘；
   FCStd/STEP 为有效闭合实体，保存重开与声明的重建方式可复现，任何拟合误差、
   外部依赖及静态快照属性均显式记录，不静默改变输入或拓扑。
-- [ ] 公开 CATIA 黄金矩阵、许可、摘要、工程公差、几何比较和 Linux required CI
+- [ ] 公开 CATIA 黄金矩阵、许可、摘要、标准误差报告、人工结论和 Linux 测量完整性 CI
   均可从干净 checkout 复现，1000 点样例具有性能记录。
 - [ ] Windows 与 Linux 的常规检查、干净 wheel 安装 smoke、真实 CATIA、真实
   FreeCAD、双后端 STEP 和 owned-process 清理证据全部通过。

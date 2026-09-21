@@ -44,7 +44,18 @@ scripts/validate_distribution.py`。这些命令是诊断入口，完整验收�
 | mock CATIA 层 | 唯一基准几何复用、调用顺序、异常清理和批任务隔离 | COM 编排、重复创建、资源泄漏路径 | CATIA 内核的样条、Loft、`CloseSurface` 结果 |
 | 真实 CATIA 层 | 版本化代表输入的人工冒烟与回归 | 几何内核、特征树、实体封闭、格式导出和真实进程残留 | 不进入默认 `pytest`，不能作为低成本提交前检查 |
 
-pytest 专用预期失败数据不得放入 `input/` 扫描目录。当前小型测试全部使用 `tmp_path` 构造；未来出现跨模块共享的大型固定夹具时再创建 `tests/fixtures/`。版本化输入的分类和推荐命令见 [`input/README.md`](../input/README.md)。
+pytest 专用预期失败数据不得放入 `input/` 扫描目录。小型测试使用 `tmp_path`
+构造；公开 CAD 黄金夹具维护在 `tests/fixtures/golden/`，默认 pytest 只校验
+身份与报告完整性，真实 FreeCAD 测量必须显式运行。首个案例的历史命令、数值契约与
+阶段 4 边界见[公开黄金验证记录](validation/golden-fixture-2026-09-20.md)。版本化
+输入的分类和推荐命令见 [`input/README.md`](../input/README.md)。
+
+新 CATIA 候选使用 `scripts.golden.candidates` 显式生成和测量，并通过
+`scripts.golden.review` 整理双后端模型、实测 JSON/CSV 和检查入口。按用户要求，
+候选和公开夹具都只记录误差，不给出模型可用性裁决；2026-09-21 用户的新规则
+取代历史数值自动裁决。格式、覆盖要求与 CI 见[标准几何误差报告](geometry-measurement-reports.md)。
+候选尚未获公开基线批准时留在 `output/`，不能通过本轮测量自动进入公开夹具。
+命令与真实结果见[候选矩阵测量记录](validation/golden-matrix-2026-09-21.md)。
 
 ## 覆盖范围
 
@@ -65,6 +76,9 @@ pytest 专用预期失败数据不得放入 `input/` 扫描目录。当前小型
 | `test_doctor.py` | 诊断摘要、COM 初始化配对、配置目录与失败退出边界 |
 | `test_distribution_workflow.py` | Hatchling 白名单、禁止产物路径和真实 CATIA 发布证据门槛 |
 | `test_distribution_identity.py` | 规范 namespace、旧 distribution 共存失败和可执行卸载提示 |
+| `test_golden_fixture.py` | 公开黄金摘要、元数据清理、许可入口、实测数值合法性、站位覆盖和源码归档例外 |
+| `test_golden_candidates.py` | 原创合成翼型、精确尖钝拓扑、候选输入身份、建模前冲突检查和仿射残差 |
+| `test_golden_review.py` | 检查包的输入/模型/测量关联、原字节保真及只导出实测字段 |
 | `test_cli.py` | 主命令、独立入口、长短选项与参数分派 |
 | `test_catia_lifecycle.py` | COM 初始化、文档关闭、应用退出、异常清理和批处理隔离 |
 

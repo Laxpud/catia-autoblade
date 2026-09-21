@@ -41,6 +41,14 @@ output/
 *.CATPart.1
 *.CATProduct.1
 *.stp
+# 逐案例获批公开黄金 STEP；其他 CAD 产物继续忽略。
+!/tests/fixtures/golden/multi-sharp-89/catia.stp
+!/tests/fixtures/golden/single-sharp/catia.stp
+!/tests/fixtures/golden/single-blunt/catia.stp
+!/tests/fixtures/golden/multi-blunt/catia.stp
+!/tests/fixtures/golden/affine-05/catia.stp
+!/tests/fixtures/golden/affine-17/catia.stp
+!/tests/fixtures/golden/affine-25/catia.stp
 
 # IDE
 .idea/

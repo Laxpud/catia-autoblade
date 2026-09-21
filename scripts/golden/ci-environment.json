@@ -1,0 +1,8 @@
+{
+  "app_ref": "app/org.freecad.FreeCAD/x86_64/stable",
+  "app_commit": "e6bcddd5025c49f8b47122b4172dc09f9afeff64fdb1cab83214b7de3e28f121",
+  "runtime_ref": "runtime/org.kde.Platform/x86_64/6.11",
+  "runtime_commit": "4da4797cdce707e1db7bc25720ac5e1f56818c087621f3737ea5482b0ed53c18",
+  "freecad_version": "1.1.3",
+  "occt_version": "7.8.1"
+}

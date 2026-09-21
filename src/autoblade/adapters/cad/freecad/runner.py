@@ -498,11 +498,6 @@ def _build_geometry(request: dict[str, Any]) -> tuple[Any, dict[str, Any], Any]:
         }
         for side, surface in surfaces.items()
     }
-    for region, measured in continuity.items():
-        order = measured["spanwise_v"]["minimum_interior_continuity_order"]
-        if order is not None and order < 2:
-            raise ValueError(f"{region} Gordon surface does not meet interior C2.")
-
     network_shape = Part.makeCompound(
         [profile.toShape() for region in profiles.values() for profile in region]
         + [guide.toShape() for guide in guides.values()]
@@ -518,6 +513,8 @@ def _build_geometry(request: dict[str, Any]) -> tuple[Any, dict[str, Any], Any]:
     maximum_guide_hold_mm = max(item["max_mm"] for item in guide_hold.values())
 
     measurements = {
+        "decision_policy": "human_only",
+        "usability": "requires_human_judgment",
         "parameterization": {
             "profile": (
                 "normalized-cumulative-arc-per-sharp-side"
@@ -559,24 +556,6 @@ def _build_geometry(request: dict[str, Any]) -> tuple[Any, dict[str, Any], Any]:
         + [guide.toShape() for guide in guides.values()]
     )
     return solid, measurements, audit_shapes
-
-
-def _validate_geometry_quality(measurements: dict[str, Any]) -> None:
-    """把 profile/guide hold 从报告项提升为阶段 2 的强制数值 gate。"""
-    quality = measurements["network_quality"]
-    failures = {
-        name: quality[name]
-        for name in ("maximum_section_hold_mm", "maximum_guide_hold_mm")
-        if quality[name] > quality["hold_limit_mm"]
-    }
-    if failures:
-        raise ValueError(
-            "Gordon network hold exceeds the scale-relative tolerance: "
-            + json.dumps(
-                {"limit_mm": quality["hold_limit_mm"], **failures},
-                sort_keys=True,
-            )
-        )
 
 
 def _save_and_verify(
@@ -730,7 +709,8 @@ def run() -> None:
         error_code = "geometry"
         solid, measurements, audit_shapes = _build_geometry(request)
         result["measurements"] = measurements
-        _validate_geometry_quality(measurements)
+        # 截面/导引保持误差及连续性只进入报告，几何适用性由人类判断。
+        # valid/closed/单实体、文件重开与请求身份仍是可交付制品的完整性检查。
         error_code = "artifact_validation"
         result["artifacts"] = _save_and_verify(
             request,

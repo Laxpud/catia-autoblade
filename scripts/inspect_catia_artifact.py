@@ -15,7 +15,10 @@ REQUIRED_FEATURES = (
 )
 
 
-def inspect_artifact(path: Path) -> None:
+def inspect_artifact(
+    path: Path, *, required_features: tuple[str, ...] = REQUIRED_FEATURES
+) -> None:
+    """重开 CATPart 并检查调用者声明的特征，默认兼容既有尖尾缘 smoke。"""
     import pythoncom
     import win32com.client
 
@@ -34,7 +37,7 @@ def inspect_artifact(path: Path) -> None:
 
         selection = document.Selection
         missing = []
-        for name in REQUIRED_FEATURES:
+        for name in required_features:
             selection.Clear()
             selection.Search(f"Name={name},all")
             if selection.Count2 < 1:
@@ -44,7 +47,7 @@ def inspect_artifact(path: Path) -> None:
             raise RuntimeError(f"CATPart feature tree is missing: {missing}")
         print(
             "CATPart feature tree: PASS - "
-            + ", ".join(REQUIRED_FEATURES)
+            + ", ".join(required_features)
         )
     finally:
         if document is not None:

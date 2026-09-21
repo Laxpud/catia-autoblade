@@ -161,10 +161,10 @@ Host 仍只传入已闭合 SI 单位任务；CAD 子进程负责几何构造和�
 TE-upper→LE→TE-lower full-wrap 曲面并增加显式 ruled closure。profile 按分区累计
 弧长参数化；LE 与两条 TE guide 共享按相邻站位三边平均距离得到的 span 参数。
 固定 Runner 直接调用 CurvesWB Gordon builder，绕开其会改变曲线几何的自动求交、
-排序和近似重参数化。每张曲面内部 knot 连续性至少为 C2；曲面接缝、根尖封盖和
-钝后缘 closure 只要求 C0 与最终 watertight single solid。阶段 2 Runner 还强制
-截面/导引有限采样保持不超过 `network bbox diagonal × 1e-5`；该数值是算法完整性
-gate，不是制造公差或连续 Hausdorff 上界。
+排序和近似重参数化。报告逐张曲面的内部 knot 连续性、截面/导引保持误差及
+曲面接缝状态，最终制品仍须为有效闭合单实体。阶段 2 曾以 C2 和
+`network bbox diagonal × 1e-5` 作自动检查；2026-09-21 按用户要求改为记录
+实测值，由人类判断模型适用性。求解参数保持不变，历史限值不再拒绝交付。
 
 不要求不同翼型点数相同；保持 TE→LE→TE 输入语义、变换顺序与尖/钝拓扑。
 任何重新参数化、近似或采样均必须显式记录参数及对原始输入的几何误差。
@@ -229,11 +229,12 @@ FCStd，不导出 STEP；旧 `--keep-failed-part` 暂作为弃用 alias。成功
 - 输入站位截面偏差；
 - 表面采样最大值和 RMS 偏差。
 
-跨后端不比较 CAD 文件字节、面数、边数或拓扑编号。黄金基线是重要参照，但输入
-契约和经批准的工程公差拥有最终权威；更新必须由 CATIA 显式生成、记录版本与摘要
-并人工批准，FreeCAD 测试不能改写期望结果。详细案例、CI 和发布门禁由
+跨后端不比较 CAD 文件字节、面数、边数或拓扑编号。黄金基线是重要参照，自动化
+只测量误差并检查报告完整性，实际可用性由人类按用途判断。基线更新必须由 CATIA
+显式生成、记录版本与摘要并人工批准，FreeCAD 测试不能改写参照。详细案例、CI 和发布门禁由
 [`0.3.0` 实施计划](plans/autoblade-0.3.0.md)维护，决策理由见
-[ADR-0004](adr/0004-use-curated-cross-backend-golden-baselines.md)。
+[ADR-0007](adr/0007-measure-geometry-and-defer-usability-to-humans.md)，格式见
+[标准几何误差报告](geometry-measurement-reports.md)。
 
 ## 已通过的可行性闸门与后续矩阵
 
@@ -242,13 +243,13 @@ FCStd，不导出 STEP；旧 `--keep-failed-part` 暂作为弃用 alias。成功
 - 受约束曲面、Gordon 或自定义算法对 300/253/249 点多翼型、260 点钝尾缘和
   1000 点密集轮廓的精度、稳定性、重建依赖与性能；
 - AP242DIS writer 固定显式 `1e-7 mm`；
-- 体积、截面、表面、质心和包围盒的代表案例默认值已经批准，仍须由阶段 4 完整
-  黄金矩阵验证默认值与逐案例覆盖；
+- 体积、截面、表面、质心和包围盒继续测量；阶段 2 的数值限值保留为历史背景，
+  阶段 4 按 2026-09-21 新规则形成完整矩阵报告并记录人工结论；
 - 首个公开 CATIA STEP `d9ef236c…824db9` 的黄金身份与再分发已于 2026-09-16
   获批；入库前仍须清理路径元数据、验证几何未变并记录最终摘要，完整矩阵未齐备。
 
-如果几何精度、尖/钝拓扑、保存重开/声明的重建方式或黄金对照任一关键条件失败，
-正式集成停止并返回设计决策。替代路线按 ADR-0005 显式评估，不允许静默改变输入。
+输入拓扑、保存重开和身份完整性错误仍阻止交付；几何差异由报告交给人类判断，
+需要调整建模路线时按 ADR-0005 显式评估，不允许静默改变输入。
 
 ## 决策记录
 
@@ -256,4 +257,5 @@ FCStd，不导出 STEP；旧 `--keep-failed-part` 暂作为弃用 alias。成功
 - [ADR-0002：隔离 CAD 后端与 FreeCAD 进程](adr/0002-isolate-cad-backends-and-freecad-processes.md)
 - [ADR-0003（已替代）：生成原生可重算的 FreeCAD 模型](adr/0003-build-native-recomputable-freecad-models.md)
 - [ADR-0005：以几何精度决定建模路线](adr/0005-prioritize-geometric-accuracy.md)
-- [ADR-0004：使用经治理的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)
+- [ADR-0004（已替代）：使用经治理的跨后端黄金基线](adr/0004-use-curated-cross-backend-golden-baselines.md)
+- [ADR-0007：自动测量几何误差，模型可用性由人类判断](adr/0007-measure-geometry-and-defer-usability-to-humans.md)

@@ -1,6 +1,8 @@
 # 使用经治理的跨后端黄金基线
 
-Status: accepted
+Status: superseded（2026-09-21）by
+[ADR-0007](0007-measure-geometry-and-defer-usability-to-humans.md)。以下保留当时
+的决策背景；来源、再分发、摘要和人工更新原则继续适用，数值自动裁决不再适用。
 
 FreeCAD 的正确性不能只由文件存在、人工外观或与自身旧输出比较来证明。项目使用可公开再分发的输入、CATIA STEP、来源与版本 manifest 作为黄金基线，在 Linux 上按工程公差比较有效实体、截面、表面和整体几何；CATIA 是重要参照，但输入契约和经工程批准的公差才是最终裁判。
 

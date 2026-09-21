@@ -1,3 +1,8 @@
 src/autoblade/resources/**/*.csv text eol=lf
 src/autoblade/resources/**/*.json text eol=lf
 src/autoblade/resources/**/*.toml text eol=lf
+tests/fixtures/golden/**/*.csv text eol=lf
+tests/fixtures/golden/**/*.json text eol=lf
+tests/fixtures/golden/**/*.md text eol=lf
+# 已批准 STEP 的 CRLF 是摘要的一部分；禁止换行转换及文本 diff/merge。
+tests/fixtures/golden/**/*.stp binary

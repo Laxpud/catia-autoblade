@@ -1,0 +1,4329 @@
+{
+  "schema": "autoblade.golden.reference/v2",
+  "source_report_sha256": "8681cfa2e794b9b513918f827c6cf82e64da19ea0864c22a83a95d184336875f",
+  "source_record": "docs/validation/golden-matrix-2026-09-21.md",
+  "source_original_catia_step_sha256": "91c4e426325b7406671630fcaf17e2fb81759dac84add53fc58359abd56204f2",
+  "decision_policy": "human_only",
+  "properties": {
+    "native": {
+      "valid": true,
+      "closed": true,
+      "solids": 1,
+      "volume_mm3": 57481.19753241577,
+      "center_of_mass_mm": [
+        60.234449625033314,
+        35.137468087337616,
+        -16.81461669392938
+      ],
+      "bounding_box_mm": [
+        -50.00000000000003,
+        200.0000000000001,
+        -3.4666621830080757,
+        58.38725411735595,
+        -26.05594186829467,
+        -3.857012017209346
+      ]
+    },
+    "step": {
+      "valid": true,
+      "closed": true,
+      "solids": 1,
+      "volume_mm3": 57481.19753242063,
+      "center_of_mass_mm": [
+        60.23444962504174,
+        35.137468087343215,
+        -16.814616693927068
+      ],
+      "bounding_box_mm": [
+        -50.0,
+        200.0,
+        -3.466662183008,
+        58.387254117356,
+        -26.05594186829,
+        -3.857012017209
+      ]
+    },
+    "catia": {
+      "valid": true,
+      "closed": true,
+      "solids": 1,
+      "volume_mm3": 57468.36936458443,
+      "center_of_mass_mm": [
+        60.271123875196665,
+        35.138486370396194,
+        -16.813959122711836
+      ],
+      "bounding_box_mm": [
+        -50.0,
+        200.0,
+        -3.46666218301,
+        58.3854707587,
+        -25.9858617323,
+        -3.85701201721
+      ]
+    }
+  },
+  "exchange": {
+    "volume_relative": 8.459899447643693e-14,
+    "centroid_max_mm": 8.427036846114788e-12,
+    "bbox_max_mm": 4.671818487622659e-12,
+    "surface": {
+      "candidate_to_reference": {
+        "samples": 400,
+        "max_mm": 6.777803990145796e-12,
+        "rms_mm": 3.315788977288321e-12,
+        "worst_source_mm": [
+          112.35474411270222,
+          54.45886840483469,
+          -25.323880927010567
+        ],
+        "worst_target_mm": [
+          112.35474411270211,
+          54.4588684048354,
+          -25.323880927003827
+        ]
+      },
+      "reference_to_candidate": {
+        "samples": 400,
+        "max_mm": 6.427943032003847e-12,
+        "rms_mm": 3.2467022766207392e-12,
+        "worst_source_mm": [
+          79.15474882246667,
+          53.760671113732194,
+          -25.709403160422585
+        ],
+        "worst_target_mm": [
+          79.15474882246674,
+          53.76067111373158,
+          -25.709403160428984
+        ]
+      }
+    }
+  },
+  "cross_backend": {
+    "volume_relative": 0.00022322136460761755,
+    "centroid_max_mm": 0.03667425016335102,
+    "bbox_max_mm": 0.07008013599467233,
+    "surface": {
+      "candidate_to_reference": {
+        "samples": 400,
+        "max_mm": 0.01729108310756786,
+        "rms_mm": 0.008348459197847758,
+        "worst_source_mm": [
+          172.07520856771973,
+          57.97213603991879,
+          -23.579128369181966
+        ],
+        "worst_target_mm": [
+          172.07501889780912,
+          57.98935900876729,
+          -23.580649856743996
+        ]
+      },
+      "reference_to_candidate": {
+        "samples": 400,
+        "max_mm": 0.017413661333757848,
+        "rms_mm": 0.007035044802533253,
+        "worst_source_mm": [
+          179.73211820001927,
+          58.08895845797337,
+          -23.430431924240263
+        ],
+        "worst_target_mm": [
+          179.73231225695687,
+          58.07165562197651,
+          -23.42848005093044
+        ]
+      }
+    }
+  },
+  "stations": [
+    {
+      "requested_x_mm": -46.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 122.15325074043618
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 122.12684221941956
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00799457705014896,
+          "rms_mm": 0.00143643470084669,
+          "worst_source_mm": [
+            -46.87499999999999,
+            -3.2840701027918033,
+            -8.28175313333637
+          ],
+          "worst_target_mm": [
+            -46.87500000000001,
+            -3.276278895955543,
+            -8.283544880596834
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.004933180896203065,
+          "rms_mm": 0.001239440792849879,
+          "worst_source_mm": [
+            -46.875,
+            54.5980709167638,
+            -23.95974540944532
+          ],
+          "worst_target_mm": [
+            -46.87499999999999,
+            54.60288040082024,
+            -23.960843196704097
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -43.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 122.07360250635405
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 122.02654390378888
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.014132512922528855,
+          "rms_mm": 0.002568866408538903,
+          "worst_source_mm": [
+            -43.74999999999999,
+            -3.093503776491242,
+            -8.212056516558128
+          ],
+          "worst_target_mm": [
+            -43.75,
+            -3.079725456572281,
+            -8.215200689218179
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.008932535490356249,
+          "rms_mm": 0.002224661562189562,
+          "worst_source_mm": [
+            -43.75,
+            54.70456220519069,
+            -24.034712920772193
+          ],
+          "worst_target_mm": [
+            -43.75,
+            54.713265365429756,
+            -24.036724187074707
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -40.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.97027643683252
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.90771443021939
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.018609891525789825,
+          "rms_mm": 0.003426480899355076,
+          "worst_source_mm": [
+            -40.625,
+            -2.8951534047398475,
+            -8.144003499391719
+          ],
+          "worst_target_mm": [
+            -40.62500000000001,
+            -2.8770023832274205,
+            -8.148110624987202
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.012068913858668082,
+          "rms_mm": 0.002979260695313762,
+          "worst_source_mm": [
+            -40.62500000000001,
+            54.808364279066176,
+            -24.107191403320435
+          ],
+          "worst_target_mm": [
+            -40.625,
+            54.82011594849622,
+            -24.109940393559565
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -37.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.84380877148257
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.77033977054222
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.021623347309927675,
+          "rms_mm": 0.004038188674406987,
+          "worst_source_mm": [
+            -37.5,
+            -2.689209443364518,
+            -8.077544399730986
+          ],
+          "worst_target_mm": [
+            -37.49999999999999,
+            -2.6681098084112547,
+            -8.0822745745401
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.014415201469314218,
+          "rms_mm": 0.0035258737016500563,
+          "worst_source_mm": [
+            -37.5,
+            54.90947872182334,
+            -24.177181995782085
+          ],
+          "worst_target_mm": [
+            -37.5,
+            54.92350619735338,
+            -24.180502833576224
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -34.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.69473752679703
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.61440920589266
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.02336761292967722,
+          "rms_mm": 0.004432126062246746,
+          "worst_source_mm": [
+            -34.375,
+            -2.4758625973515422,
+            -8.012629475602841
+          ],
+          "worst_target_mm": [
+            -34.37499999999999,
+            -2.45304985906225,
+            -8.017691521214594
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.016045396820705635,
+          "rms_mm": 0.0038871809209684058,
+          "worst_source_mm": [
+            -34.375,
+            55.007906501293235,
+            -24.244684371547383
+          ],
+          "worst_target_mm": [
+            -34.375,
+            55.02351046276369,
+            -24.248422171108956
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -31.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.52360241430286
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.43992181741187
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.024033184186775806,
+          "rms_mm": 0.004636319560530948,
+          "worst_source_mm": [
+            -31.250000000000004,
+            -2.2553038147898783,
+            -7.949208926751995
+          ],
+          "worst_target_mm": [
+            -31.249999999999996,
+            -2.2318289213234324,
+            -7.954359006255702
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.017033748178238613,
+          "rms_mm": 0.004085637202812643,
+          "worst_source_mm": [
+            -31.249999999999996,
+            55.1036487357123,
+            -24.309697275116605
+          ],
+          "worst_target_mm": [
+            -31.249999999999996,
+            55.12020332141957,
+            -24.313709041443342
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -28.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.33094476230204
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.2468926151304
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.023804101911651672,
+          "rms_mm": 0.004678160762186973,
+          "worst_source_mm": [
+            -28.124999999999996,
+            -2.027724280792271,
+            -7.887232896231165
+          ],
+          "worst_target_mm": [
+            -28.124999999999993,
+            -2.004459790141113,
+            -7.89227261274725
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01745394842598984,
+          "rms_mm": 0.004143261478865291,
+          "worst_source_mm": [
+            -28.124999999999993,
+            55.19670740681438,
+            -24.372219008146725
+          ],
+          "worst_target_mm": [
+            -28.124999999999996,
+            55.2136595048522,
+            -24.376374328564367
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -25.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.11730744086458
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 121.03535829519623
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.022855854690267446,
+          "rms_mm": 0.004584014880088716,
+          "worst_source_mm": [
+            -25.0,
+            -1.7933154113947527,
+            -7.826651471996639
+          ],
+          "worst_target_mm": [
+            -25.0,
+            -1.7709636999759177,
+            -7.831425473491375
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.017378388836065593,
+          "rms_mm": 0.004081384992960805,
+          "worst_source_mm": [
+            -24.999999999999993,
+            55.28708601989037,
+            -24.43224786585514
+          ],
+          "worst_target_mm": [
+            -24.999999999999993,
+            55.303953835216035,
+            -24.43642939723451
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -21.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.8832347897565
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.80538260701249
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.021353409282074437,
+          "rms_mm": 0.0043789138389602085,
+          "worst_source_mm": [
+            -21.875,
+            -1.5522688474350494,
+            -7.767414688509035
+          ],
+          "worst_target_mm": [
+            -21.87499999999999,
+            -1.5313722300441608,
+            -7.771807804668049
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01687747387173405,
+          "rms_mm": 0.003920365018274214,
+          "worst_source_mm": [
+            -21.874999999999993,
+            55.37479020952652,
+            -24.48978252352188
+          ],
+          "worst_target_mm": [
+            -21.874999999999996,
+            55.39116116851956,
+            -24.493886281060938
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -18.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.6292725490147
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.55706130679175
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01944937729391014,
+          "rms_mm": 0.004086284203577607,
+          "worst_source_mm": [
+            -18.749999999999996,
+            -1.304776448410436,
+            -7.709472528339147
+          ],
+          "worst_target_mm": [
+            -18.750000000000004,
+            -1.2857290758794755,
+            -7.713406467432178
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.016018999974175534,
+          "rms_mm": 0.0036793915087215494,
+          "worst_source_mm": [
+            -18.75,
+            55.45982828899562,
+            -24.544822372177332
+          ],
+          "worst_target_mm": [
+            -18.749999999999996,
+            55.475356345936305,
+            -24.54875782740124
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -15.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.35596779190053
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.290526672353
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01728232726181472,
+          "rms_mm": 0.0037277154481436293,
+          "worst_source_mm": [
+            -15.625000000000004,
+            -1.051030286315579,
+            -7.6527749237787015
+          ],
+          "worst_target_mm": [
+            -15.624999999999998,
+            -1.0340916785415164,
+            -7.6562045596574695
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01486760167106592,
+          "rms_mm": 0.0033763056979181608,
+          "worst_source_mm": [
+            -15.624999999999996,
+            55.54221174094039,
+            -24.597367802198896
+          ],
+          "worst_target_mm": [
+            -15.624999999999998,
+            55.556614153858284,
+            -24.601057799704574
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -12.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.06386885998569
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 120.00595155544482
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.014975250868726335,
+          "rms_mm": 0.003322742555931267,
+          "worst_source_mm": [
+            -12.500000000000002,
+            -0.7912226394609047,
+            -7.597271758455904
+          ],
+          "worst_target_mm": [
+            -12.499999999999998,
+            -0.7765327034333821,
+            -7.60018103982569
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.013484268324135807,
+          "rms_mm": 0.003027508473711001,
+          "worst_source_mm": [
+            -12.499999999999998,
+            55.6219556470223,
+            -24.647420433433265
+          ],
+          "worst_target_mm": [
+            -12.500000000000002,
+            55.63500929334995,
+            -24.650800937802405
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -9.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.75352530014077
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.70355295222504
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.012634190763198664,
+          "rms_mm": 0.0028887416126514224,
+          "worst_source_mm": [
+            -9.375000000000005,
+            -0.5255459862720543,
+            -7.542912868955629
+          ],
+          "worst_target_mm": [
+            -9.374999999999998,
+            -0.5131413623376565,
+            -7.5453103846045995
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.011925934442985368,
+          "rms_mm": 0.0026477451114861007,
+          "worst_source_mm": [
+            -9.375000000000002,
+            55.699079054572074,
+            -24.694983290574726
+          ],
+          "worst_target_mm": [
+            -9.374999999999996,
+            55.71061635962819,
+            -24.69800297671413
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -6.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.42548780321064
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.38359507942229
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.010347035579236304,
+          "rms_mm": 0.002440939798163369,
+          "worst_source_mm": [
+            -6.2500000000000036,
+            -0.25419299907095755,
+            -7.489648046444088
+          ],
+          "worst_target_mm": [
+            -6.2500000000000036,
+            -0.2440245748360781,
+            -7.491562280979744
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.010245145783554843,
+          "rms_mm": 0.002250028195567474,
+          "worst_source_mm": [
+            -6.2499999999999964,
+            55.77360527892819,
+            -24.740060922823996
+          ],
+          "worst_target_mm": [
+            -6.249999999999996,
+            55.78350983213929,
+            -24.74268062468008
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": -3.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.08030814418424
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 119.04639195276692
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.008496095775861074,
+          "rms_mm": 0.001991618841438541,
+          "worst_source_mm": [
+            -3.1250000000000004,
+            55.85367965811971,
+            -24.7851673667586
+          ],
+          "worst_target_mm": [
+            -3.1249999999999942,
+            55.84556214103301,
+            -24.782659467283004
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.008488702490075323,
+          "rms_mm": 0.0018455490132243668,
+          "worst_source_mm": [
+            -3.1250000000000044,
+            55.84556214103301,
+            -24.782659467283008
+          ],
+          "worst_target_mm": [
+            -3.1250000000000004,
+            55.8535610256734,
+            -24.785501282631458
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 0.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 118.71853912366551
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 118.69230947505011
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.006706876401319523,
+          "rms_mm": 0.001550923024073973,
+          "worst_source_mm": [
+            -4.105712476429809e-15,
+            55.92139375923659,
+            -24.82475473675208
+          ],
+          "worst_target_mm": [
+            6.661338147750939e-15,
+            55.91498214091845,
+            -24.82278665606139
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006699744244179601,
+          "rms_mm": 0.0014437398053415232,
+          "worst_source_mm": [
+            3.552713678800501e-15,
+            55.914982140918454,
+            -24.82278665606139
+          ],
+          "worst_target_mm": [
+            -3.7362755652703884e-15,
+            55.92128948789323,
+            -24.82504584774807
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 3.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 118.34073451047871
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 118.32176705317852
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.004924764225640177,
+          "rms_mm": 0.0011266485524012583,
+          "worst_source_mm": [
+            3.1249999999999964,
+            55.9866154515158,
+            -24.861880767298395
+          ],
+          "worst_target_mm": [
+            3.125000000000004,
+            55.9819025688919,
+            -24.860451767630295
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.004918075292979998,
+          "rms_mm": 0.0010523174844579157,
+          "worst_source_mm": [
+            3.1249999999999964,
+            55.981902568891904,
+            -24.86045176763029
+          ],
+          "worst_target_mm": [
+            3.1249999999999964,
+            55.98652830550374,
+            -24.862122104538027
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 6.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.94744898524154
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.9352387763393
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0031830236469660906,
+          "rms_mm": 0.0007244195499661785,
+          "worst_source_mm": [
+            6.249999999999999,
+            56.049418604960714,
+            -24.896565823760827
+          ],
+          "worst_target_mm": [
+            6.250000000000003,
+            56.046365557468064,
+            -24.89566552350826
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.003176839317115732,
+          "rms_mm": 0.0006772899558195467,
+          "worst_source_mm": [
+            6.2500000000000036,
+            56.04636555746807,
+            -24.895665523508264
+          ],
+          "worst_target_mm": [
+            6.25,
+            56.049350767708326,
+            -24.89675218254782
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 9.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.53923808475582
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.53325420041978
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0015103527266131654,
+          "rms_mm": 0.00034848899724120394,
+          "worst_source_mm": [
+            9.375000000000004,
+            56.10987715890794,
+            -24.928830314182676
+          ],
+          "worst_target_mm": [
+            9.375000000000004,
+            56.10841807832496,
+            -24.928439931852864
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0015042545517852573,
+          "rms_mm": 0.00032367329955466386,
+          "worst_source_mm": [
+            9.375000000000004,
+            56.108418078324966,
+            -24.928439931852864
+          ],
+          "worst_target_mm": [
+            9.375000000000004,
+            56.109830263150556,
+            -24.928958116930747
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 12.499999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.11665814707268
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 117.11639879673591
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00016985996609078014,
+          "rms_mm": 5.2327019209998706e-05,
+          "worst_source_mm": [
+            12.499999999999995,
+            1.4823154326471975,
+            -7.190217512077394
+          ],
+          "worst_target_mm": [
+            12.499999999999998,
+            1.4824717170203754,
+            -7.190284052311695
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00011981543260667693,
+          "rms_mm": 5.006208165228156e-05,
+          "worst_source_mm": [
+            12.499999999999996,
+            55.880745627984474,
+            -25.349372704647326
+          ],
+          "worst_target_mm": [
+            12.5,
+            55.88067168478547,
+            -25.34927842770841
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 15.624999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 116.68031928553532
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 116.68531413561044
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.001538960836059259,
+          "rms_mm": 0.0003250122617335452,
+          "worst_source_mm": [
+            15.624999999999996,
+            56.224058063970105,
+            -24.98617908581503
+          ],
+          "worst_target_mm": [
+            15.624999999999996,
+            56.2255393345947,
+            -24.986596503820916
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0015446300158464881,
+          "rms_mm": 0.00033690176853037434,
+          "worst_source_mm": [
+            15.624999999999996,
+            56.22550344103005,
+            -24.98672387753786
+          ],
+          "worst_target_mm": [
+            15.624999999999995,
+            56.224058063970105,
+            -24.98617908581503
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 18.749999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 116.23104444795152
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 116.24069788721098
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.002874975689785309,
+          "rms_mm": 0.0006022689741124546,
+          "worst_source_mm": [
+            18.75,
+            56.27793766378659,
+            -25.011302281916976
+          ],
+          "worst_target_mm": [
+            18.749999999999996,
+            56.28070284306921,
+            -25.01208921822433
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00288056674286392,
+          "rms_mm": 0.0006278159158865964,
+          "worst_source_mm": [
+            18.749999999999996,
+            56.28065374150305,
+            -25.012261753958413
+          ],
+          "worst_target_mm": [
+            18.75,
+            56.2779376637866,
+            -25.011302281916976
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 21.874999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 115.76971030151411
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 115.78330373330422
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0040599358075324886,
+          "rms_mm": 0.0008460289889037404,
+          "worst_source_mm": [
+            21.875,
+            56.32978717874155,
+            -25.034082761767994
+          ],
+          "worst_target_mm": [
+            21.875000000000004,
+            56.33368917617458,
+            -25.0352041425213
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00406593305471478,
+          "rms_mm": 0.0008815402294507862,
+          "worst_source_mm": [
+            21.875000000000004,
+            56.33362820215726,
+            -25.035416309939357
+          ],
+          "worst_target_mm": [
+            21.874999999999996,
+            56.32978717874154,
+            -25.034082761767998
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 24.999999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 115.29719410525527
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 115.31394129433971
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.005079505325507847,
+          "rms_mm": 0.0010521345593773202,
+          "worst_source_mm": [
+            25.0,
+            56.37968994760227,
+            -25.054539072489728
+          ],
+          "worst_target_mm": [
+            25.000000000000004,
+            56.38456820003593,
+            -25.055954709288272
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0050860237579718175,
+          "rms_mm": 0.0010935091012955129,
+          "worst_source_mm": [
+            25.000000000000004,
+            56.384496459105904,
+            -25.056201926912777
+          ],
+          "worst_target_mm": [
+            24.999999999999996,
+            56.37968994760229,
+            -25.054539072489728
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 28.124999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 114.81437360088714
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 114.83347618688371
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.005922957566461573,
+          "rms_mm": 0.0012185175616827068,
+          "worst_source_mm": [
+            28.125000000000004,
+            56.42772938334052,
+            -25.072689822431865
+          ],
+          "worst_target_mm": [
+            28.125000000000004,
+            56.43341336655222,
+            -25.074355283684245
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.005929989306974156,
+          "rms_mm": 0.0012620067284264405,
+          "worst_source_mm": [
+            28.125000000000004,
+            56.43333218815011,
+            -25.07463233406539
+          ],
+          "worst_target_mm": [
+            28.125000000000004,
+            56.42772938334051,
+            -25.07268982243187
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 31.249999999999996,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 114.32212690320111
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 114.34282971506977
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0065829026645204455,
+          "rms_mm": 0.0013445449760607557,
+          "worst_source_mm": [
+            31.249999999999993,
+            56.473988968232554,
+            -25.088553680096993
+          ],
+          "worst_target_mm": [
+            31.24999999999999,
+            56.48030143553946,
+            -25.090421128620996
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006590288623369713,
+          "rms_mm": 0.001387283413975585,
+          "worst_source_mm": [
+            31.249999999999996,
+            56.480212948401885,
+            -25.090720238425575
+          ],
+          "worst_target_mm": [
+            31.249999999999996,
+            56.47398896823256,
+            -25.088553680096986
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 34.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 113.8213323899422
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 113.8429565066134
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007056670151875935,
+          "rms_mm": 0.00143095869950499,
+          "worst_source_mm": [
+            34.375,
+            56.51855224894955,
+            -25.102149373058534
+          ],
+          "worst_target_mm": [
+            34.375,
+            56.525313783269425,
+            -25.104168840135138
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007064150653302161,
+          "rms_mm": 0.0014710895614100767,
+          "worst_source_mm": [
+            34.375,
+            56.52522077270387,
+            -25.10448025602226
+          ],
+          "worst_target_mm": [
+            34.375,
+            56.51855224894955,
+            -25.10214937305853
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 37.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 113.31286859111383
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 113.33481783345341
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007346513303483806,
+          "rms_mm": 0.001479580481119648,
+          "worst_source_mm": [
+            37.5,
+            56.561502831638926,
+            -25.113495686872156
+          ],
+          "worst_target_mm": [
+            37.499999999999986,
+            56.56853657622185,
+            -25.115616463819507
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007353842480009047,
+          "rms_mm": 0.0015160646297884518,
+          "worst_source_mm": [
+            37.5,
+            56.568441820544955,
+            -25.115930729414472
+          ],
+          "worst_target_mm": [
+            37.5,
+            56.56150283163893,
+            -25.113495686872156
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 40.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 112.79761407767441
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 112.81938515214242
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007457533322284152,
+          "rms_mm": 0.0014927819193866414,
+          "worst_source_mm": [
+            40.625,
+            56.60292437699766,
+            -25.12261146398071
+          ],
+          "worst_target_mm": [
+            40.62500000000001,
+            56.610058762060106,
+            -25.1247829503458
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007464482054593919,
+          "rms_mm": 0.0015253064317463244,
+          "worst_source_mm": [
+            40.625,
+            56.60996499972024,
+            -25.125091005071695
+          ],
+          "worst_target_mm": [
+            40.625,
+            56.60292437699768,
+            -25.12261146398071
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 43.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 112.27644734962108
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 112.29763296622443
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007396848742178771,
+          "rms_mm": 0.0014732797465548404,
+          "worst_source_mm": [
+            43.74999999999999,
+            56.64290059533813,
+            -25.129515602612887
+          ],
+          "worst_target_mm": [
+            43.74999999999999,
+            56.649763702123025,
+            -25.132274431453872
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007403593040835287,
+          "rms_mm": 0.001502135955947364,
+          "worst_source_mm": [
+            43.74999999999999,
+            56.649881539687,
+            -25.131981288300945
+          ],
+          "worst_target_mm": [
+            43.75,
+            56.64290059533813,
+            -25.129515602612884
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 46.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 111.75024672347334
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 111.7705306274031
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007173586415027728,
+          "rms_mm": 0.0014240033548942805,
+          "worst_source_mm": [
+            46.875,
+            56.68151524164753,
+            -25.13422705567581
+          ],
+          "worst_target_mm": [
+            46.87499999999999,
+            56.688164153322596,
+            -25.136920068039515
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007180758754609149,
+          "rms_mm": 0.0014499278433783194,
+          "worst_source_mm": [
+            46.87499999999999,
+            56.68828460812719,
+            -25.13662267120339
+          ],
+          "worst_target_mm": [
+            46.875,
+            56.68151524164753,
+            -25.134227055675815
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 50.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 111.21989021919929
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 111.23903406261701
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.006799704345003763,
+          "rms_mm": 0.0013480178928216276,
+          "worst_source_mm": [
+            50.0,
+            56.718852110641514,
+            -25.136764829641752
+          ],
+          "worst_target_mm": [
+            50.0,
+            56.72514775571907,
+            -25.139334038126265
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006807261018167412,
+          "rms_mm": 0.001371996436107456,
+          "worst_source_mm": [
+            50.0,
+            56.725268914606595,
+            -25.139037147718795
+          ],
+          "worst_target_mm": [
+            50.0,
+            56.71885211064152,
+            -25.13676482964175
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 53.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 110.68625544665207
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 110.70407744770957
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.006287811958737616,
+          "rms_mm": 0.0012483256895695414,
+          "worst_source_mm": [
+            53.125,
+            56.75499503181302,
+            -25.137147983429053
+          ],
+          "worst_target_mm": [
+            53.125,
+            56.7608104578229,
+            -25.13953909186491
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00629570490258121,
+          "rms_mm": 0.0012715041986293186,
+          "worst_source_mm": [
+            53.125,
+            56.760930302914204,
+            -25.139247616057848
+          ],
+          "worst_target_mm": [
+            53.125,
+            56.754995031813024,
+            -25.137147983429056
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 56.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 110.15021949161252
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 110.16656484906008
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.005651471694621215,
+          "rms_mm": 0.0011277440170768345,
+          "worst_source_mm": [
+            56.25,
+            56.790027864476954,
+            -25.135395627277617
+          ],
+          "worst_target_mm": [
+            56.24999999999999,
+            56.79524907480265,
+            -25.137558517716354
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.005659630045078823,
+          "rms_mm": 0.0011513314643198348,
+          "worst_source_mm": [
+            56.24999999999999,
+            56.79536533380648,
+            -25.13727786886777
+          ],
+          "worst_target_mm": [
+            56.24999999999999,
+            56.79002786447697,
+            -25.13539562727762
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 59.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 109.6126588015641
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 109.62736185432735
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.004904809306456309,
+          "rms_mm": 0.0009886741482351014,
+          "worst_source_mm": [
+            59.37499999999999,
+            56.82403449281171,
+            -25.13152692161897
+          ],
+          "worst_target_mm": [
+            59.375,
+            56.828560917805895,
+            -25.13341600369891
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.004913108804481026,
+          "rms_mm": 0.0010138010831061137,
+          "worst_source_mm": [
+            59.375,
+            56.82867085997897,
+            -25.133152571524406
+          ],
+          "worst_target_mm": [
+            59.375,
+            56.82403449281171,
+            -25.13152692161897
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 62.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 109.07444907136136
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 109.08728721227844
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.004062116481582929,
+          "rms_mm": 0.0008327130157709906,
+          "worst_source_mm": [
+            62.50000000000001,
+            56.85709882089814,
+            -25.125561075941192
+          ],
+          "worst_target_mm": [
+            62.5,
+            56.860843418464306,
+            -25.12713548992023
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0040703309381690065,
+          "rms_mm": 0.0008601152871300874,
+          "worst_source_mm": [
+            62.5,
+            56.860943595140064,
+            -25.12689722899189
+          ],
+          "worst_target_mm": [
+            62.5,
+            56.857098820898145,
+            -25.125561075941192
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 65.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 108.53646512897916
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 108.54710449957807
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.003137447595894545,
+          "rms_mm": 0.0006600175162710594,
+          "worst_source_mm": [
+            65.625,
+            56.88930476775701,
+            -25.11751734764888
+          ],
+          "worst_target_mm": [
+            65.625,
+            56.892193750405255,
+            -25.118741012911578
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0031451737417007466,
+          "rms_mm": 0.0006893485039605805,
+          "worst_source_mm": [
+            65.625,
+            56.89227967906603,
+            -25.118538141736327
+          ],
+          "worst_target_mm": [
+            65.625,
+            56.88930476775701,
+            -25.11751734764888
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 68.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 107.99958082157423
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 108.00751382935687
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00214421239470955,
+          "rms_mm": 0.0004683461034820821,
+          "worst_source_mm": [
+            68.75,
+            56.920736262385695,
+            -25.107415040918326
+          ],
+          "worst_target_mm": [
+            68.75,
+            56.92270844954368,
+            -25.108256542319108
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.002150755712489079,
+          "rms_mm": 0.0004969310523447152,
+          "worst_source_mm": [
+            68.75,
+            56.922774240472755,
+            -25.108102351220538
+          ],
+          "worst_target_mm": [
+            68.74999999999999,
+            56.92073626238571,
+            -25.107415040918326
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 71.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 107.46466890211616
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 107.46914361241929
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0010947663081848334,
+          "rms_mm": 0.0002517060494741768,
+          "worst_source_mm": [
+            71.875,
+            56.95147723879479,
+            -25.095273505548082
+          ],
+          "worst_target_mm": [
+            71.875,
+            56.9524830348347,
+            -25.095705810527967
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0011456896346290154,
+          "rms_mm": 0.00027273370055259146,
+          "worst_source_mm": [
+            71.875,
+            7.643765626576744,
+            -6.3172127810947885
+          ],
+          "worst_target_mm": [
+            71.875,
+            7.644891189306927,
+            -6.3174265877348175
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 75.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 106.93260091689251
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 106.9325423770454
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 2.6040593858338056e-05,
+          "rms_mm": 3.5400978735953244e-06,
+          "worst_source_mm": [
+            75.0,
+            56.58187393141314,
+            -23.852644072891998
+          ],
+          "worst_target_mm": [
+            75.0,
+            56.58185352273031,
+            -23.852660246889453
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 2.6032265671354295e-05,
+          "rms_mm": 3.5390005683612547e-06,
+          "worst_source_mm": [
+            75.0,
+            56.58183729782365,
+            -23.85263977396833
+          ],
+          "worst_target_mm": [
+            75.0,
+            56.58185769482443,
+            -23.852623598640974
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 78.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 106.4040620592113
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 106.39817082252571
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0017515530391186906,
+          "rms_mm": 0.00034031916420185324,
+          "worst_source_mm": [
+            78.125,
+            8.29004850208624,
+            -6.21506610248616
+          ],
+          "worst_target_mm": [
+            78.125,
+            8.29175659603521,
+            -6.215453856416298
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0011268789118185076,
+          "rms_mm": 0.0003002393947288793,
+          "worst_source_mm": [
+            78.12499999999997,
+            57.01013575091814,
+            -25.064614907529133
+          ],
+          "worst_target_mm": [
+            78.12500000000001,
+            57.01116956575375,
+            -25.065063330284552
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 81.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 105.87899652532724
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 105.86639720615746
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.003930783175160541,
+          "rms_mm": 0.000728113552366275,
+          "worst_source_mm": [
+            81.25,
+            8.609196728139317,
+            -6.162271335431147
+          ],
+          "worst_target_mm": [
+            81.25000000000003,
+            8.613023020136868,
+            -6.163171638668728
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.002256676012326237,
+          "rms_mm": 0.0006331364811929641,
+          "worst_source_mm": [
+            81.25,
+            57.038180260576915,
+            -25.04615543804651
+          ],
+          "worst_target_mm": [
+            81.25,
+            57.04024819407656,
+            -25.047058896770334
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 84.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 105.35716356223733
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 105.33750031503806
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.006313934729722022,
+          "rms_mm": 0.0011377455490983786,
+          "worst_source_mm": [
+            84.375,
+            8.926244588543051,
+            -6.108466018509156
+          ],
+          "worst_target_mm": [
+            84.37500000000001,
+            8.932383667853488,
+            -6.109941646169292
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.003358230236545645,
+          "rms_mm": 0.0009802128273748716,
+          "worst_source_mm": [
+            84.37499999999997,
+            57.065829440139204,
+            -25.0257639045257
+          ],
+          "worst_target_mm": [
+            84.375,
+            57.068903246884176,
+            -25.02711646595359
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 87.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 104.83832264801354
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 104.81167552496532
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.008715550863716316,
+          "rms_mm": 0.0015451837590233191,
+          "worst_source_mm": [
+            87.5,
+            9.241352690796571,
+            -6.0537056613744
+          ],
+          "worst_target_mm": [
+            87.50000000000001,
+            9.249820634176851,
+            -6.055768368761887
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0044027401783442634,
+          "rms_mm": 0.001323552187404083,
+          "worst_source_mm": [
+            87.49999999999999,
+            57.09316486280738,
+            -25.003470949314558
+          ],
+          "worst_target_mm": [
+            87.50000000000001,
+            57.097190037894755,
+            -25.005254789720524
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 90.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 104.3222335002072
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 104.28904102557459
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.010985561627457759,
+          "rms_mm": 0.0019298448242908613,
+          "worst_source_mm": [
+            90.625,
+            9.554681584537153,
+            -5.9980457500948425
+          ],
+          "worst_target_mm": [
+            90.625,
+            9.565349994958286,
+            -6.000666357535293
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.005363837595744502,
+          "rms_mm": 0.0016474293569083713,
+          "worst_source_mm": [
+            90.625,
+            57.12026536473293,
+            -24.979307526432134
+          ],
+          "worst_target_mm": [
+            90.62500000000001,
+            57.12516348966434,
+            -24.981493647634135
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 93.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 103.80865608416467
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 103.76964404561825
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01300624930870547,
+          "rms_mm": 0.0022747691415408275,
+          "worst_source_mm": [
+            93.74999999999999,
+            9.866391766615415,
+            -5.941541748907081
+          ],
+          "worst_target_mm": [
+            93.75000000000003,
+            9.879018852948263,
+            -5.944659313954196
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006217655269388991,
+          "rms_mm": 0.0019386020586833034,
+          "worst_source_mm": [
+            93.75,
+            57.147207019710734,
+            -24.953304755526936
+          ],
+          "worst_target_mm": [
+            93.75,
+            57.15287815858572,
+            -24.9558537594323
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 96.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 103.29735062125533
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 103.25346706849683
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.014689184836424528,
+          "rms_mm": 0.0025665107427137,
+          "worst_source_mm": [
+            96.875,
+            10.176643686165942,
+            -5.884249101969447
+          ],
+          "worst_target_mm": [
+            96.87499999999999,
+            10.190902391589743,
+            -5.8877791828178
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006942890295800932,
+          "rms_mm": 0.0021863043334680423,
+          "worst_source_mm": [
+            96.87500000000001,
+            57.174063117554056,
+            -24.925493782974435
+          ],
+          "worst_target_mm": [
+            96.87500000000001,
+            57.180388258778066,
+            -24.928356703538448
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 100.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 102.78807759701971
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 102.74043403134405
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.015972161166310547,
+          "rms_mm": 0.0027949081291331578,
+          "worst_source_mm": [
+            99.99999999999999,
+            10.485597749673742,
+            -5.826223235113477
+          ],
+          "worst_target_mm": [
+            100.0,
+            10.501100938318222,
+            -5.830065249451849
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007520863819381452,
+          "rms_mm": 0.002382127087167669,
+          "worst_source_mm": [
+            99.99999999999999,
+            57.200904145089545,
+            -24.89590564977229
+          ],
+          "worst_target_mm": [
+            100.0,
+            57.20774768475745,
+            -24.899024841559193
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 103.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 102.28059776923557
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 102.23041650374438
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.016816132108869813,
+          "rms_mm": 0.00295280215714402,
+          "worst_source_mm": [
+            103.125,
+            10.793414326037045,
+            -5.767519557593909
+          ],
+          "worst_target_mm": [
+            103.125,
+            10.809737037889455,
+            -5.771563241172793
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.007935578138773705,
+          "rms_mm": 0.0025198634551710747,
+          "worst_source_mm": [
+            103.12499999999999,
+            57.22779776879187,
+            -24.864571165873368
+          ],
+          "worst_target_mm": [
+            103.12500000000001,
+            57.23501003278765,
+            -24.86788124872004
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 106.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 101.77467217591831
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 101.72323984453763
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01720215910233776,
+          "rms_mm": 0.0030357187657310924,
+          "worst_source_mm": [
+            106.25000000000001,
+            11.100253751626816,
+            -5.708193463837361
+          ],
+          "worst_target_mm": [
+            106.25,
+            11.116952535222294,
+            -5.7123244327568194
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.008173772051645073,
+          "rms_mm": 0.002595319031594126,
+          "worst_source_mm": [
+            106.24999999999997,
+            57.2548088181592,
+            -24.831520790587945
+          ],
+          "worst_target_mm": [
+            106.25,
+            57.262228620817865,
+            -24.83494965017368
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 109.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 101.2700621432596
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 101.21868933710726
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01712836585553876,
+          "rms_mm": 0.003041539950824464,
+          "worst_source_mm": [
+            109.375,
+            11.406276335343513,
+            -5.648300335189842
+          ],
+          "worst_target_mm": [
+            109.37500000000003,
+            11.422905666406775,
+            -5.6524047554009815
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.008224975225336634,
+          "rms_mm": 0.0026061048765776426,
+          "worst_source_mm": [
+            109.37499999999997,
+            57.2819992690139,
+            -24.796784518686888
+          ],
+          "worst_target_mm": [
+            109.375,
+            57.289456506919095,
+            -24.800254363104546
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 112.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 100.76652929352068
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 100.71651630510576
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01660689946105049,
+          "rms_mm": 0.0029701654145712687,
+          "worst_source_mm": [
+            112.50000000000001,
+            11.711642363671457,
+            -5.587895541663258
+          ],
+          "worst_target_mm": [
+            112.50000000000001,
+            11.727768155885595,
+            -5.59186390847794
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.008081562301453252,
+          "rms_mm": 0.0025514191930619866,
+          "worst_source_mm": [
+            112.49999999999999,
+            57.30942822599668,
+            -24.760391771846475
+          ],
+          "worst_target_mm": [
+            112.5,
+            57.316746506133875,
+            -24.76382024454811
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 115.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 100.26383555289456
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 100.21644421169867
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01566089584623663,
+          "rms_mm": 0.0028231686152356207,
+          "worst_source_mm": [
+            115.625,
+            12.01651210573132,
+            -5.52703444368105
+          ],
+          "worst_target_mm": [
+            115.625,
+            12.03172231736859,
+            -5.530764473259498
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00773880735888267,
+          "rms_mm": 0.0024318208534779007,
+          "worst_source_mm": [
+            115.625,
+            57.33715190360675,
+            -24.722371295091644
+          ],
+          "worst_target_mm": [
+            115.625,
+            57.344151205655045,
+            -24.725672644842074
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 118.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 99.76174315935282
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 99.71817474614
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01432144705480028,
+          "rms_mm": 0.0026034502049917443,
+          "worst_source_mm": [
+            118.74999999999999,
+            12.321045818331141,
+            -5.4657723938231495
+          ],
+          "worst_target_mm": [
+            118.75,
+            12.33495815578399,
+            -5.469171027716569
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0071949392733890805,
+          "rms_mm": 0.0022489965779503057,
+          "worst_source_mm": [
+            118.75,
+            57.36522360522693,
+            -24.68275105791779
+          ],
+          "worst_target_mm": [
+            118.75,
+            57.371722978249146,
+            -24.685837366629805
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 121.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 99.26001467050217
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 99.22139260329749
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.012625244550149807,
+          "rms_mm": 0.0023149543617684205,
+          "worst_source_mm": [
+            121.87499999999997,
+            12.625403751016346,
+            -5.4041647385703655
+          ],
+          "worst_target_mm": [
+            121.87499999999997,
+            12.637671109992237,
+            -5.407149483736662
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006451151310092513,
+          "rms_mm": 0.002005561945515218,
+          "worst_source_mm": [
+            121.875,
+            57.39369366945993,
+            -24.641558332197842
+          ],
+          "worst_target_mm": [
+            121.875,
+            57.399513921134314,
+            -24.644340781419753
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 125.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 98.75841297146901
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 98.72575407667635
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.010620622262331061,
+          "rms_mm": 0.001963190559575827,
+          "worst_source_mm": [
+            125.0,
+            12.929746151119181,
+            -5.3422668200483905
+          ],
+          "worst_target_mm": [
+            125.0,
+            12.940067765588513,
+            -5.344769197315232
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0055110522087783755,
+          "rms_mm": 0.00170534202593198,
+          "worst_source_mm": [
+            124.99999999999997,
+            57.422608955971725,
+            -24.5988220107934
+          ],
+          "worst_target_mm": [
+            125.00000000000001,
+            57.4275748308401,
+            -24.601211944524596
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 128.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 98.25670128284345
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 98.23091169130902
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00835474572162941,
+          "rms_mm": 0.0015539424407660888,
+          "worst_source_mm": [
+            128.125,
+            13.234233268808017,
+            -5.280133977771569
+          ],
+          "worst_target_mm": [
+            128.125,
+            13.242353662624392,
+            -5.282098915516146
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.004381482636792602,
+          "rms_mm": 0.0013525583997826946,
+          "worst_source_mm": [
+            128.12499999999997,
+            57.45201301237495,
+            -24.554570305377545
+          ],
+          "worst_target_mm": [
+            128.125,
+            57.455956091380415,
+            -24.556480676559584
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 131.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 97.75464316870585
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 97.73654011417923
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.005860249027605286,
+          "rms_mm": 0.0010920002424120664,
+          "worst_source_mm": [
+            131.24999999999997,
+            13.539025362137028,
+            -5.2178215503865575
+          ],
+          "worst_target_mm": [
+            131.25,
+            13.544720584729145,
+            -5.219202476992788
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0030732849938228703,
+          "rms_mm": 0.0009510578169709513,
+          "worst_source_mm": [
+            131.25,
+            57.48194661267994,
+            -24.50882786478737
+          ],
+          "worst_target_mm": [
+            131.25,
+            57.48470888630796,
+            -24.51017505633173
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 134.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 97.2520025447752
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 97.24233580934373
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0031555994127734563,
+          "rms_mm": 0.000581493354511679,
+          "worst_source_mm": [
+            134.37500000000003,
+            13.844282702096578,
+            -5.155384877416086
+          ],
+          "worst_target_mm": [
+            134.37499999999997,
+            13.847346871095729,
+            -5.156138983508449
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0016011006193917526,
+          "rms_mm": 0.0005046111401427345,
+          "worst_source_mm": [
+            134.375,
+            57.51244781409377,
+            -24.46161618092577
+          ],
+          "worst_target_mm": [
+            134.37500000000003,
+            57.51388505050119,
+            -24.462321783294392
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 137.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 96.74854368671222
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 96.74801616223223
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00024702066973570453,
+          "rms_mm": 5.421627495249642e-05,
+          "worst_source_mm": [
+            137.49999999999997,
+            14.150165577664836,
+            -5.092879301002915
+          ],
+          "worst_target_mm": [
+            137.5,
+            14.150397968349555,
+            -5.092963049321899
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 9.055791537331619e-05,
+          "rms_mm": 4.9353604920325765e-05,
+          "worst_source_mm": [
+            137.5,
+            57.2405211471407,
+            -23.284077210173137
+          ],
+          "worst_target_mm": [
+            137.5,
+            57.24059494941397,
+            -23.28402473198246
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 140.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 96.24408370725729
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 96.25331879486654
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0017572786499827628,
+          "rms_mm": 0.000519318227564924,
+          "worst_source_mm": [
+            140.625,
+            57.573643709650064,
+            -24.36222471301967
+          ],
+          "worst_target_mm": [
+            140.625,
+            57.57521555079335,
+            -24.363010425227767
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.0028537197285054368,
+          "rms_mm": 0.0005811395073671386,
+          "worst_source_mm": [
+            140.625,
+            14.454026870884547,
+            -5.0297250072776745
+          ],
+          "worst_target_mm": [
+            140.62500000000003,
+            14.456810612079021,
+            -5.0303531006234845
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 143.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 95.73864981200313
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 95.75800101907367
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.003589372034769786,
+          "rms_mm": 0.0010718903987274365,
+          "worst_source_mm": [
+            143.75,
+            57.60429021095232,
+            -24.310127841870965
+          ],
+          "worst_target_mm": [
+            143.75,
+            57.607496638875055,
+            -24.31174104104661
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.006039230109433041,
+          "rms_mm": 0.001205989564486312,
+          "worst_source_mm": [
+            143.75000000000003,
+            14.758374481532082,
+            -4.966471082428017
+          ],
+          "worst_target_mm": [
+            143.75,
+            14.76425969246618,
+            -4.967826291849419
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 146.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 95.23232161787149
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 95.26184370999417
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.005477971645728052,
+          "rms_mm": 0.0016352120228888608,
+          "worst_source_mm": [
+            146.87500000000003,
+            57.635575407626526,
+            -24.256603330644722
+          ],
+          "worst_target_mm": [
+            146.875,
+            57.64046253901531,
+            -24.25907802661396
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.00919669243080863,
+          "rms_mm": 0.001839269105733844,
+          "worst_source_mm": [
+            146.875,
+            15.063569920580557,
+            -4.903243542559882
+          ],
+          "worst_target_mm": [
+            146.875,
+            15.072531023130331,
+            -4.905311825122619
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 150.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 94.72517864006417
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 94.76463356096119
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.007384830053622007,
+          "rms_mm": 0.002192475769628937,
+          "worst_source_mm": [
+            150.00000000000003,
+            57.66756039648721,
+            -24.20167527601105
+          ],
+          "worst_target_mm": [
+            150.0,
+            57.674140036145126,
+            -24.20502849191416
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.012223478448861158,
+          "rms_mm": 0.002461828921698357,
+          "worst_source_mm": [
+            150.0,
+            15.369730807738886,
+            -4.840080833736291
+          ],
+          "worst_target_mm": [
+            150.00000000000003,
+            15.381642812415762,
+            -4.842822652469878
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 153.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 94.21730028665041
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 94.26618873505217
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.00926888943661954,
+          "rms_mm": 0.0027296615034021992,
+          "worst_source_mm": [
+            153.125,
+            57.700306283477545,
+            -24.145367774458403
+          ],
+          "worst_target_mm": [
+            153.125,
+            57.70855360096858,
+            -24.1495979122328
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01502877790692098,
+          "rms_mm": 0.0030573970608581734,
+          "worst_source_mm": [
+            153.125,
+            15.676963538449346,
+            -4.777017707819023
+          ],
+          "worst_target_mm": [
+            153.125,
+            15.691613272810239,
+            -4.780371727576097
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 156.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 93.70876585314426
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 93.76634106922268
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.011086416544010283,
+          "rms_mm": 0.003232742675515951,
+          "worst_source_mm": [
+            156.25,
+            57.733874184014994,
+            -24.08770492242933
+          ],
+          "worst_target_mm": [
+            156.24999999999997,
+            57.74372552936818,
+            -24.09279015856147
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.017533258860903685,
+          "rms_mm": 0.00361043265212023,
+          "worst_source_mm": [
+            156.24999999999997,
+            15.985363572881957,
+            -4.71408534787375
+          ],
+          "worst_target_mm": [
+            156.24999999999997,
+            16.002460621048257,
+            -4.7179720058575
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 159.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 93.19965451707327
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 93.26493997312804
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.012791141683320458,
+          "rms_mm": 0.0036882639770740118,
+          "worst_source_mm": [
+            159.375,
+            57.76832522333707,
+            -24.02871081645616
+          ],
+          "worst_target_mm": [
+            159.375,
+            57.779676084843516,
+            -24.034607531526802
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.019668722098663768,
+          "rms_mm": 0.004106133361021018,
+          "worst_source_mm": [
+            159.375,
+            16.295015752915546,
+            -4.651311496341742
+          ],
+          "worst_target_mm": [
+            159.37500000000003,
+            16.31420307821432,
+            -4.655636444534902
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 162.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 92.69004533254193
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 92.76185190770885
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.014334403646530046,
+          "rms_mm": 0.004083081134562424,
+          "worst_source_mm": [
+            162.5,
+            57.80372053684738,
+            -23.968409553296798
+          ],
+          "worst_target_mm": [
+            162.49999999999997,
+            57.816423645657636,
+            -23.97505079975032
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.021377716702673116,
+          "rms_mm": 0.004530595665617656,
+          "worst_source_mm": [
+            162.49999999999997,
+            16.60599465940848,
+            -4.58872058988164
+          ],
+          "worst_target_mm": [
+            162.5,
+            16.62685886984631,
+            -4.593378002706992
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 165.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 92.18001722479275
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 92.25695978387358
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.015665301745434228,
+          "rms_mm": 0.004405005322781498,
+          "worst_source_mm": [
+            165.625,
+            57.840121270461744,
+            -23.90682523007053
+          ],
+          "worst_target_mm": [
+            165.625,
+            57.85398485768578,
+            -23.91411924323593
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.022613104979235663,
+          "rms_mm": 0.004870903867055231,
+          "worst_source_mm": [
+            165.62499999999997,
+            16.918365019101422,
+            -4.52633390384007
+          ],
+          "worst_target_mm": [
+            165.625,
+            16.940446226038944,
+            -4.531209641423686
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 168.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 91.66964898476735
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 91.75016225883357
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.016730855438948995,
+          "rms_mm": 0.004642373139594841,
+          "worst_source_mm": [
+            168.75,
+            57.87758858095458,
+            -23.843981944393846
+          ],
+          "worst_target_mm": [
+            168.75,
+            57.89237479334021,
+            -23.85181070208623
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.02333756959020043,
+          "rms_mm": 0.005114964925327886,
+          "worst_source_mm": [
+            168.75,
+            17.232182167621264,
+            -4.464169708409782
+          ],
+          "worst_target_mm": [
+            168.75,
+            17.254983381547284,
+            -4.469144323759469
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 171.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 91.15901926367354
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 91.24137294479385
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.017476171419927827,
+          "rms_mm": 0.004783820022181617,
+          "worst_source_mm": [
+            171.875,
+            57.91618363630539,
+            -23.779903794516322
+          ],
+          "worst_target_mm": [
+            171.87499999999997,
+            57.93160711639294,
+            -23.788121630575024
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.023523058816844234,
+          "rms_mm": 0.005251422217879851,
+          "worst_source_mm": [
+            171.875,
+            17.547492572337443,
+            -4.402243437693794
+          ],
+          "worst_target_mm": [
+            171.87499999999997,
+            17.570488575890284,
+            -4.407195014886815
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 175.0,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 90.64820656755857
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 90.73051949312864
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.017844617497499084,
+          "rms_mm": 0.004818373960037517,
+          "worst_source_mm": [
+            175.0,
+            57.95596761604557,
+            -23.71461487945654
+          ],
+          "worst_target_mm": [
+            175.0,
+            57.971694252045715,
+            -23.72304715635848
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.02315016852990754,
+          "rms_mm": 0.0052695622921248245,
+          "worst_source_mm": [
+            175.0,
+            17.864334416337794,
+            -4.3405678721323735
+          ],
+          "worst_target_mm": [
+            175.00000000000003,
+            17.88698005345449,
+            -4.345374682149634
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 178.125,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 90.13728925189848
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 90.2175425865139
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.0177780021752554,
+          "rms_mm": 0.00473538826400208,
+          "worst_source_mm": [
+            178.125,
+            57.997001711605314,
+            -23.648139299138037
+          ],
+          "worst_target_mm": [
+            178.125,
+            58.012647561212304,
+            -23.65658114439952
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.022207461714969193,
+          "rms_mm": 0.0051592127274318516,
+          "worst_source_mm": [
+            178.125,
+            18.182738242623223,
+            -4.279153334086597
+          ],
+          "worst_target_mm": [
+            178.125,
+            18.204476063597706,
+            -4.283696295136743
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 181.25,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 89.62634551620398
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 89.70239481856407
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01721675849400191,
+          "rms_mm": 0.004524468175636052,
+          "worst_source_mm": [
+            181.25,
+            58.03934712666076,
+            -23.580501154525326
+          ],
+          "worst_target_mm": [
+            181.25,
+            58.05447751768945,
+            -23.58871626501513
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.020690728261765733,
+          "rms_mm": 0.004910630256819086,
+          "worst_source_mm": [
+            181.25,
+            18.502727655847252,
+            -4.218007895826081
+          ],
+          "worst_target_mm": [
+            181.24999999999994,
+            18.522994860752863,
+            -4.222172825755408
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 184.375,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 89.11545339865114
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 89.18503948713655
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.016100130485847294,
+          "rms_mm": 0.004175396504740942,
+          "worst_source_mm": [
+            184.375,
+            58.08306507748137,
+            -23.511724547759925
+          ],
+          "worst_target_mm": [
+            184.37499999999997,
+            58.097193886702485,
+            -23.51944406533907
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01860218910875211,
+          "rms_mm": 0.004514392598898206,
+          "worst_source_mm": [
+            184.37499999999997,
+            18.824320077614193,
+            -4.157137598754899
+          ],
+          "worst_target_mm": [
+            184.37499999999997,
+            18.84255470453187,
+            -4.160817248304904
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 187.5,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 88.60469077074374
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 88.66544928691242
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.014366360475025255,
+          "rms_mm": 0.0036780649257131697,
+          "worst_source_mm": [
+            187.49999999999997,
+            58.12821679327754,
+            -23.44183358229648
+          ],
+          "worst_target_mm": [
+            187.5,
+            58.14080590321913,
+            -23.448755043426676
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.015949649690304362,
+          "rms_mm": 0.003961287988790036,
+          "worst_source_mm": [
+            187.5,
+            19.14752755055238,
+            -4.096546682439942
+          ],
+          "worst_target_mm": [
+            187.49999999999994,
+            19.163173859829545,
+            -4.099642539550129
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 190.625,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 88.09413533201081
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 88.14360092012959
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.01195287545590986,
+          "rms_mm": 0.003021889903246201,
+          "worst_source_mm": [
+            190.625,
+            58.174863516548356,
+            -23.370852363038896
+          ],
+          "worst_target_mm": [
+            190.62500000000003,
+            58.18532244842603,
+            -23.37663872421348
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.01274560792837323,
+          "rms_mm": 0.003241657795148559,
+          "worst_source_mm": [
+            190.625,
+            19.472357586132922,
+            -4.036237821886802
+          ],
+          "worst_target_mm": [
+            190.625,
+            19.484870596927735,
+            -4.038661678795268
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 193.75,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 87.583864604751
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 87.61948968143459
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.008796470874615636,
+          "rms_mm": 0.0021967545777163947,
+          "worst_source_mm": [
+            193.75,
+            58.22306650342969,
+            -23.298804996476548
+          ],
+          "worst_target_mm": [
+            193.74999999999997,
+            58.230752222850164,
+            -23.303083736575893
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.009006321722351478,
+          "rms_mm": 0.0023476515188834823,
+          "worst_source_mm": [
+            193.74999999999997,
+            19.79881405153392,
+            -3.976212371541833
+          ],
+          "worst_target_mm": [
+            193.75000000000006,
+            19.807663191599353,
+            -3.9778876479574894
+          ]
+        }
+      }
+    },
+    {
+      "requested_x_mm": 196.875,
+      "plane_offset_mm": 0,
+      "complete": true,
+      "attempts": [
+        {
+          "offset_mm": 0,
+          "candidate": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 87.0739559288286
+          },
+          "reference": {
+            "connected_groups": 1,
+            "closed_groups": 1,
+            "length_mm": 87.0931038262888
+          },
+          "complete": true
+        }
+      ],
+      "section": {
+        "candidate_to_reference": {
+          "samples": 240,
+          "max_mm": 0.004833490326065995,
+          "rms_mm": 0.0011926775940036844,
+          "worst_source_mm": [
+            196.87500000000003,
+            58.27288702404245,
+            -23.225715590820556
+          ],
+          "worst_target_mm": [
+            196.875,
+            58.277103914770315,
+            -23.2280778908272
+          ]
+        },
+        "reference_to_candidate": {
+          "samples": 240,
+          "max_mm": 0.004889818996884381,
+          "rms_mm": 0.0012700883146616515,
+          "worst_source_mm": [
+            196.875,
+            58.27753656596115,
+            -23.227305574529563
+          ],
+          "worst_target_mm": [
+            196.87500000000003,
+            58.27308886532771,
+            -23.225273755419117
+          ]
+        }
+      }
+    }
+  ]
+}

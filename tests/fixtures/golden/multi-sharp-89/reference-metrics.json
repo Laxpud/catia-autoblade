@@ -1,0 +1,100 @@
+{
+  "schema": "autoblade.golden.reference/v1",
+  "source_report_sha256": "79439bbce75241c00c8000c114039d6799663c2a841204b23ce1037ad3fca989",
+  "source_record": "docs/validation/freecad-precision-proposal-2026-09-16.md",
+  "properties": {
+    "gordon": {
+      "valid": true,
+      "closed": true,
+      "solids": 1,
+      "volume_mm3": 1308847.1596591389,
+      "center_of_mass_mm": [
+        349.4204303481004,
+        -21.373832939474717,
+        1.4699537556031559
+      ],
+      "bounding_box_mm": {
+        "x_min": 78.73999999999998,
+        "x_max": 787.4000000000003,
+        "y_min": -117.68234635178645,
+        "y_max": 39.24981733852055,
+        "z_min": -43.80887449009464,
+        "z_max": 22.80900144742599
+      }
+    },
+    "catia": {
+      "valid": true,
+      "closed": true,
+      "solids": 1,
+      "volume_mm3": 1308523.889727185,
+      "center_of_mass_mm": [
+        349.48550218097733,
+        -21.374291221151054,
+        1.4723958712803262
+      ],
+      "bounding_box_mm": {
+        "x_min": 78.74,
+        "x_max": 787.4,
+        "y_min": -117.651959749,
+        "y_max": 39.2566690502,
+        "z_min": -43.8088744901,
+        "z_max": 22.8056205902
+      }
+    },
+    "deltas": {
+      "volume_delta_mm3": 323.26993195386603,
+      "volume_relative_to_catia": 0.0002470493160207088,
+      "center_of_mass_delta_mm": [
+        -0.06507183287692442,
+        0.00045828167633743533,
+        -0.0024421156771703423
+      ],
+      "center_of_mass_max_abs_delta_mm": 0.06507183287692442,
+      "bounding_box_delta_mm": {
+        "x_min": -1.4210854715202004e-14,
+        "x_max": 3.410605131648481e-13,
+        "y_min": -0.030386602786450112,
+        "y_max": -0.006851711679452421,
+        "z_min": 5.364597654988756e-12,
+        "z_max": 0.0033808572259914627
+      },
+      "bounding_box_max_abs_delta_mm": 0.030386602786450112
+    }
+  },
+  "global_surface": {
+    "gordon_to_catia": {
+      "samples": 400,
+      "max_mm": 0.35717933578038985,
+      "rms_mm": 0.04147019530474182,
+      "worst_sample_index": 116,
+      "worst_source_mm": [
+        477.21346286262377,
+        -18.445865421299313,
+        12.885922092043774
+      ],
+      "worst_target_mm": [
+        477.1736655257311,
+        -18.419915109951955,
+        12.531916680749331
+      ]
+    },
+    "catia_to_gordon": {
+      "samples": 400,
+      "max_mm": 0.3305194976937844,
+      "rms_mm": 0.02753120682030406,
+      "worst_sample_index": 309,
+      "worst_source_mm": [
+        475.4104699758614,
+        -29.170907006760945,
+        11.696623575944017
+      ],
+      "worst_target_mm": [
+        475.45100946705986,
+        -29.21297380456424,
+        12.021938919159949
+      ]
+    }
+  },
+  "section_max_mm": 0.38517231539606217,
+  "incomplete_station_count": 1
+}

@@ -1,0 +1,409 @@
+{
+  "schema": "autoblade.golden/v2",
+  "case_id": "affine-17",
+  "decision_policy": "human_only",
+  "policy_record": "docs/adr/0007-measure-geometry-and-defer-usability-to-humans.md",
+  "authorization": {
+    "date": "2026-09-21",
+    "original_sha256": "d5b45e5f0f93bac5a0aadd8ca2c947bc661ab77bffcd8f059c709793d1bf3f9b",
+    "record": "docs/validation/golden-matrix-2026-09-21.md#\u516c\u5f00\u6d4b\u8bd5\u57fa\u7ebf\u6388\u6743",
+    "notice": "LICENSE.md",
+    "public_redistribution": true
+  },
+  "human_review": {
+    "date": "2026-09-21",
+    "record": "docs/validation/golden-matrix-2026-09-21.md#\u4eba\u5de5\u68c0\u67e5\u7ed3\u8bba",
+    "scope": "Recorded original artifacts; new outputs require human judgment"
+  },
+  "origin": {
+    "kind": "project_defined_analytic_geometry",
+    "license": "MIT",
+    "generator": "scripts/golden/candidates.py",
+    "profiles": [
+      {
+        "point_count": 121,
+        "amplitude": 0.156,
+        "camber": 0.0,
+        "gap_m": 0.0
+      }
+    ],
+    "transform": {
+      "scale": 1.7,
+      "rotation_x_deg": 37.0,
+      "translation_m": [
+        0.2,
+        -0.1,
+        0.3
+      ]
+    }
+  },
+  "environment": {
+    "freecad_version": "1.1.3",
+    "occt_version": "7.8.1",
+    "catia": "P3 V5-6R2020 (5.30.0.19235)"
+  },
+  "input": {
+    "sections": "input/blade_sections.csv",
+    "airfoil": "synthetic-1.csv",
+    "section_count": 5,
+    "point_counts": [
+      121
+    ],
+    "trailing_edge": "sharp",
+    "airfoils": [
+      "input/airfoils/synthetic-1.csv"
+    ]
+  },
+  "baseline": {
+    "step": "catia.stp",
+    "data_sha256": "9e7bdfd765514c3c66528777284b0a0a819cbc4874d803852904e6096739e3e8",
+    "sanitization": "HEADER/FILE_NAME path only; DATA bytes unchanged"
+  },
+  "reference_metrics": "reference-metrics.json",
+  "sampling": {
+    "method": "tessellation-vertices-to-trimmed-faces/v1",
+    "deflection_mm": 0.1,
+    "surface_samples": 400,
+    "section_samples": 240,
+    "retry_offsets_mm": [
+      0,
+      0.0001,
+      -0.0001,
+      0.001,
+      -0.001
+    ],
+    "stations": [
+      {
+        "x_mm": 210.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 221.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 231.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 242.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 253.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 263.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 274.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 285.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 295.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 306.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 316.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 327.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 338.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 348.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 359.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 370.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 380.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 391.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 401.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 412.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 423.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 433.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 444.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 455.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 465.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 476.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 486.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 497.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 508.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 518.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 529.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 540.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 550.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 561.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 571.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 582.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 593.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 603.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 614.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 625.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 635.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 646.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 656.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 667.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 678.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 688.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 699.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 710.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 720.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 731.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 741.8749999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 752.4999999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 763.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 773.7499999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 784.3749999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 794.9999999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 805.6249999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 816.2499999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 826.8749999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 837.4999999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 848.1249999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 858.7499999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 869.3749999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 879.9999999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 890.6249999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 901.2499999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 911.8749999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 922.4999999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 933.1249999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 943.7499999999999,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 954.375,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 965.0,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 975.625,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 986.25,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 996.875,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1007.5,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1018.125,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1028.75,
+        "allow_incomplete": false
+      },
+      {
+        "x_mm": 1039.375,
+        "allow_incomplete": false
+      }
+    ],
+    "station_source": "Predeclared 5% grid in every span interval plus internal input stations; no incomplete-station exceptions"
+  },
+  "step_writer": {
+    "schema": "AP242DIS",
+    "precision_mode": 2,
+    "precision_mm": 1e-07,
+    "surfacecurve_mode": 1,
+    "length_unit": "mm"
+  },
+  "files": {
+    "LICENSE.md": "bc64b439f7f41e9ea171091bfd39a050eb4ab28119f1be2d9b88ae9691eafc21",
+    "catia.stp": "e6761a86279364ae783d82281bce29a096ac0712839573ba329cf35dbf75e350",
+    "input/airfoils/synthetic-1.csv": "ebafa10b4123ee7c78c7730a6f0f7ad408ad9c812d746f5652148e72592a1d38",
+    "input/blade_sections.csv": "a25c25773788dbe38c0069b271f5fce808ec6af19fffe144ff7dd09fa9f43968",
+    "reference-metrics.json": "570d05ab6529d8a7b0c43f3f6a21f309864bacafd089dd765d11624b3a830675"
+  }
+}

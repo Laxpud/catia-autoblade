@@ -41,10 +41,7 @@ REQUIRED_WHEEL_FILES = {
     "autoblade/resources/airfoil_library/airfoil1_sharp.csv",
     "autoblade/resources/airfoil_library/airfoil2_sharp.csv",
     "autoblade/resources/airfoil_library/airfoil3_sharp.csv",
-    (
-        "autoblade/resources/workspace/blade_sections/"
-        "example-blade-sections.csv"
-    ),
+    ("autoblade/resources/workspace/blade_sections/example-blade-sections.csv"),
 }
 REQUIRED_SDIST_PATHS = {
     "CONTEXT.md",
@@ -58,6 +55,23 @@ REQUIRED_SDIST_PATHS = {
     "scripts/validate_distribution.py",
     "src/autoblade/__init__.py",
     "tests/conftest.py",
+    "tests/fixtures/golden/multi-sharp-89/manifest.json",
+    "tests/fixtures/golden/multi-sharp-89/catia.stp",
+}
+GOLDEN_CASE_PATH = "tests/fixtures/golden/multi-sharp-89/"
+GOLDEN_CASE_PATHS = (
+    GOLDEN_CASE_PATH,
+    "tests/fixtures/golden/single-sharp/",
+    "tests/fixtures/golden/single-blunt/",
+    "tests/fixtures/golden/multi-blunt/",
+    "tests/fixtures/golden/affine-05/",
+    "tests/fixtures/golden/affine-17/",
+    "tests/fixtures/golden/affine-25/",
+)
+REQUIRED_SDIST_PATHS |= {
+    prefix + name
+    for prefix in GOLDEN_CASE_PATHS
+    for name in ("manifest.json", "catia.stp")
 }
 FORBIDDEN_PARTS = {
     ".git",
@@ -94,9 +108,7 @@ def _source_version() -> str:
             for target in node.targets
         ):
             continue
-        if isinstance(node.value, ast.Constant) and isinstance(
-            node.value.value, str
-        ):
+        if isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
             return node.value.value
     raise ValidationError(f"Literal __version__ not found in {VERSION_PATH}")
 
@@ -238,14 +250,10 @@ def _validate_pyproject() -> None:
     version_path = data["tool"]["hatch"]["version"]["path"]
     if version_path != "src/autoblade/__init__.py":
         raise ValidationError("Hatchling version path differs from source contract")
-    wheel_packages = data["tool"]["hatch"]["build"]["targets"]["wheel"][
-        "packages"
-    ]
+    wheel_packages = data["tool"]["hatch"]["build"]["targets"]["wheel"]["packages"]
     if wheel_packages != ["src/autoblade"]:
         raise ValidationError("wheel package whitelist changed unexpectedly")
-    sdist_include = set(
-        data["tool"]["hatch"]["build"]["targets"]["sdist"]["include"]
-    )
+    sdist_include = set(data["tool"]["hatch"]["build"]["targets"]["sdist"]["include"])
     required_sdist_sources = {
         "/CONTEXT.md",
         "/LICENSE",
@@ -358,11 +366,32 @@ def _validate_distribution_contents(dist_dir: Path, version: str) -> None:
                 raise ValidationError(f"Missing source file: {name}")
             return extracted.read()
 
-        _validate_vendor_files(read_sdist, sdist_root + "src/autoblade/_vendor/curveswb/")
+        _validate_vendor_files(
+            read_sdist, sdist_root + "src/autoblade/_vendor/curveswb/"
+        )
+        _validate_golden_files(read_sdist, relative_names, sdist_root)
         _validate_no_local_path_leak(sdist_contents(), artifact="sdist")
 
     _write_content_manifest(dist_dir, wheel_path.name, wheel_names)
     _write_content_manifest(dist_dir, sdist_path.name, sdist_names)
+
+
+def _validate_golden_files(read_file, names: set[str], root: str) -> None:
+    """sdist 只允许已列入 manifest 的黄金资产，并从实际归档字节验证摘要。"""
+    expected = set()
+    for case_path in GOLDEN_CASE_PATHS:
+        prefix = root + case_path
+        manifest = json.loads(read_file(prefix + "manifest.json"))
+        expected.update(case_path + name for name in manifest["files"])
+        expected.add(case_path + "manifest.json")
+        for name, digest in manifest["files"].items():
+            if hashlib.sha256(read_file(prefix + name)).hexdigest() != digest:
+                raise ValidationError(
+                    f"sdist golden fixture fingerprint mismatch: {case_path}{name}"
+                )
+    actual = {name for name in names if name.startswith("tests/fixtures/golden/")}
+    if actual != expected:
+        raise ValidationError("sdist golden fixture contains missing or unlisted files")
 
 
 def _validate_vendor_files(read_file, prefix: str) -> None:
@@ -377,10 +406,17 @@ def _validate_vendor_files(read_file, prefix: str) -> None:
         if not read_file(prefix + "NOTICE.md"):
             raise ValidationError("Bundled dependency notice is empty")
         for item in manifest["files"] + manifest["licenses"]:
-            if hashlib.sha256(read_file(prefix + item["path"])).hexdigest() != item["sha256"]:
-                raise ValidationError(f"Bundled dependency fingerprint mismatch: {item['path']}")
+            if (
+                hashlib.sha256(read_file(prefix + item["path"])).hexdigest()
+                != item["sha256"]
+            ):
+                raise ValidationError(
+                    f"Bundled dependency fingerprint mismatch: {item['path']}"
+                )
     except (KeyError, OSError) as error:
-        raise ValidationError(f"Missing bundled dependency source or license: {error}") from error
+        raise ValidationError(
+            f"Missing bundled dependency source or license: {error}"
+        ) from error
 
 
 def _validate_wheel_entry_points(archive: ZipFile, version: str) -> None:
@@ -389,7 +425,9 @@ def _validate_wheel_entry_points(archive: ZipFile, version: str) -> None:
     try:
         content = archive.read(path).decode("utf-8")
     except KeyError as error:
-        raise ValidationError(f"wheel entry point metadata is missing: {path}") from error
+        raise ValidationError(
+            f"wheel entry point metadata is missing: {path}"
+        ) from error
     parser = ConfigParser()
     parser.read_string(content)
     if not parser.has_section("console_scripts"):
@@ -414,6 +452,12 @@ def _validate_archive_names(names: list[str], *, artifact: str) -> None:
                 f"{artifact} contains forbidden path {name}: {sorted(forbidden)}"
             )
         if any(normalized.lower().endswith(suffix) for suffix in FORBIDDEN_SUFFIXES):
+            # 获批公开 STEP 是唯一源码归档例外；wheel 和任何相邻 CAD 产物仍拒绝。
+            if artifact == "sdist" and normalized in {
+                f"autoblade-{_source_version()}/" + prefix + "catia.stp"
+                for prefix in GOLDEN_CASE_PATHS
+            }:
+                continue
             raise ValidationError(f"{artifact} contains forbidden file: {name}")
 
 

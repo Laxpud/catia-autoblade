@@ -68,6 +68,13 @@ exclude = [
     "**/*.FCStd*",
     "**/*.log",
     "**/*.stp",
+    "!/tests/fixtures/golden/multi-sharp-89/catia.stp",
+    "!/tests/fixtures/golden/single-sharp/catia.stp",
+    "!/tests/fixtures/golden/single-blunt/catia.stp",
+    "!/tests/fixtures/golden/multi-blunt/catia.stp",
+    "!/tests/fixtures/golden/affine-05/catia.stp",
+    "!/tests/fixtures/golden/affine-17/catia.stp",
+    "!/tests/fixtures/golden/affine-25/catia.stp",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -76,6 +83,7 @@ packages = ["src/autoblade"]
 [tool.hatch.build.targets.sdist]
 include = [
     "/.github/workflows/checks.yml",
+    "/.github/workflows/freecad-measurements.yml",
     "/AGENTS.md",
     "/CONTEXT.md",
     "/LICENSE",
@@ -119,3 +127,6 @@ extend-exclude = ["src/autoblade/_vendor"]
 "src/autoblade/adapters/cad/freecad/runner.py" = "py310"
 "src/autoblade/adapters/cad/freecad/protocol.py" = "py310"
 "src/autoblade/adapters/cad/freecad/probe.py" = "py310"
+"scripts/golden/measure.py" = "py310"
+"scripts/golden/fixture.py" = "py310"
+"scripts/golden/candidate_contract.py" = "py310"
