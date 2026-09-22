@@ -16,8 +16,8 @@ jobs:
     name: FreeCAD measurement integrity
     runs-on: ubuntu-24.04
     timeout-minutes: 45
-    # 初期观察环境稳定性；任何状态都不代表人类对几何适用性的批准。
-    continue-on-error: true
+    # 独立 runner 的完整复现已通过；环境或报告失败必须保留失败状态。
+    # required 只约束测量完整性，不能代替人类对几何适用性的批准。
     steps:
       - uses: actions/checkout@v5
         with:
