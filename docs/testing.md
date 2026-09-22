@@ -79,6 +79,7 @@ pytest 专用预期失败数据不得放入 `input/` 扫描目录。小型测试
 | `test_golden_fixture.py` | 公开黄金摘要、元数据清理、许可入口、实测数值合法性、站位覆盖和源码归档例外 |
 | `test_golden_candidates.py` | 原创合成翼型、精确尖钝拓扑、候选输入身份、建模前冲突检查和仿射残差 |
 | `test_golden_review.py` | 检查包的输入/模型/测量关联、原字节保真及只导出实测字段 |
+| `test_golden_ci_scope.py` | required 测量检查的完整 push/PR 差异、删除路径、文档跳过和历史不可用时的完整测量 |
 | `test_cli.py` | 主命令、独立入口、长短选项与参数分派 |
 | `test_catia_lifecycle.py` | COM 初始化、文档关闭、应用退出、异常清理和批处理隔离 |
 

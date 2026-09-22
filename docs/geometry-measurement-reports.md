@@ -51,10 +51,22 @@ bash scripts/check-freecad-measurements.sh output/freecad-measurements-new
 固定环境身份在 `scripts/golden/ci-environment.json`，包括 FreeCAD 1.1.3 / OCCT
 7.8.1 和实际验证的 Flatpak app/runtime commit。
 
-`.github/workflows/freecad-measurements.yml` 在相关改动、每周和手动触发时
-运行，初期为 non-blocking，并上传报告及模型供人类复查。仅环境、制品、测量
-完整性与进程清理可以影响任务退出码。远程 workflow 尚需推送后观察稳定性；
-新增 YAML 不等于 GitHub 已执行，也不等于 required branch protection 已配置。
+`.github/workflows/freecad-measurements.yml` 对每次 PR 和 `main` push 返回
+`FreeCAD measurement integrity` 状态。job 内的 `scripts.golden.ci_scope` 对比
+push 前后或 PR 分叉点以来的完整差异：源码、测试、脚本、输入、workflow 和
+构建配置变更执行完整矩阵，纯文档变更跳过 CAD 步骤；历史不可用时执行完整
+矩阵。每周一 02:17 UTC 和手动触发也执行完整矩阵。
+非主线 push 由随后的 PR 检查覆盖，避免同一 PR 同时等待两个同名 required job。
+
+三轮独立 runner 的完整复现通过后，检查已结束 non-blocking 观察期，`main`
+要求 `FreeCAD measurement integrity` 成功且分支跟上最新主线，管理员同样
+受此规则约束；检查来源绑定 GitHub Actions。报告及模型上传为保留 14 天的
+Actions artifact，重要验收证据另行下载保存到项目 `output/`。仅环境、制品、
+测量完整性与进程清理可以影响任务退出码。远程观察和 required
+状态见[阶段四远程验收记录](validation/golden-matrix-2026-09-21.md#远程-ci-验收)。
+workflow 不使用顶层路径过滤，以免无关 PR 缺少 required 状态而永久等待；
+这是 [GitHub required checks](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks)
+规定的跳过行为。
 
 安装脚本只允许 GitHub 临时 Linux runner 使用，不修改开发者本机的 Flatpak。
 它依照 [Flatpak 的 commit 更新接口](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-update)

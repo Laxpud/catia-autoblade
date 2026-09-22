@@ -4,7 +4,7 @@
 “和 catia 的对比，只测量结果，判断交给我”，最初要求统一放入 win11 目录，
 随后明确改为保存在当前项目目录，后续不再复制到 win11。
 因此本记录及检查包只提供实测值，不作几何适用性裁决，不自动批准新的公开
-黄金基线或逐案例公差。阶段 4 继续进行，阶段 5 未启动。
+黄金基线或逐案例公差。阶段 4 于 2026-09-22 完成远程验收，阶段 5 未启动。
 
 ## 当前项目检查入口
 
@@ -261,6 +261,62 @@ wheel smoke 和分发校验。另从独立 sdist 解包检查了全部七份夹�
 - `output/golden-matrix-windows-20260921/public-matrix-reproduction-delivery.json`：
   win11 追加包逐文件校验记录。
 
-Linux non-blocking workflow 已配置相关改动、每周和手动触发，但尚未推送，
-也未在 GitHub runner 上运行。远程稳定性和 required 状态仍未验收，阶段 4 保持
-进行中，阶段 5 未启动。
+以上本机验证完成时，Linux non-blocking workflow 尚未推送和远程执行。
+随后经用户明确授权推送、提交本轮修复及配置 required 检查，继续下方远程验收。
+
+## 远程 CI 验收
+
+推送 `f5bdebc` 后，GitHub Linux 常规检查通过，Windows 出现 7 项失败，根因
+均为干净 checkout 的 `core.autocrlf` 改写 CurvesWB manifest/源码/许可证字节。
+之前将 Linux 工作区复制到 Windows 的验证没有触发这条路径。`ec7e8b7` 在
+`.gitattributes` 中固定该闭包为 LF，保留既有 SHA-256 契约，没有放宽认证。
+
+同一修复将路径选择移到 job 内部，确保纯文档变更也返回稳定的
+`FreeCAD measurement integrity` 状态；PR 比较 merge base 以来的完整差异，
+push 比较前后完整树，删除/重命名也能触发测量，未知历史执行完整矩阵。
+每周与手动运行始终执行七组公开案例及七组合成性能案例。
+
+修复后的 [Windows/Linux 完整检查](https://github.com/Laxpud/catia-autoblade/actions/runs/35600989620)
+均通过 269 项测试、Ruff、wheel/sdist 构建、独立 wheel 安装 smoke 和分发校验；
+本机 Linux 同样完成完整检查。Windows 直接使用 GitHub 干净 checkout，未再
+复制工作区至 win11。日志、远程制品和核验结果统一保存在
+`output/stage4-ci-20260921/`，不进入源码提交。
+
+三个独立 `ubuntu-24.04` runner 均从干净 checkout 构建、安装非 editable wheel，
+固定 Flatpak app/runtime commit、FreeCAD 1.1.3 / OCCT 7.8.1，实际安装、测量、
+上传步骤全部成功。每轮七组公开案例均为 `measured`，另有七组合成性能模型。
+下载后重新核验 manifest/模型摘要、实体属性、预定站位及 JSON→Markdown/CSV
+逐字节重建；每轮 520 条站位记录完整，六组各 79/79 完整截面，89 截面案例
+保持 45/46 及原有缺口。公开与合成任务的 FreeCAD 实例 before/after 均为空。
+
+| GitHub run | 源码 | 触发 | 89 截面建模 / 测量 s | 建模 / 测量峰值 RSS KiB | 1000 点建模 s / RSS KiB |
+| --- | --- | --- | ---: | ---: | ---: |
+| [35600566121](https://github.com/Laxpud/catia-autoblade/actions/runs/35600566121) | `f5bdebc` | push | 493.412 / 302.149 | 278376 / 488296 | 12.640 / 141836 |
+| [35600989648](https://github.com/Laxpud/catia-autoblade/actions/runs/35600989648) | `ec7e8b7` | push | 492.804 / 296.497 | 280508 / 491440 | 13.105 / 142236 |
+| [35601008804](https://github.com/Laxpud/catia-autoblade/actions/runs/35601008804) | `ec7e8b7` | workflow_dispatch | 391.888 / 241.531 | 276728 / 489540 | 9.842 / 139940 |
+
+典型 `single-sharp` 建模 1.777–2.368 s、峰值 RSS 126696–128672 KiB。
+三轮覆盖一致，七案的跨后端曲面双向最大值范围均为
+`0.017414–0.357179 mm`，最大值对应 `multi-sharp-89`；逐案完整数值保存在
+下载报告中。自身 STEP 的曲面交换最大差范围为 `1.12e-12–5.34e-11 mm`。
+这三次独立完整复现作为本阶段结束观察期的证据，不代表长期服务可靠性或
+吞吐承诺；既定每周完整运行继续提供后续观察。人类对先前模型的结论保持其
+原有制品和用途边界，本次 CI 不自动批准新模型。
+
+2026-09-22，提交 `8a11c45` 移除 job 的 `continue-on-error`。随后通过 GitHub
+API 实际配置并重新读取 `main` branch protection：required context 为
+`FreeCAD measurement integrity`，来源 App ID `15368`（GitHub Actions），
+`strict=true`、`enforce_admins=true`，未增加人工 PR review 数量要求。
+因此后续变更通过检查后再合并，管理员同样不能绕过此 required 状态。
+仅提交 YAML 不算配置完成；实际返回值保存在
+`output/stage4-ci-20260921/branch-protection-applied.json`。
+
+实际文档 PR 的 [pull_request 检查](https://github.com/Laxpud/catia-autoblade/actions/runs/35681290564)
+在 5 秒内返回成功且跳过 CAD，但原配置同时触发分支 push 的同名完整测量，
+GitHub 会把两项都列为 required。因此 push 触发进一步限定为 `main`，所有 PR
+继续无条件进入 workflow，再由 job 内判断测量范围；避免同一 PR 重复等待。
+
+证据目录同时保留 `run-<id>.json`、`artifacts-<id>.json` 与各
+`run-<id>/download-audit.json`；每份下载包含完整模型、数值报告、建模/测量日志
+和 wheel。阶段 4 的完整矩阵、公开许可与摘要、人工结论、重复运行及 required
+检查均已有可追溯证据，阶段 5 尚未启动。

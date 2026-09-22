@@ -14,7 +14,7 @@
 - 里程碑完成后，把持久事实写回技术文档，将详细记录归档到 `docs/archive/`，再从
   backlog 或用户新指令中提升下一项工作。
 
-## 当前状态（2026-09-21）
+## 当前状态（2026-09-22）
 
 - `0.2.0` 的单/多翼型、`create`/`batch`/`sweep`、CATIA Adapter、配置 schema
   `3.0.0`、sweep manifest v2 和内部 preview wheel 流程已经完成；证据见下方
@@ -24,8 +24,9 @@
 - 目标架构、ADR 和实施计划已经建立；阶段 1 的 distribution、Python namespace、
   配置目录和 Linux 无 CAD 路径已实现，Linux 与 Windows 完整检查及安装 gate
   均已通过，阶段 1 已完成。
-- 阶段 3 已完成开发集成与 FreeCAD 真实 smoke；当前发布版本仍为 `0.2.0`，
-  `0.3.0` preview 的完整黄金矩阵、CI、真实 CATIA 发布回归和正式发布尚未完成。
+- 阶段 3 的开发集成、FreeCAD 真实 smoke，以及阶段 4 的完整公开黄金矩阵和
+  Linux 测量 CI 已完成；当前发布版本仍为 `0.2.0`，阶段 5 的真实 CATIA 发布
+  回归、当前文档切换和正式发布尚未启动。
 - 用户已人工对比当前 Gordon FreeCAD 模型与 CATIA 候选模型，确认两者视觉上
   几乎完全重合，并批准当前已观测差异用于预期科学计算用途；批准边界见
   [人工验收记录](docs/validation/gordon-transition-analysis-2026-09-09.md#2026-09-15-人工验收)。
@@ -43,17 +44,17 @@ STEP，最终以一个经过双平台、双 CAD 和黄金几何验证的内部 `
 - [实施计划](docs/plans/autoblade-0.3.0.md)
 - [架构决策](docs/adr/)
 
-Current focus：**阶段 4：公开黄金矩阵、标准误差报告与 Linux 测量 CI。**
-7 组公开参考已齐备，覆盖单尖、单钝、不同点数多尖、多钝和三组明显变换；另有
-1000 点性能案例。用户已人工接受本次 6 组模型，并另行批准其公开测试基线。
-统一策略为自动测量并生成标准报告，实际可用性由人类判断；既有数值阈值只留作
-历史背景，见 [ADR-0007](docs/adr/0007-measure-geometry-and-defer-usability-to-humans.md)。
+Current focus：**阶段 4 已完成；下一阶段为阶段 5，尚未启动。**
+7 组公开参考覆盖单尖、单钝、不同点数多尖、多钝和三组明显变换，另有 1000 点
+性能案例。人工结论与公开授权均可追溯；自动化只测量和生成标准报告，实际
+可用性由人类判断，见 [ADR-0007](docs/adr/0007-measure-geometry-and-defer-usability-to-humans.md)。
 
-双平台各 262 项测试及完整检查通过，独立源码归档已校验全部夹具。7 例完整
-公开矩阵的独立 wheel 测量与 1000 点性能复现已完成，临时环境和 owned 进程
-均已清理。non-blocking Linux workflow 已写入，本次提交已获授权，下一步是获推送授权后
-执行远程 CI 并观察稳定性，阶段 5 未启动。按用户最新要求，检查产物统一保留
-在当前项目的 `output/` 下，后续不再复制到 win11。完整复现模型与报告入口为
+GitHub 三轮独立 runner 完成全部公开矩阵和合成性能案例，下载后的报告、模型
+摘要及零残留进程证据均已核验。Windows 干净 checkout 的 CurvesWB 换行问题
+已修复，双平台各 269 项测试及完整检查通过。`main` 已要求
+`FreeCAD measurement integrity`，相关改动执行完整测量，每周和手动运行同样
+覆盖完整套件；纯文档变更返回状态并跳过 CAD。检查产物统一保留在项目
+`output/stage4-ci-20260921/`，后续不再复制到 win11。完整本机模型与报告入口为
 `output/AutoBlade-public-matrix-reproduction-20260921/index.html`，原人工结论在
 `output/AutoBlade-standard-reports-20260921/human-review.json`。
 具体数据与当前证据见[矩阵测量与交付](docs/validation/golden-matrix-2026-09-21.md)，
@@ -65,7 +66,8 @@ Dependencies：
   已完成路径元数据清理、几何未变验证，新摘要为 `0eb34e4a…42dafe0`。
 - 单尖、单钝、多钝和三组变换的公开基线已于 2026-09-21 获独立授权，完整
   矩阵已齐备。STEP precision 保持既定设置，测量方法、标准报告和人工结论
-  已版本化；完整 CI 脚本已在本机执行，远程运行及稳定性仍须记录。
+  已版本化；完整 CI 脚本已在本机和独立 GitHub runner 复现，远程重复运行和
+  required 配置证据见[远程验收记录](docs/validation/golden-matrix-2026-09-21.md#远程-ci-验收)。
 - GitHub 仓库改名、PyPI 名称注册、checkout 移动、后续 CATIA 基线批准和 Git
   commit 均需要独立授权，不是本 milestone 的隐含操作权限。
 
@@ -77,10 +79,10 @@ Exit criteria：
   会话所有权和零新增 CNEXT 回归全部通过。
 - [x] Linux/Flatpak FreeCAD 1.1.3 支持 `create`、`batch`、`sweep`、dry-run、doctor、
   manifest v3、失败快照和每任务隔离，成功产出完整 `.FCStd + .stp` 制品集。
-- [ ] FreeCAD 建模路线通过截面、导引与曲面精度验证，覆盖不同点数与尖/钝尾缘；
+- [x] FreeCAD 建模路线通过截面、导引与曲面精度验证，覆盖不同点数与尖/钝尾缘；
   FCStd/STEP 为有效闭合实体，保存重开与声明的重建方式可复现，任何拟合误差、
   外部依赖及静态快照属性均显式记录，不静默改变输入或拓扑。
-- [ ] 公开 CATIA 黄金矩阵、许可、摘要、标准误差报告、人工结论和 Linux 测量完整性 CI
+- [x] 公开 CATIA 黄金矩阵、许可、摘要、标准误差报告、人工结论和 Linux 测量完整性 CI
   均可从干净 checkout 复现，1000 点样例具有性能记录。
 - [ ] Windows 与 Linux 的常规检查、干净 wheel 安装 smoke、真实 CATIA、真实
   FreeCAD、双后端 STEP 和 owned-process 清理证据全部通过。
