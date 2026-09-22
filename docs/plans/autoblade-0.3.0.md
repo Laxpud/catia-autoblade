@@ -267,7 +267,7 @@ Outcome：把 FreeCAD 从本机成功提升为可重复、可审计的 Linux pre
   偏差比较；不比较二进制、面数、边数或拓扑编号。
 - [x] 把固定采样方法、标准误差报告与人工结论关联写入契约；不以数值大小自动
   裁决模型可用性。基线更新仍须显式 CATIA 生成、SHA-256 校验和人工批准。
-- [ ] 增加独立 Linux FreeCAD CI job；初期 non-blocking，稳定后对 backend、核心
+- [x] 增加独立 Linux FreeCAD CI job；初期 non-blocking，稳定后对 backend、核心
   几何、输入拓扑和 Runner 相关变更设为 required，并定时运行完整套件。
 - [x] 固定 CI 认证环境为 Flatpak FreeCAD 1.1.3，记录典型、89 截面和 1000 点案例
   的耗时与峰值内存。
@@ -296,8 +296,17 @@ Outcome：把 FreeCAD 从本机成功提升为可重复、可审计的 Linux pre
 字节和重开实体属性完全一致。再次完成全部七个合成性能案例，1000 点建模
 8.759 s、峰值 RSS 139,908 KiB。双平台最终各 262 项测试与完整检查通过。
 本机完整 CI 脚本运行及环境清理有记录，追加复现包已放入 win11 原检查目录。
-Linux workflow 已写入，远程执行和稳定性观察尚未发生，相关 CI checklist
-保持未完成；本次提交已获授权，下一步须先取得推送授权，阶段 5 未启动。
+当时 Linux workflow 已写入，远程执行和稳定性观察尚未发生，CI checklist
+保持未完成，阶段 5 未启动。
+
+远程收尾（2026-09-22）：经用户明确授权推送及配置 required，GitHub 三个独立
+runner 已完成全部七组公开测量与七组合成性能模型，实际步骤均成功；下载后
+核验模型 SHA-256、标准报告、全部 520 个站位记录及零残留进程。Windows 干净
+checkout 暴露的 CurvesWB 换行问题已通过固定 LF 修复，双平台各 269 项测试及
+完整检查通过。测量 job 已移除 `continue-on-error`，`main` 已实际要求绑定
+GitHub Actions 的 `FreeCAD measurement integrity`；纯文档变更在 job 内跳过
+CAD 并返回状态，每周和手动运行完整套件。阶段 4 gate 已通过，阶段 5 尚未
+启动。逐轮身份、性能、重复性及规则证据见[远程 CI 验收](../validation/golden-matrix-2026-09-21.md#远程-ci-验收)。
 
 Exit gate：完整公开矩阵、许可、摘要、标准报告和明确人工结论均可追溯；Linux
 环境与报告完整性 CI 可从干净 checkout 复现并稳定运行。FreeCAD 测试不能更新
