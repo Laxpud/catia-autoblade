@@ -51,11 +51,12 @@ bash scripts/check-freecad-measurements.sh output/freecad-measurements-new
 固定环境身份在 `scripts/golden/ci-environment.json`，包括 FreeCAD 1.1.3 / OCCT
 7.8.1 和实际验证的 Flatpak app/runtime commit。
 
-`.github/workflows/freecad-measurements.yml` 对每次 push/PR 返回
+`.github/workflows/freecad-measurements.yml` 对每次 PR 和 `main` push 返回
 `FreeCAD measurement integrity` 状态。job 内的 `scripts.golden.ci_scope` 对比
 push 前后或 PR 分叉点以来的完整差异：源码、测试、脚本、输入、workflow 和
 构建配置变更执行完整矩阵，纯文档变更跳过 CAD 步骤；历史不可用时执行完整
 矩阵。每周一 02:17 UTC 和手动触发也执行完整矩阵。
+非主线 push 由随后的 PR 检查覆盖，避免同一 PR 同时等待两个同名 required job。
 
 三轮独立 runner 的完整复现通过后，检查已结束 non-blocking 观察期，`main`
 要求 `FreeCAD measurement integrity` 成功且分支跟上最新主线，管理员同样

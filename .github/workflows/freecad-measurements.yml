@@ -2,8 +2,10 @@ name: FreeCAD measurements
 
 on:
   workflow_dispatch:
-  # required check 必须对每次变更返回状态，具体测量范围由 job 内部选择。
+  # 所有 PR 都返回 required 状态；主线合并后另做测量。
+  # 不对 PR 分支再运行同名 push job，避免两项 required 同时等待。
   push:
+    branches: [main]
   pull_request:
   schedule:
     - cron: '17 2 * * 1'

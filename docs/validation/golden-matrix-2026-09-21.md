@@ -311,6 +311,11 @@ API 实际配置并重新读取 `main` branch protection：required context 为
 仅提交 YAML 不算配置完成；实际返回值保存在
 `output/stage4-ci-20260921/branch-protection-applied.json`。
 
+实际文档 PR 的 [pull_request 检查](https://github.com/Laxpud/catia-autoblade/actions/runs/35681290564)
+在 5 秒内返回成功且跳过 CAD，但原配置同时触发分支 push 的同名完整测量，
+GitHub 会把两项都列为 required。因此 push 触发进一步限定为 `main`，所有 PR
+继续无条件进入 workflow，再由 job 内判断测量范围；避免同一 PR 重复等待。
+
 证据目录同时保留 `run-<id>.json`、`artifacts-<id>.json` 与各
 `run-<id>/download-audit.json`；每份下载包含完整模型、数值报告、建模/测量日志
 和 wheel。阶段 4 的完整矩阵、公开许可与摘要、人工结论、重复运行及 required
